@@ -1,18 +1,18 @@
 const disciplines = [{
-  "id": 3,
+  "id": 3, // Olika grenar exempelvis shack
   "name": "D03",
   "skillFactors": {
-    "S01": 14,
-    "S02": 16,
-    "S03": 10,
-    "S04": 17,
-    "S05": 17
+    "S01": 14, // Strength
+    "S02": 16, // Camoflauge
+    "S03": 10, // Speed
+    "S04": 17, // Hitpoints
+    "S05": 17 // Intelligence
   }
 }, {
   "id": 5,
   "name": "D05",
   "skillFactors": {
-    "S01": 19,
+    "S01": 19, 
     "S02": 17,
     "S03": 15,
     "S04": 13,

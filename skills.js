@@ -1,10 +1,10 @@
 
 const skills = [{
   "id": 1,
-  "name": "S01"
+  "name": "S01" // Strength
 }, {
   "id": 2,
-  "name": "S02"
+  "name": "S02" // 
 }, {
   "id": 3,
   "name": "S03"
