@@ -1,6 +1,6 @@
 
 const seasons = [{
-  "year": 0,
+  "year": 1,
   "coaches": [{
     "participantId": 35,
     "coachId": 10
@@ -14745,7 +14745,7 @@ const seasons = [{
     }]
   }]
 }, {
-  "year": 1,
+  "year": 2,
   "coaches": [{
     "participantId": 103,
     "coachId": 5
@@ -29490,7 +29490,7 @@ const seasons = [{
     }]
   }]
 }, {
-  "year": 2,
+  "year": 3,
   "coaches": [{
     "participantId": 195,
     "coachId": 5
@@ -43899,7 +43899,7 @@ const seasons = [{
     }]
   }]
 }, {
-  "year": 3,
+  "year": 4,
   "coaches": [{
     "participantId": 118,
     "coachId": 11
@@ -58308,7 +58308,7 @@ const seasons = [{
     }]
   }]
 }, {
-  "year": 4,
+  "year": 5,
   "coaches": [{
     "participantId": 118,
     "coachId": 11
@@ -72717,7 +72717,7 @@ const seasons = [{
     }]
   }]
 }, {
-  "year": 5,
+  "year": 6,
   "coaches": [{
     "participantId": 118,
     "coachId": 11
@@ -87126,7 +87126,7 @@ const seasons = [{
     }]
   }]
 }, {
-  "year": 6,
+  "year": 7,
   "coaches": [{
     "participantId": 118,
     "coachId": 11
@@ -101871,7 +101871,7 @@ const seasons = [{
     }]
   }]
 }, {
-  "year": 7,
+  "year": 8,
   "coaches": [{
     "participantId": 118,
     "coachId": 10
@@ -116280,7 +116280,7 @@ const seasons = [{
     }]
   }]
 }, {
-  "year": 8,
+  "year": 9,
   "coaches": [{
     "participantId": 172,
     "coachId": 5
@@ -130689,7 +130689,7 @@ const seasons = [{
     }]
   }]
 }, {
-  "year": 9,
+  "year": 10,
   "coaches": [{
     "participantId": 85,
     "coachId": 5
