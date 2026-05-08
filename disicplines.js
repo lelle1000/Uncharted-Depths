@@ -5,14 +5,14 @@ const disciplines = [{
     "S01": 14, // Strength
     "S02": 16, // Speed
     "S03": 10, // Knowledge
-    "S04": 17, // Camoflauge
+    "S04": 18, // Camoflauge --> SKILL
     "S05": 17 // Endurance
   }
 }, {
   "id": 5, // Fighting
   "name": "D05",
   "skillFactors": {
-    "S01": 19, // Strength
+    "S01": 19, // Strength --> SKILL
     "S02": 17, // Speed
     "S03": 15, // Knowledge
     "S04": 13, // Camoflauge
@@ -26,7 +26,7 @@ const disciplines = [{
     "S02": 14, // Speed
     "S03": 12, // Knowledge
     "S04": 13, // Camoflauge
-    "S05": 20 // Endurance
+    "S05": 20 // Endurance --> SKILL
   }
 }, {
   "id": 1, // Maze
@@ -34,16 +34,16 @@ const disciplines = [{
   "skillFactors": {
     "S01": 11, // Strength
     "S02": 14, // Speed
-    "S03": 13, // Knowledge
+    "S03": 21, // Knowledge --> SKILL
     "S04": 17, // Camoflauge
-    "S05": 19 // Endurance
+    "S05": 19 // Endurance 
   }
 }, {
   "id": 4, // Race
   "name": "D04",
   "skillFactors": {
     "S01": 14, // Strength
-    "S02": 20, // Speed
+    "S02": 20, // Speed --> SKILL
     "S03": 13, // Knowledge
     "S04": 12, // Camoflauge
     "S05": 17 // Endurance
