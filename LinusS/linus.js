@@ -1,8 +1,21 @@
+
+ let unique = []
 let sameParticipantFightingScores = seasons.filter(obj => {
     let averagePlayerScore = 0;
     let playerId = 178;
     let playerArr = [];
     let totalScore;
+    let allPlayersInTheGame = obj.coaches.filter(player => player.participantId)
+
+    for(let playerid of allPlayersInTheGame){
+
+        if(!unique.includes(playerid.participantId)){
+            unique.push(playerid.participantId)
+        }
+        
+    }
+    
+
     if (obj.year == 0) {
         let correctCompDay = obj.competitionDays
         for(let day of correctCompDay) {
@@ -30,3 +43,4 @@ let sameParticipantFightingScores = seasons.filter(obj => {
         
     }
 })
+console.log(unique);
