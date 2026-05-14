@@ -1,5 +1,5 @@
 
- let unique = []
+let unique = []
 let sameParticipantFightingScores = seasons.filter(obj => {
     let averagePlayerScore = 0;
     let playerId = 178;
