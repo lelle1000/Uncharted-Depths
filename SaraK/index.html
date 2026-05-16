@@ -5,11 +5,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="comparePage.css">
 </head>
 
 <body>
-    <script src="d3.v7.min.js"></script>
-    <script src="index.html"></script>
+    <main>
+        <img src="../images/backArrow.png" id="backArrow" alt="">
+        <div id="containerParticipants">
+
+            <h2 class="containerTitle">Participants</h2>
+            <input type="text" id="inputIdField" placeholder="Search Monster Id">
+
+            <div id="containerAllMonstersBox">
+                <div class="monsterCard"></div>
+                <div class="monsterCard"></div>
+                <div class="monsterCard"></div>
+                <div class="monsterCard"></div>
+                <div class="monsterCard"></div>
+                <div class="monsterCard"></div>
+                <div class="monsterCard"></div>
+                <div class="monsterCard"></div>
+                <div class="monsterCard"></div>
+                <div class="monsterCard"></div>
+
+            </div>
+
+            <div id="containerButtons">
+                <button class="buttonParticipants">Clear Selection</button>
+                <button class="buttonParticipants">Select Random</button>
+            </div>
+        </div>
+
+
+        <div id="containerGraphs">
+            <h2 class="containerTitle">Skill Points</h2>
+            <div id="skillDistrubution">
+                <h3 class="graphTitle">Skill Distribution</h3>
+            </div>
+            <div id="pointsDistrubution">
+                <h3 class="graphTitle">Point Distribution</h3>
+            </div>
+
+
+        </div>
+    </main>
+
+    <script src="../d3.v7.min.js"></script>
+    <script src="../Frontend/dataset_valid.js"></script>
+    <script src="saraK.js"></script>
 </body>
 
 </html>
