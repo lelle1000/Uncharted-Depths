@@ -62,7 +62,7 @@ function updateScoreboard() {
             <div class="creatureScoreboard">
                 <p>${creaturePlacement}</p>
                 <p>${creatureName}</p>
-                <p>${creaturePoints}</p>
+                <p>${creaturePoints} Pts</p>
             </div>
         `
     }
