@@ -11,6 +11,16 @@ body {
 
     min-height: 100vh;
     width: 100%;
+    font-family: titleFont;
+    padding: 80px 40px;
+    display: flex;
+    justify-content: end;
+}
+
+#firstPageLogo {
+    width: 336px;
+    height: 183px;
+    display: block;
 }
 
 .firstPageButtons {
@@ -19,6 +29,14 @@ body {
     font-weight: 400;
     background: none;
     border: 0;
+}
+
+#firstPageItemContainer {
+    
+    display: flex;
+    flex-direction: column;
+    width: 336px; 
+    gap: 20px;
 }
 
 #landingPageContainer {

@@ -4,11 +4,11 @@
 
 
 @font-face {
-    font-family: titleFont;
     src: url(../Fonts/Pirata_One/PirataOne-Regular.ttf);
+    font-family: titleFont;
 }
 
 @font-face {
-    font-family: textFont;
     src: url(../Fonts/Piazzolla/Piazzolla-VariableFont_opsz\,wght.ttf);
+    font-family: textFont;
 }

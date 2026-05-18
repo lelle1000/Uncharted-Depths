@@ -3,7 +3,7 @@ function ScoreboardParticipantsAndAverageScore(disciplineId, seasonId) {
     let averageScore;
     let participantName;
 
-    let disciplineIdNumb = Number(disciplineId) // Kan använda == men lättare att fatta att dataset i html bara extraherar strängar
+    let disciplineIdNumb = Number(disciplineId)
     let seasonIdNumb = Number(seasonId)
 
     let correctSeason = seasons.find(obj => obj.year === seasonIdNumb)
