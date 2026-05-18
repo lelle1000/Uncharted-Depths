@@ -6,13 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="comparePage.css">
-    <link rel="stylesheet" href="../LinusS/landingPage.css">
-
+    <link rel="stylesheet" href="../common.css">
 </head>
 
 <body>
 
-    <main id="creditsPage">
+    <main id="storyPage">
+        <div id="storyDiv">
+            <p id="storyText">Bla bla bla story</p>
+        </div>
+
+    </main>
+
+
+    <main id="creditsPage" class="hide">
+        <img src="../images/backArrow.png" id="backArrow" alt="">
+
 
         <div id="containerCredits">
 
@@ -39,22 +48,16 @@
                     <p>Linus Strandberg</p>
             </div>
 
+            <div class="textDiv">
+                <h2>Fika Manager </h1>
+                    <p>Linus Strandberg</p>
+            </div>
         </div>
 
     </main>
 
 
-
-    <!-- STORY PAGE
-    <main id="storyPage">
-        <div id="storyDiv">
-            <p id="storyText">Bla bla bla story</p>
-        </div>
-
-    </main> -->
-
-    <!-- MONSTER CARDS PAGE
-    <main id="comparePage">
+    <main id="comparePage" class="hide">
         <img src="../images/backArrow.png" id="backArrow" alt="">
         <div id="containerParticipants">
 
@@ -95,7 +98,7 @@
 
 
         </div>
-    </main> -->
+    </main>
 
     <script src="../Frontend/dataset.v2.js"></script>
     <script src="../d3.v7.min.js"></script>

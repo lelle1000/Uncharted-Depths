@@ -54,6 +54,7 @@ body {
     height: 30px;
     position: absolute;
     left: 20px;
+    top: 20px;
 }
 
 #containerParticipants {
@@ -170,7 +171,27 @@ body {
     justify-content: center;
     align-items: center;
     color: white;
+    position: fixed;
+    width: 100%;
+    overflow: hidden;
+    /* starta under skärmen */
+    bottom: -100%;
+
+    animation: scrollCredits 20s linear forwards;
+
 }
+
+
+@keyframes scrollCredits {
+    from {
+        bottom: -100%;
+    }
+
+    to {
+        bottom: 100%;
+    }
+}
+
 
 #containerCredits h1 {
     font-family: "titleFont";
