@@ -171,3 +171,63 @@ body {
     font-size: 16px;
     font-weight: 400;
 }
+
+
+
+#portalPage{
+    width: 100%;
+    height: 100vh;
+    background-image: url("../images/Portals.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+}
+
+
+#pirateSkull{
+    position: relative;
+    z-index: 10000;
+}
+
+.pirateSkull{
+    position: relative;
+    width: 202px;
+    height: 189px;
+}
+
+.pirateJaw{
+    position: absolute;
+    width: 70px;
+    top: 110px;
+    left: 62px;
+
+}
+
+.animation {
+    animation: MoveJaw 0.25s infinite ease-in-out alternate;
+}
+
+@keyframes MoveJaw {
+     from {
+        top: 110px;
+    }
+
+    to {
+        top: 115px;
+    }
+    
+}
+
+.storyText{
+    position: absolute;
+    background-color: rgba(68, 99, 96, 0.80);
+    color: white;
+    width: 1200px;
+    border: 2px solid white;
+    border-radius: 5px;
+    padding: 15px 15px 15px 50px;
+    top: 60px;
+    left: 130px;
+    
+}
