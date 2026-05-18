@@ -8,10 +8,10 @@ function ScoreboardParticipantsAndAverageScore(disciplineId, seasonId) {
 
     let correctSeason = seasons.find(obj => obj.year === seasonIdNumb)
 
-    let allParticipants = correctSeason.coaches.map(coachObj => coachObj.participantId)
+    let allParticipants = participants.map(participant => participant.Id)
     
     let compDays = correctSeason.competitionDays
-7
+
     for(let day of compDays) {
         let events = day.events
         let correctDisciplinesArrays = events.filter(event => event.disciplineId === disciplineIdNumb)
@@ -44,7 +44,7 @@ function ScoreboardParticipantsAndAverageScore(disciplineId, seasonId) {
         delete participant.matchesPlayed
         
     }
-
+    
     return ParticipantAndScore
 }
 
@@ -115,4 +115,3 @@ seasonButtons.forEach(btn => btn.addEventListener("click", () => {
     }
 
 }))
-
