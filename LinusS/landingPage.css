@@ -1,8 +1,14 @@
 body {
+    display: flex;
     margin: 0;
+    height: 100vh;
+}
+
+#landingPageContainer {
     padding: 40px;
     box-sizing: border-box;
     min-height: 100vh;
+    width: 100%;
 
     display: flex;
     flex-direction: column;
