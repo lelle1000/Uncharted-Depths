@@ -75,6 +75,12 @@ let subSound = document.querySelector("#subSound")
 let waveSound = document.querySelector("#waveSound")
 let pirateStory = document.querySelector("#pirateStory")
 
+let firstPage = document.querySelector("#firstPage")
+let creditsPage = document.querySelector("#creditsPage")
+let portalPage = document.querySelector("#portalPage")
+let storyPage = document.querySelector("#storyPage")
+let landingPage = document.querySelector("#landingPageContainer")
+
 let storyModeButton = document.querySelector("#storyModeButton")
 let quickModeButton = document.querySelector("#quickModeButton")
 let creditsButton = document.querySelector("#creditsButton")
@@ -98,14 +104,19 @@ let season10 = document.querySelector("#season10Landing")
 
 let creatureScoreboardStats = document.querySelector("#creatureScoreboardStats")
 
-storyModeButton.addEventListener("click", () => 
-    subSound.play()
+let pages = [firstPage, creditsPage, storyPage, portalPage, landingPage]
 
+storyModeButton.addEventListener("click", () => {
+    firstPage.classList.add("hide")
+
+    subSound.play()
     setTimeout(() => {
+
+        storyPage.classList.add("")
         waveSound.play()
-        revealCurrentPage("storyPage")
     }, 9000 )
-)
+})
+
 
 let disciplineButtons = [fightingButton, raceButton, hidenseekButton, mazeButton, huntButton]
 let seasonButtons = [season1, season2, season3, season4, season5, season6, season7, season8, season9, season10]
@@ -113,7 +124,7 @@ let seasonButtons = [season1, season2, season3, season4, season5, season6, seaso
 let selectedDiscipline;
 let selectedSeason;
 
-disciplineButtons.forEach(btn => btn.addEventListener("click", () => {
+disciplineButtons.forEach(btn => btn.addEventListener("click", () => { 
     selectedDiscipline = btn.dataset.disciplineid;
     console.log(selectedDiscipline);
 
