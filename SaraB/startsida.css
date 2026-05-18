@@ -1,0 +1,30 @@
+.pirateSkull{
+    display: flex;
+    display: relativ;
+    width: 202px;
+    height: 189px;
+}
+
+.pirateJaw{
+    position: absolute;
+    width: 70px;
+    top: 116px;
+    left: 70px;
+
+}
+
+.animation {
+    animation: MoveJaw 0.25s infinite ease-in-out alternate;
+}
+
+@keyframes MoveJaw {
+     from {
+        top: 116px;
+    }
+
+    to {
+        top: 120px;
+    }
+    
+}
+
