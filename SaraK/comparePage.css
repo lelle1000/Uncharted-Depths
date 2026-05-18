@@ -186,8 +186,10 @@ body {
 }
 
 .textDiv h2 {
+
     font-family: "titleFont";
     color: #A2844F;
+    margin-bottom: 7px;
 
 
 }
