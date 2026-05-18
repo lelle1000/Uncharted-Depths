@@ -1,3 +1,73 @@
+function ScoreboardParticipantsAndAverageScore(disciplineId, seasonId) {
+    let ParticipantAndScore = []
+    let averageScore;
+
+    let disciplineIdNumb = Number(disciplineId) // Kan använda == men lättare att fatta att dataset i html bara extraherar strängar
+    let seasonIdNumb = Number(seasonId)
+
+    let correctSeason = seasons.find(obj => obj.year === seasonIdNumb)
+
+    let allParticipants = correctSeason.coaches.map(coachObj => coachObj.participantId)
+    
+    let compDays = correctSeason.competitionDays
+
+    for(let day of compDays) {
+        let events = day.events
+        let correctDisciplinesArrays = events.filter(event => event.disciplineId === disciplineIdNumb)
+        
+        let scores = correctDisciplinesArrays[0].scores
+        for(let scoreObj of scores) {
+            if(allParticipants.includes(scoreObj.participantId) ) {
+
+                let existing = ParticipantAndScore.find(p => p.participantId == scoreObj.participantId)
+
+                if(existing) {
+                    existing.totalScore += scoreObj.score
+                    existing.matchesPlayed += 1
+                } else {
+                    ParticipantAndScore.push({
+                        participantId: scoreObj.participantId,
+                        totalScore: scoreObj.score,
+                        matchesPlayed: 1
+                    })
+                }
+            } 
+        }
+    }   
+
+    for(let participant of ParticipantAndScore) {
+        participant.averageScore = Math.round(participant.totalScore / participant.matchesPlayed)
+        delete participant.totalScore
+        delete participant.matchesPlayed
+        
+    }
+
+    return ParticipantAndScore
+}
+
+function updateScoreboard() {
+    creatureScoreboardStats.innerHTML = ""
+
+    let arrayWithScoreAndParticipantId = ScoreboardParticipantsAndAverageScore(selectedDiscipline, selectedSeason)
+
+    arrayWithScoreAndParticipantId.sort((a, b) => b.averageScore - a.averageScore)
+
+    for(let obj of arrayWithScoreAndParticipantId) {
+        
+        let creaturePlacement = arrayWithScoreAndParticipantId.indexOf(obj) + 1
+        let creatureName = "Hasse"
+        let creaturePoints = obj.averageScore
+
+        creatureScoreboardStats.innerHTML += `
+            <div class="creatureScoreboard">
+                <p>${creaturePlacement}</p>
+                <p>${creatureName}</p>
+                <p>${creaturePoints} Pts</p>
+            </div>
+        `
+    }
+}
+
 let fightingButton = document.querySelector("#fightingDiscipline")
 let raceButton = document.querySelector("#raceDiscipline")
 let hidenseekButton = document.querySelector("#hidenseekDiscipline")
@@ -24,98 +94,22 @@ let selectedDiscipline;
 let selectedSeason;
 
 disciplineButtons.forEach(btn => btn.addEventListener("click", () => {
-    
-    creatureScoreboardStats.innerHTML = ""
     selectedDiscipline = btn.dataset.disciplineid;
-    let creaturePlacement;
-    let creatureName;
-    let craturePoints;
+    console.log(selectedDiscipline);
+    
+    if(selectedSeason) {
+        updateScoreboard()
+    }
 
 
-
-    creatureScoreboardStats.innerHTML += `
-    <div class="creatureScoreboard">
-        <p>${creaturePlacement}</p>
-        <p>${creatureName}</p>
-        <p>${craturePoints}</p>
-    </div>
-    `
 }))
 
 seasonButtons.forEach(btn => btn.addEventListener("click", () => {
-    
-    creatureScoreboardStats.innerHTML = ""
     selectedSeason = btn.dataset.currentseason;
     console.log(selectedSeason);
-    
-    let creaturePlacement;
-    let creatureName;
-    let craturePoints;
+    if(selectedDiscipline) {
+        updateScoreboard()
+    }
 
-
-
-    creatureScoreboardStats.innerHTML += `
-    <div class="creatureScoreboard">
-        <p>${creaturePlacement}</p>
-        <p>${creatureName}</p>
-        <p>${craturePoints}</p>
-    </div>
-    `
 }))
 
-
-
-
-
-
-
-
-
-
-
-
-let unique = []
-let sameParticipantFightingScores = seasons.filter(obj => {
-    let averagePlayerScore = 0;
-    let playerId = 178;
-    let playerArr = [];
-    let totalScore;
-    let allPlayersInTheGame = obj.coaches.filter(player => player.participantId)
-
-    for(let playerid of allPlayersInTheGame){
-
-        if(!unique.includes(playerid.participantId)){
-            unique.push(playerid.participantId)
-        }
-        
-    }
-    
-
-    if (obj.year == 0) {
-        let correctCompDay = obj.competitionDays
-        for(let day of correctCompDay) {
-
-            let events = day.events
-            let correctEvents = events.filter(event => event.disciplineId == 5)
-            
-            let samePlayerScores = 0;
-            
-            for (let event of correctEvents) {
-                let allEventScores = event.scores
-                for(let player of allEventScores) {
-                    
-                    if(player.participantId == playerId) {
-                        playerArr.push(player)
-                        totalScore = averagePlayerScore += player.score 
-
-                    
-                    }
-                }
-                 
-            }
-        }
-        console.log(totalScore / playerArr.length);
-        
-    }
-})
-console.log(unique);
