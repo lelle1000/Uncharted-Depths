@@ -4,6 +4,15 @@ body {
     height: 100vh;
 }
 
+#firstPage {
+    background-image: url("../images/submarine.jpg");
+
+    background-size: contain;
+
+    min-height: 100vh;
+    width: 100%;
+}
+
 #landingPageContainer {
     padding: 40px;
     box-sizing: border-box;
@@ -133,6 +142,6 @@ body {
 
 .creatureScoreboard p {
     margin: 0;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 400;
 }
