@@ -63,13 +63,21 @@ function updateScoreboard() {
 
         creatureScoreboardStats.innerHTML += `
             <div class="creatureScoreboard">
-                <p>${creaturePlacement}</p>
-                <p>${creatureName}</p>
-                <p>${creaturePoints} Pts</p>
+                <p class="text">${creaturePlacement}</p>
+                <p class="text">${creatureName}</p>
+                <p class="text">${creaturePoints} Pts</p>
             </div>
         `
     }
 }
+
+let subSound = document.querySelector("#subSound")
+let waveSound = document.querySelector("#waveSound")
+let pirateStory = document.querySelector("#pirateStory")
+
+let storyModeButton = document.querySelector("#storyModeButton")
+let quickModeButton = document.querySelector("#quickModeButton")
+let creditsButton = document.querySelector("#creditsButton")
 
 let fightingButton = document.querySelector("#fightingDiscipline")
 let raceButton = document.querySelector("#raceDiscipline")
@@ -89,6 +97,15 @@ let season9 = document.querySelector("#season9Landing")
 let season10 = document.querySelector("#season10Landing")
 
 let creatureScoreboardStats = document.querySelector("#creatureScoreboardStats")
+
+storyModeButton.addEventListener("click", () => 
+    subSound.play()
+
+    setTimeout(() => {
+        waveSound.play()
+        revealCurrentPage("storyPage")
+    }, 9000 )
+)
 
 let disciplineButtons = [fightingButton, raceButton, hidenseekButton, mazeButton, huntButton]
 let seasonButtons = [season1, season2, season3, season4, season5, season6, season7, season8, season9, season10]

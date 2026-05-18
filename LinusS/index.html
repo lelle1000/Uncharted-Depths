@@ -9,17 +9,21 @@
 </head>
 <body>
 
-    <main id="firstPage" class="hide">
+    <audio id="waveSound" src="../audioFile/WaveSound.mp3"></audio>
+    <audio id="subSound" src="../audioFile/SubmarineSonar.mp3"></audio>
+    <audio id="pirateStory" src="../audioFile/pirateAudio.mp3"></audio>
+
+    <main id="firstPage" class="">
         <div id="firstPageItemContainer">  
             <img id="firstPageLogo" src="../images/Logo.png" alt="">
-            <button id="storyModeButton" class="firstPageButtons">Story Mode</button>
-            <button id="quickModeButton" class="firstPageButtons">Quick Mode</button>
-            <button id="creditsButton" class="firstPageButtons">Credits</button>            
+            <button id="storyModeButton" class="firstPageButtons title">Story Mode</button>
+            <button id="quickModeButton" class="firstPageButtons title">Quick Mode</button>
+            <button id="creditsButton" class="firstPageButtons title">Credits</button>            
         </div>
 
     </main>
 
-    <main id="landingPageContainer" class="">
+    <main id="landingPageContainer" class="hide">
         <div id="topSectionLandingPage">
             <div id="topCreaturesContainer">
                     
@@ -32,35 +36,35 @@
         <div id="bottomSectionLandingPage">
             <div id="scoreboardContainer">
                 <div id="disciplineButtons">
-                    <button class="disciplineButton" id="fightingDiscipline" data-disciplineid="5">Fighting</button>
-                    <button class="disciplineButton" id="raceDiscipline" data-disciplineid="4">Race</button>
-                    <button class="disciplineButton" id="hidenseekDiscipline" data-disciplineid="3">Hide n Seek</button>
-                    <button class="disciplineButton" id="mazeDiscipline" data-disciplineid="1">Maze</button>
-                    <button class="disciplineButton" id="huntDiscipline" data-disciplineid="2">Hunt</button>
-                    <button class="disciplineButton" id="calcRatesButton">Calculate Rates</button>
+                    <button class="disciplineButton title" id="fightingDiscipline" data-disciplineid="5">Fighting</button>
+                    <button class="disciplineButton title" id="raceDiscipline" data-disciplineid="4">Race</button>
+                    <button class="disciplineButton title" id="hidenseekDiscipline" data-disciplineid="3">Hide n Seek</button>
+                    <button class="disciplineButton title" id="mazeDiscipline" data-disciplineid="1">Maze</button>
+                    <button class="disciplineButton title" id="huntDiscipline" data-disciplineid="2">Hunt</button>
+                    <button class="disciplineButton title" id="calcRatesButton">Calculate Rates</button>
                 </div>
                 <div id="scoreboardBottomSection">
                     <div id="scoreboardSeasonContainer">
-                        <p>Seasons</p>
+                        <p class="text">Seasons</p>
                         <div id="scoreboardScrollContainer">
-                            <button class="seasonButton" id="season1Landing" data-currentseason="1">1</button>
-                            <button class="seasonButton" id="season2Landing" data-currentseason="2">2</button>
-                            <button class="seasonButton" id="season3Landing" data-currentseason="3">3</button>
-                            <button class="seasonButton" id="season4Landing" data-currentseason="4">4</button>
-                            <button class="seasonButton" id="season5Landing" data-currentseason="5">5</button>
-                            <button class="seasonButton" id="season6Landing" data-currentseason="6">6</button>
-                            <button class="seasonButton" id="season7Landing" data-currentseason="7">7</button>
-                            <button class="seasonButton" id="season8Landing" data-currentseason="8">8</button>
-                            <button class="seasonButton" id="season9Landing" data-currentseason="9">9</button>
-                            <button class="seasonButton" id="season10Landing" data-currentseason="10">10</button>
+                            <button class="seasonButton title" id="season1Landing" data-currentseason="1">1</button>
+                            <button class="seasonButton title" id="season2Landing" data-currentseason="2">2</button>
+                            <button class="seasonButton title" id="season3Landing" data-currentseason="3">3</button>
+                            <button class="seasonButton title" id="season4Landing" data-currentseason="4">4</button>
+                            <button class="seasonButton title" id="season5Landing" data-currentseason="5">5</button>
+                            <button class="seasonButton title" id="season6Landing" data-currentseason="6">6</button>
+                            <button class="seasonButton title" id="season7Landing" data-currentseason="7">7</button>
+                            <button class="seasonButton title" id="season8Landing" data-currentseason="8">8</button>
+                            <button class="seasonButton title" id="season9Landing" data-currentseason="9">9</button>
+                            <button class="seasonButton title" id="season10Landing" data-currentseason="10">10</button>
                         </div>
 
                     </div>
                     <div id="scoreboardStatsContainer">
                         <div id="scoreboardListingTitles">
-                            <div>Placement</div>
-                            <div>Creature</div>
-                            <div>Points</div>
+                            <div class="text">Placement</div>
+                            <div class="text">Creature</div>
+                            <div class="text">Points</div>
                         </div>
                         <div id="creatureScoreboardStats">
                         </div>
