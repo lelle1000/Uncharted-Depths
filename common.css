@@ -1,3 +1,14 @@
-.hide{
+.hide {
     display: none !important;
+}
+
+
+@font-face {
+    font-family: titleFont;
+    src: url(../Fonts/Pirata_One/PirataOne-Regular.ttf);
+}
+
+@font-face {
+    font-family: textFont;
+    src: url(../Fonts/Piazzolla/Piazzolla-VariableFont_opsz\,wght.ttf);
 }
