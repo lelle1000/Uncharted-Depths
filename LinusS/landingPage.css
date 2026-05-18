@@ -4,6 +4,41 @@ body {
     height: 100vh;
 }
 
+#firstPage {
+    background-image: url("../images/SubFinish.png");
+
+    background-size: cover;
+
+    min-height: 100vh;
+    width: 100%;
+    font-family: titleFont;
+    padding: 80px 40px;
+    display: flex;
+    justify-content: end;
+}
+
+#firstPageLogo {
+    width: 336px;
+    height: 183px;
+    display: block;
+}
+
+.firstPageButtons {
+    color: #A2844F;
+    font-size: 36px;
+    font-weight: 400;
+    background: none;
+    border: 0;
+}
+
+#firstPageItemContainer {
+    
+    display: flex;
+    flex-direction: column;
+    width: 336px; 
+    gap: 20px;
+}
+
 #landingPageContainer {
     padding: 40px;
     box-sizing: border-box;
@@ -133,6 +168,6 @@ body {
 
 .creatureScoreboard p {
     margin: 0;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 400;
 }
