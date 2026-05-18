@@ -4,6 +4,34 @@ body {
     height: 100vh;
 }
 
+@keyframes fadePageToBlack {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadePageToNormal {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.FadePageBlack {
+    animation: fadePageToBlack 5s forwards;
+}
+
+.fadeToNoraml {
+    animation: fadePageToNormal 5s forwards;
+}
+
 #firstPage {
     background-image: url("../images/SubFinish.png");
 
@@ -15,6 +43,7 @@ body {
     padding: 80px 40px;
     display: flex;
     justify-content: end;
+
 }
 
 #firstPageLogo {
