@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,19 +10,27 @@
     <link rel="stylesheet" href="SaraK/comparePage.css">
     <title>Uncharted Depth</title>
 </head>
+
 <body>
-    
+
     <audio id="waveSound" src="./audioFile/WaveSound.mp3"></audio>
     <audio id="subSound" src="./audioFile/SubmarineSonar.mp3"></audio>
     <audio id="pirateStory" src="./audioFile/pirateAudio.mp3"></audio>
 
     <main id="firstPage" class="">
-        <div id="firstPageItemContainer">  
+        <div id="firstPageItemContainer">
             <img id="firstPageLogo" src="./images/Logo.png" alt="">
             <button id="storyModeButton" class="firstPageButtons title">Story Mode</button>
             <button id="quickModeButton" class="firstPageButtons title">Quick Mode</button>
-            <button id="creditsButton" class="firstPageButtons title">Credits</button>            
+            <button id="creditsButton" class="firstPageButtons title">Credits</button>
         </div>
+    </main>
+
+    <main id="storyPage">
+        <div id="storyDiv">
+            <p id="storyText">Bla bla bla story</p>
+        </div>
+
     </main>
 
     <main id="portalPage" class="hide">
@@ -35,7 +44,7 @@
     <main id="landingPageContainer" class="hide">
         <div id="topSectionLandingPage">
             <div id="topCreaturesContainer">
-                    
+
             </div>
             <div id="topCreatureStats">
 
@@ -45,9 +54,11 @@
         <div id="bottomSectionLandingPage">
             <div id="scoreboardContainer">
                 <div id="disciplineButtons">
-                    <button class="disciplineButton title" id="fightingDiscipline" data-disciplineid="5">Fighting</button>
+                    <button class="disciplineButton title" id="fightingDiscipline"
+                        data-disciplineid="5">Fighting</button>
                     <button class="disciplineButton title" id="raceDiscipline" data-disciplineid="4">Race</button>
-                    <button class="disciplineButton title" id="hidenseekDiscipline" data-disciplineid="3">Hide n Seek</button>
+                    <button class="disciplineButton title" id="hidenseekDiscipline" data-disciplineid="3">Hide n
+                        Seek</button>
                     <button class="disciplineButton title" id="mazeDiscipline" data-disciplineid="1">Maze</button>
                     <button class="disciplineButton title" id="huntDiscipline" data-disciplineid="2">Hunt</button>
                     <button class="disciplineButton title" id="calcRatesButton">Calculate Rates</button>
@@ -80,8 +91,89 @@
                     </div>
                 </div>
             </div>
-        </main>
-    
+    </main>
+
+
+    <main id="comparePage">
+        <img src="../images/backArrow.png" id="backArrow" alt="">
+        <div id="containerParticipants">
+
+            <h2 class="containerTitle">Participants</h2>
+            <input type="text" id="inputIdField" placeholder="Search Monster Id">
+
+            <div id="containerAllMonstersBox">
+                <div class="monsterCard">
+                    <div class="colorBar" id="colorBar1"></div>
+                </div>
+                <div class="monsterCard"></div>
+                <div class="monsterCard"></div>
+                <div class="monsterCard"></div>
+                <div class="monsterCard"></div>
+                <div class="monsterCard"></div>
+                <div class="monsterCard"></div>
+                <div class="monsterCard"></div>
+                <div class="monsterCard"></div>
+
+
+            </div>
+
+            <div id="containerButtons">
+                <button class="buttonParticipants" id="clearSelectionButton">Clear Selection</button>
+                <button class="buttonParticipants" id="selectRandomButton">Select Random</button>
+            </div>
+        </div>
+
+
+        <div id="containerGraphs">
+            <h2 class="containerTitle">Skill Points</h2>
+            <div id="skillDistrubution">
+                <h3 class="graphTitle">Skill Distribution</h3>
+            </div>
+            <div id="pointsDistrubution">
+                <h3 class="graphTitle">Point Distribution</h3>
+            </div>
+
+
+        </div>
+    </main>
+
+    <main id="creditsPage" class="hide">
+        <img src="../images/backArrow.png" id="backArrow" alt="">
+
+
+        <div id="containerCredits">
+
+            <h1>Credits</h1>
+
+            <div class="textDiv">
+                <h2>Lead designer</h1>
+                    <p>Ahmet Börütecne</p>
+            </div>
+            <div class="textDiv">
+                <h2>Designer</h1>
+                    <p>Sara Karlsson</p>
+                    <p>Sara Boughiout </p>
+                    <p>Linus Strandberg</p>
+            </div>
+            <div class="textDiv">
+                <h2>Lead programmer</h1>
+                    <p>Erik Pineiro</p>
+            </div>
+            <div class="textDiv">
+                <h2>Programmers </h1>
+                    <p>Sara Karlsson</p>
+                    <p>Sara Boughiout </p>
+                    <p>Linus Strandberg</p>
+            </div>
+
+            <div class="textDiv">
+                <h2>Fika Manager </h1>
+                    <p>Linus Strandberg</p>
+            </div>
+        </div>
+
+    </main>
+
     <script src="d3.v7.min.js"></script>
     <script src="functions.js"></script>
     <script src="classes.js"></script>
@@ -89,4 +181,5 @@
     <script src="SaraB/saraB.js"></script>
     <script src="SaraK/saraK.js"></script>
 </body>
+
 </html>
