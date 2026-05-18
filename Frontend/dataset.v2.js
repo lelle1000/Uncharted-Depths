@@ -88,136 +88,136 @@ const disciplines = [{
 
 const participants = [{
   "id": 148,
-  "name": "P171"
+  "name": "AquaOcto"
 }, {
   "id": 65,
-  "name": "P030"
+  "name": "CoralFin"
 }, {
   "id": 189,
-  "name": "P060"
+  "name": "DeepKraken"
 }, {
   "id": 268,
-  "name": "P106"
+  "name": "BlueTang"
 }, {
   "id": 180,
-  "name": "P212"
+  "name": "SeaDrifter"
 }, {
   "id": 296,
-  "name": "P190"
+  "name": "NeonJelly"
 }, {
   "id": 141,
-  "name": "P181"
+  "name": "ShellWhisper"
 }, {
   "id": 179,
-  "name": "P154"
+  "name": "TideCrawler"
 }, {
   "id": 76,
-  "name": "P055"
+  "name": "StarGlimmer"
 }, {
   "id": 173,
-  "name": "P215"
+  "name": "WaveRay"
 }, {
   "id": 214,
-  "name": "P252"
+  "name": "PearlDiver"
 }, {
   "id": 169,
-  "name": "P016"
+  "name": "InkSquid"
 }, {
   "id": 269,
-  "name": "P247"
+  "name": "ReefStalker"
 }, {
   "id": 122,
-  "name": "P240"
+  "name": "BubbleFin"
 }, {
   "id": 58,
-  "name": "P175"
+  "name": "LagoonSpirit"
 }, {
   "id": 270,
-  "name": "P176"
+  "name": "CrabSnap"
 }, {
   "id": 206,
-  "name": "P255"
+  "name": "AbyssWatcher"
 }, {
   "id": 150,
-  "name": "P172"
+  "name": "GlideManta"
 }, {
   "id": 190,
-  "name": "P300"
+  "name": "OceanPhantom"
 }, {
   "id": 68,
-  "name": "P029"
+  "name": "FinChaser"
 }, {
   "id": 82,
-  "name": "P057"
+  "name": "CoralShadow"
 }, {
   "id": 156,
-  "name": "P001"
+  "name": "TinyShrimp"
 }, {
   "id": 159,
-  "name": "P078"
+  "name": "DriftKelp"
 }, {
   "id": 201,
-  "name": "P056"
+  "name": "SilverAnchovy"
 }, {
   "id": 124,
-  "name": "P144"
+  "name": "DeepCurrent"
 }, {
   "id": 149,
-  "name": "P107"
+  "name": "GlowEel"
 }, {
   "id": 235,
-  "name": "P043"
+  "name": "SandCrawler"
 }, {
   "id": 170,
-  "name": "P124"
+  "name": "WaveSnapper"
 }, {
   "id": 11,
-  "name": "P258"
+  "name": "MiniPlankton"
 }, {
   "id": 19,
-  "name": "P274"
+  "name": "StormMarlin"
 }, {
   "id": 290,
-  "name": "P237"
+  "name": "DarkBarracuda"
 }, {
   "id": 181,
-  "name": "P201"
+  "name": "SeaNibbler"
 }, {
   "id": 12,
-  "name": "P170"
+  "name": "IceKrill"
 }, {
   "id": 195,
-  "name": "P285"
+  "name": "GiantClam"
 }, {
   "id": 182,
-  "name": "P079"
+  "name": "ReefGuardian"
 }, {
   "id": 6,
-  "name": "P123"
+  "name": "SwiftSeahorse"
 }, {
   "id": 239,
-  "name": "P189"
+  "name": "BlueWhalelet"
 }, {
   "id": 125,
-  "name": "P010"
+  "name": "EchoDolphin"
 }, {
   "id": 140,
-  "name": "P213"
+  "name": "ToxicLionfish"
 }, {
   "id": 81,
-  "name": "P095"
+  "name": "SilentStingray"
 }, {
   "id": 160,
-  "name": "P047"
+  "name": "MoonJelly"
 }, {
   "id": 192,
-  "name": "P033"
+  "name": "ReefPuffer"
 }, {
   "id": 274,
-  "name": "P063"
+  "name": "ShadowMoray"
 }, {
   "id": 119,
-  "name": "P254"
+  "name": "CoralSprite"
 }]
 
 const coaches = [{
