@@ -1,3 +1,309 @@
+// Dataset
+
+const skills = [{
+  "id": 1,
+  "name": "S01"
+}, {
+  "id": 2,
+  "name": "S02"
+}, {
+  "id": 3,
+  "name": "S03"
+}, {
+  "id": 4,
+  "name": "S04"
+}, {
+  "id": 5,
+  "name": "S05"
+}]
+
+const locations = [{
+  "id": 1,
+  "name": "L01"
+}, {
+  "id": 2,
+  "name": "L02"
+}, {
+  "id": 3,
+  "name": "L03"
+}, {
+  "id": 4,
+  "name": "L04"
+}, {
+  "id": 5,
+  "name": "L05"
+}]
+
+const disciplines = [{
+  "id": 1,
+  "name": "D01",
+  "skillFactors": {
+    "S01": 13,
+    "S02": 12,
+    "S03": 14,
+    "S04": 17,
+    "S05": 20
+  }
+}, {
+  "id": 4,
+  "name": "D04",
+  "skillFactors": {
+    "S01": 21,
+    "S02": 12,
+    "S03": 15,
+    "S04": 12,
+    "S05": 15
+  }
+}, {
+  "id": 2,
+  "name": "D02",
+  "skillFactors": {
+    "S01": 18,
+    "S02": 13,
+    "S03": 19,
+    "S04": 11,
+    "S05": 16
+  }
+}, {
+  "id": 3,
+  "name": "D03",
+  "skillFactors": {
+    "S01": 19,
+    "S02": 11,
+    "S03": 13,
+    "S04": 17,
+    "S05": 17
+  }
+}, {
+  "id": 5,
+  "name": "D05",
+  "skillFactors": {
+    "S01": 20,
+    "S02": 12,
+    "S03": 16,
+    "S04": 14,
+    "S05": 13
+  }
+}]
+
+const participants = [{
+  "id": 148,
+  "name": "P171"
+}, {
+  "id": 65,
+  "name": "P030"
+}, {
+  "id": 189,
+  "name": "P060"
+}, {
+  "id": 268,
+  "name": "P106"
+}, {
+  "id": 180,
+  "name": "P212"
+}, {
+  "id": 296,
+  "name": "P190"
+}, {
+  "id": 141,
+  "name": "P181"
+}, {
+  "id": 179,
+  "name": "P154"
+}, {
+  "id": 76,
+  "name": "P055"
+}, {
+  "id": 173,
+  "name": "P215"
+}, {
+  "id": 214,
+  "name": "P252"
+}, {
+  "id": 169,
+  "name": "P016"
+}, {
+  "id": 269,
+  "name": "P247"
+}, {
+  "id": 122,
+  "name": "P240"
+}, {
+  "id": 58,
+  "name": "P175"
+}, {
+  "id": 270,
+  "name": "P176"
+}, {
+  "id": 206,
+  "name": "P255"
+}, {
+  "id": 150,
+  "name": "P172"
+}, {
+  "id": 190,
+  "name": "P300"
+}, {
+  "id": 68,
+  "name": "P029"
+}, {
+  "id": 82,
+  "name": "P057"
+}, {
+  "id": 156,
+  "name": "P001"
+}, {
+  "id": 159,
+  "name": "P078"
+}, {
+  "id": 201,
+  "name": "P056"
+}, {
+  "id": 124,
+  "name": "P144"
+}, {
+  "id": 149,
+  "name": "P107"
+}, {
+  "id": 235,
+  "name": "P043"
+}, {
+  "id": 170,
+  "name": "P124"
+}, {
+  "id": 11,
+  "name": "P258"
+}, {
+  "id": 19,
+  "name": "P274"
+}, {
+  "id": 290,
+  "name": "P237"
+}, {
+  "id": 181,
+  "name": "P201"
+}, {
+  "id": 12,
+  "name": "P170"
+}, {
+  "id": 195,
+  "name": "P285"
+}, {
+  "id": 182,
+  "name": "P079"
+}, {
+  "id": 6,
+  "name": "P123"
+}, {
+  "id": 239,
+  "name": "P189"
+}, {
+  "id": 125,
+  "name": "P010"
+}, {
+  "id": 140,
+  "name": "P213"
+}, {
+  "id": 81,
+  "name": "P095"
+}, {
+  "id": 160,
+  "name": "P047"
+}, {
+  "id": 192,
+  "name": "P033"
+}, {
+  "id": 274,
+  "name": "P063"
+}, {
+  "id": 119,
+  "name": "P254"
+}]
+
+const coaches = [{
+  "id": 1,
+  "name": "C01",
+  "skillId": 3
+}, {
+  "id": 2,
+  "name": "C02",
+  "skillId": 5
+}, {
+  "id": 3,
+  "name": "C03",
+  "skillId": 4
+}, {
+  "id": 4,
+  "name": "C04",
+  "skillId": 3
+}, {
+  "id": 5,
+  "name": "C05",
+  "skillId": 3
+}, {
+  "id": 6,
+  "name": "C06",
+  "skillId": 1
+}, {
+  "id": 7,
+  "name": "C07",
+  "skillId": 2
+}, {
+  "id": 8,
+  "name": "C08",
+  "skillId": 5
+}, {
+  "id": 9,
+  "name": "C09",
+  "skillId": 2
+}, {
+  "id": 10,
+  "name": "C10",
+  "skillId": 5
+}, {
+  "id": 11,
+  "name": "C11",
+  "skillId": 4
+}]
+
+const trainers = [{
+  "id": 1,
+  "name": "T01",
+  "disciplineId": 2
+}, {
+  "id": 2,
+  "name": "T02",
+  "disciplineId": 4
+}, {
+  "id": 3,
+  "name": "T03",
+  "disciplineId": 2
+}, {
+  "id": 4,
+  "name": "T04",
+  "disciplineId": 2
+}, {
+  "id": 5,
+  "name": "T05",
+  "disciplineId": 3
+}, {
+  "id": 6,
+  "name": "T06",
+  "disciplineId": 3
+}, {
+  "id": 7,
+  "name": "T07",
+  "disciplineId": 5
+}, {
+  "id": 8,
+  "name": "T08",
+  "disciplineId": 2
+}, {
+  "id": 9,
+  "name": "T09",
+  "disciplineId": 5
+}]
+
 const seasons = [{
   "year": 0,
   "coaches": [{

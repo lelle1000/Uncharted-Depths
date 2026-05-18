@@ -1,4 +1,3 @@
-
 const locations = [{
   "id": 1,
   "name": "L01"
