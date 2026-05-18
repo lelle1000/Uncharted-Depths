@@ -115,3 +115,21 @@ seasonButtons.forEach(btn => btn.addEventListener("click", () => {
     }
 
 }))
+
+// Typewriter for pirate
+
+let storyPart1 = "";
+let storyPart2 = "";
+
+let storypart1Array = storyPart1.split("")
+let storypart2Array = storyPart2.split("")
+let currentLetter = 0;
+
+const TypeWriter = setInterval(() => {
+    loadingSmsP.textContent += storyPart1[currentLetter]
+    currentLetter++
+
+    if (currentLetter === firstMessageSplit.length) {
+        clearInterval(smsInterval)
+    }
+}, 150)
