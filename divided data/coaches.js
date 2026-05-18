@@ -1,45 +1,83 @@
 const coaches = [{
   "id": 1,
   "name": "C01",
-  "skillId": 5
+  "skillId": 3
 }, {
   "id": 2,
   "name": "C02",
-  "skillId": 1
+  "skillId": 5
 }, {
   "id": 3,
   "name": "C03",
-  "skillId": 5
+  "skillId": 4
 }, {
   "id": 4,
   "name": "C04",
-  "skillId": 1
+  "skillId": 3
 }, {
   "id": 5,
   "name": "C05",
-  "skillId": 5
+  "skillId": 3
 }, {
   "id": 6,
   "name": "C06",
-  "skillId": 3
+  "skillId": 1
 }, {
   "id": 7,
   "name": "C07",
-  "skillId": 1
+  "skillId": 2
 }, {
   "id": 8,
   "name": "C08",
-  "skillId": 2
+  "skillId": 5
 }, {
   "id": 9,
   "name": "C09",
-  "skillId": 4
+  "skillId": 2
 }, {
   "id": 10,
   "name": "C10",
-  "skillId": 4
+  "skillId": 5
 }, {
   "id": 11,
   "name": "C11",
-  "skillId": 3
+  "skillId": 4
+}]
+
+const trainers = [{
+  "id": 1,
+  "name": "T01",
+  "disciplineId": 2
+}, {
+  "id": 2,
+  "name": "T02",
+  "disciplineId": 4
+}, {
+  "id": 3,
+  "name": "T03",
+  "disciplineId": 2
+}, {
+  "id": 4,
+  "name": "T04",
+  "disciplineId": 2
+}, {
+  "id": 5,
+  "name": "T05",
+  "disciplineId": 3
+}, {
+  "id": 6,
+  "name": "T06",
+  "disciplineId": 3
+}, {
+  "id": 7,
+  "name": "T07",
+  "disciplineId": 5
+}, {
+  "id": 8,
+  "name": "T08",
+  "disciplineId": 2
+}, {
+  "id": 9,
+  "name": "T09",
+  "disciplineId": 5
 }]

@@ -1,19 +1,19 @@
 const trainers = [{
   "id": 1,
   "name": "T01",
-  "disciplineId": 5
+  "disciplineId": 2
 }, {
   "id": 2,
   "name": "T02",
-  "disciplineId": 3
+  "disciplineId": 4
 }, {
   "id": 3,
   "name": "T03",
-  "disciplineId": 5
+  "disciplineId": 2
 }, {
   "id": 4,
   "name": "T04",
-  "disciplineId": 1
+  "disciplineId": 2
 }, {
   "id": 5,
   "name": "T05",
@@ -21,7 +21,7 @@ const trainers = [{
 }, {
   "id": 6,
   "name": "T06",
-  "disciplineId": 4
+  "disciplineId": 3
 }, {
   "id": 7,
   "name": "T07",
@@ -29,7 +29,7 @@ const trainers = [{
 }, {
   "id": 8,
   "name": "T08",
-  "disciplineId": 3
+  "disciplineId": 2
 }, {
   "id": 9,
   "name": "T09",
