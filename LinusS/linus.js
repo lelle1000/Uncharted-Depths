@@ -1,6 +1,7 @@
 function ScoreboardParticipantsAndAverageScore(disciplineId, seasonId) {
     let ParticipantAndScore = []
     let averageScore;
+    let participantName;
 
     let disciplineIdNumb = Number(disciplineId) // Kan använda == men lättare att fatta att dataset i html bara extraherar strängar
     let seasonIdNumb = Number(seasonId)
@@ -10,33 +11,35 @@ function ScoreboardParticipantsAndAverageScore(disciplineId, seasonId) {
     let allParticipants = correctSeason.coaches.map(coachObj => coachObj.participantId)
     
     let compDays = correctSeason.competitionDays
-
+7
     for(let day of compDays) {
         let events = day.events
         let correctDisciplinesArrays = events.filter(event => event.disciplineId === disciplineIdNumb)
         
         let scores = correctDisciplinesArrays[0].scores
         for(let scoreObj of scores) {
-            if(allParticipants.includes(scoreObj.participantId) ) {
 
-                let existing = ParticipantAndScore.find(p => p.participantId == scoreObj.participantId)
+            let existing = ParticipantAndScore.find(p => p.participantId == scoreObj.participantId)
 
-                if(existing) {
-                    existing.totalScore += scoreObj.score
-                    existing.matchesPlayed += 1
-                } else {
-                    ParticipantAndScore.push({
-                        participantId: scoreObj.participantId,
-                        totalScore: scoreObj.score,
-                        matchesPlayed: 1
-                    })
-                }
-            } 
+            if(existing) {
+                existing.totalScore += scoreObj.score
+                existing.matchesPlayed += 1
+            } else {
+                ParticipantAndScore.push({
+                    participantId: scoreObj.participantId,
+                    totalScore: scoreObj.score,
+                    matchesPlayed: 1
+                })
+            }
         }
     }   
 
     for(let participant of ParticipantAndScore) {
+
+        let correctParticipant = participants.find(p => p.id == participant.participantId)
+
         participant.averageScore = Math.round(participant.totalScore / participant.matchesPlayed)
+        participant.name = correctParticipant.name
         delete participant.totalScore
         delete participant.matchesPlayed
         
@@ -54,8 +57,8 @@ function updateScoreboard() {
 
     for(let obj of arrayWithScoreAndParticipantId) {
         
-        let creaturePlacement = arrayWithScoreAndParticipantId.indexOf(obj) + 1
-        let creatureName = "Hasse"
+        let creaturePlacement = arrayWithScoreAndParticipantId.indexOf(obj) + 1     
+        let creatureName = obj.name
         let creaturePoints = obj.averageScore
 
         creatureScoreboardStats.innerHTML += `
