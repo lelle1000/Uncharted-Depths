@@ -1,10 +1,10 @@
 @font-face {
-    font-family: titleFont;
+    font-family: "titleFont";
     src: url(../Fonts/Pirata_One/PirataOne-Regular.ttf);
 }
 
 @font-face {
-    font-family: textFont;
+    font-family: "textFont";
     src: url(../Fonts/Piazzolla/Piazzolla-VariableFont_opsz\,wght.ttf);
 }
 
@@ -32,7 +32,6 @@
 #storyText {
     font-family: textFont;
 }
-
 
 /* /////// */
 
@@ -153,4 +152,46 @@ body {
 .graphTitle {
     color: #C2AD89;
     padding-left: 20px;
+}
+
+
+#creditsPage {
+    background-image: url(../images/creditsPage.png);
+    height: 100vh;
+    width: 100vw;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#containerCredits {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+#containerCredits h1 {
+    font-family: "titleFont";
+    color: #A2844F;
+    font-size: 50px;
+}
+
+.textDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.textDiv h2 {
+    font-family: "titleFont";
+    color: #A2844F;
+
+
+}
+
+.textDiv p {
+    font-family: "textFont";
 }
