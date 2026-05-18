@@ -99,6 +99,11 @@ let selectedSeason;
 disciplineButtons.forEach(btn => btn.addEventListener("click", () => {
     selectedDiscipline = btn.dataset.disciplineid;
     console.log(selectedDiscipline);
+
+    disciplineButtons.forEach(button => {
+        button.classList.remove("clickedDisciplineAndButton")
+        btn.classList.add("clickedDisciplineAndButton")
+    })
     
     if(selectedSeason) {
         updateScoreboard()
@@ -110,6 +115,12 @@ disciplineButtons.forEach(btn => btn.addEventListener("click", () => {
 seasonButtons.forEach(btn => btn.addEventListener("click", () => {
     selectedSeason = btn.dataset.currentseason;
     console.log(selectedSeason);
+
+    seasonButtons.forEach(button => {
+        button.classList.remove("clickedDisciplineAndButton")
+        btn.classList.add("clickedDisciplineAndButton")
+    })
+
     if(selectedDiscipline) {
         updateScoreboard()
     }
