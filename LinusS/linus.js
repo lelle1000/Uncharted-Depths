@@ -114,6 +114,8 @@ storyModeButton.addEventListener("click", () => {
         firstPage.classList.remove("fadePageBlack")
         storyPage.classList.add("fadeToNormal")
         waveSound.play()
+        waveSound.volume = 0.5
+        pirateStory.play()
     }, 7000 )
 })
 
@@ -174,4 +176,4 @@ const TypeWriter = setInterval(() => {
         clearInterval(TypeWriter)
         skullJaw.classList.remove("animation")
     }
-}, 150)
+}, 95)

@@ -25,11 +25,11 @@ body {
 }
 
 .fadePageBlack {
-    animation: fadePageToBlack 7s forwards;
+    animation: fadePageToBlack 7s ease-in forwards;
 }
 
 .fadeToNormal {
-    animation: fadePageToNormal 7s forwards;
+    animation: fadePageToNormal 7s ease-out forwards;
 }
 
 #firstPage {
