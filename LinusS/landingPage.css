@@ -25,11 +25,11 @@ body {
 }
 
 .fadePageBlack {
-    animation: fadePageToBlack 7s ease-in forwards;
+    animation: fadePageToBlack 6s ease-in forwards;
 }
 
 .fadeToNormal {
-    animation: fadePageToNormal 7s ease-out forwards;
+    animation: fadePageToNormal 6s ease-out forwards;
 }
 
 #firstPage {
@@ -58,6 +58,11 @@ body {
     font-weight: 400;
     background: none;
     border: 0;
+}
+
+.firstPageButtons:hover {
+    cursor: pointer;
+    background-color: #6D3A1847;
 }
 
 #firstPageItemContainer {

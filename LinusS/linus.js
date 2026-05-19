@@ -116,29 +116,19 @@ storyModeButton.addEventListener("click", () => {
         waveSound.play()
         waveSound.volume = 0.5
         pirateStory.play()
-
-        let storyPart1 = "The story begins in the 1600s, when the pirate fleet Royal Fortune flees from the British East India Company. In a desperate attempt to escape, they sail into a violent storm, but are instead pulled into a massive whirlpool and vanish without a trace in the depths of the ocean. From the world’s perspective, the pirates are presumed dead, and over time the event becomes nothing more than a forgotten footnote in history. More than 450 years later, in 2104, a research submersible discovers a mysterious underwater cave containing an enormous energy source. When the expedition enters the cave, they end up in the same supernatural place as the pirates.";
-        let storyPart2 = "The pirates had survived inside a gigantic underwater cavern with five colored portals leading to different dangerous and strange worlds filled with monsters and unknown environments. After heavy losses, they learn to survive, tame creatures, and eventually build a functioning society, where an arena with monster battles becomes the center of culture and economy. When the modern expedition arrives, the group is split up and enters different portals. In one of the worlds, the protagonist ends up in a timeless system where people from different eras are trapped in an arena. To return, they must win three matches in a row, but each loss resets their progress. The story ends with the realization that escape may take an extremely long time—but also with hope of understanding the system and one day finding a way back.";
-        const skullJaw = document.querySelector(".pirateJaw")
-        let storyTextElement = document.querySelector(".storyText")
-
-        let storypart1Array = storyPart1.split("")
-        let storypart2Array = storyPart2.split("")
-        let currentLetter = 0;
-
-        const TypeWriter = setInterval(() => {
-            storyTextElement.textContent += storypart1Array[currentLetter]
-            currentLetter++
-
-            if (currentLetter === storypart1Array.length) {
-                clearInterval(TypeWriter)
-                skullJaw.classList.remove("animation")
-            }
-        }, 70)
-
-    }, 7000 )
+    }, 6000 )
 })
 
+creditsButton.addEventListener("click", () => {
+    firstPage.classList.add("fadePageBlack")
+    setTimeout(() => {
+        document.body.style.backgroundColor = "#04080b"
+        firstPage.classList.add("hide")
+        creditsPage.classList.remove("hide")
+        firstPage.classList.remove("fadePageBlack")
+        creditsPage.classList.add("fadeToNormal")
+    }, 6000 )
+})
 
 let disciplineButtons = [fightingButton, raceButton, hidenseekButton, mazeButton, huntButton]
 let seasonButtons = [season1, season2, season3, season4, season5, season6, season7, season8, season9, season10]
