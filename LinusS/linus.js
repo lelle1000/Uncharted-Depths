@@ -116,9 +116,19 @@ storyModeButton.addEventListener("click", () => {
         waveSound.play()
         waveSound.volume = 0.5
         pirateStory.play()
-    }, 7000 )
+    }, 6000 )
 })
 
+creditsButton.addEventListener("click", () => {
+    firstPage.classList.add("fadePageBlack")
+    setTimeout(() => {
+        document.body.style.backgroundColor = "#04080b"
+        firstPage.classList.add("hide")
+        creditsPage.classList.remove("hide")
+        firstPage.classList.remove("fadePageBlack")
+        creditsPage.classList.add("fadeToNormal")
+    }, 6000 )
+})
 
 let disciplineButtons = [fightingButton, raceButton, hidenseekButton, mazeButton, huntButton]
 let seasonButtons = [season1, season2, season3, season4, season5, season6, season7, season8, season9, season10]
