@@ -72,7 +72,7 @@ function updateScoreboard() {
 
 function getParticipantSkills(participantId, seasonId) {
 
-    let currentPlayer = {
+    let currentPlayerSkills = {
         skills: {
             S01Strength: 0,
             S02Speed: 0,
@@ -83,18 +83,57 @@ function getParticipantSkills(participantId, seasonId) {
         playerId: participantId
     }
 
+    let currentPlayerPointsInDisciplines = {
+        Maze: 0,
+        Hunt: 0,
+        HideNSeek: 0,
+        Race: 0,
+        Fighting: 0
+    }
+
+    let allParticipantsDisciplineAndSkillTotalScore = {};
+
     let allDisciplines = [1, 2, 3, 4, 5]
 
-    let allAverageScoresForAllDisciplines = []
+    let allAverageScoresForAllDisciplines = {}
+
     let correctSeason = seasons.find(season => season.year == seasonId)
 
     for(let discipline of allDisciplines) {
-        allAverageScoresForAllDisciplines.push(ScoreboardParticipantsAndAverageScore(discipline, seasonId))
+        if(discipline == 1) {
+            allAverageScoresForAllDisciplines.Maze = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
+        } else if (discipline == 2) {
+            allAverageScoresForAllDisciplines.Hunt = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
+        } else if (discipline == 3) {
+            allAverageScoresForAllDisciplines.HideNSeek = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
+        } else if (discipline == 4) {
+            allAverageScoresForAllDisciplines.Race = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
+        } else {
+            allAverageScoresForAllDisciplines.Fighting = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
+        }
     }
+
+    let highestScore = -Infinity;
+    let lowestScore = Infinity;
+
+    for (let discipline in allAverageScoresForAllDisciplines) {
+        for (let playerObj of allAverageScoresForAllDisciplines[discipline]) {
+
+            if(playerObj.participantId == participantId) {
+                currentPlayerPointsInDisciplines[discipline] = playerObj.averageScore
+            }
+
+            
+            
+        }
+    }
+
     console.log(allAverageScoresForAllDisciplines);
-    
+    console.log(currentPlayerPointsInDisciplines);
+
 
     
+    return currentPlayerSkills
 
 }
 
