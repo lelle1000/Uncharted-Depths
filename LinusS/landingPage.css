@@ -253,7 +253,7 @@ body {
 }
 
 .animation {
-    animation: MoveJaw 0.2s infinite ease-in-out alternate;
+    animation: MoveJaw 0.15s infinite ease-in-out alternate;
 }
 
 @keyframes MoveJaw {

@@ -134,7 +134,7 @@ storyModeButton.addEventListener("click", () => {
                 clearInterval(TypeWriter)
                 skullJaw.classList.remove("animation")
             }
-        }, 60)
+        }, 70)
 
     }, 7000 )
 })
