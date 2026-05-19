@@ -6,30 +6,30 @@ body {
 
 @keyframes fadePageToBlack {
     0% {
-        opacity: 0;
+        filter: brightness(1);
     }
 
     100% {
-        opacity: 1;
+        filter: brightness(0);
     }
 }
 
 @keyframes fadePageToNormal {
     0% {
-        opacity: 1;
+        filter: brightness(0);
     }
 
     100% {
-        opacity: 0;
+        filter: brightness(1);
     }
 }
 
-.FadePageBlack {
-    animation: fadePageToBlack 5s forwards;
+.fadePageBlack {
+    animation: fadePageToBlack 7s forwards;
 }
 
-.fadeToNoraml {
-    animation: fadePageToNormal 5s forwards;
+.fadeToNormal {
+    animation: fadePageToNormal 7s forwards;
 }
 
 #firstPage {

@@ -3,13 +3,12 @@ function ScoreboardParticipantsAndAverageScore(disciplineId, seasonId) {
     let averageScore;
     let participantName;
 
+    let allParticipants = participants.map(participant => participant.Id)
+
     let disciplineIdNumb = Number(disciplineId)
     let seasonIdNumb = Number(seasonId)
 
     let correctSeason = seasons.find(obj => obj.year === seasonIdNumb)
-
-    let allParticipants = participants.map(participant => participant.Id)
-    
     let compDays = correctSeason.competitionDays
 
     for(let day of compDays) {
@@ -107,14 +106,15 @@ let creatureScoreboardStats = document.querySelector("#creatureScoreboardStats")
 let pages = [firstPage, creditsPage, storyPage, portalPage, landingPage]
 
 storyModeButton.addEventListener("click", () => {
-    firstPage.classList.add("hide")
-
+    firstPage.classList.add("fadePageBlack")
     subSound.play()
     setTimeout(() => {
-
-        storyPage.classList.add("")
+        firstPage.classList.add("hide")
+        storyPage.classList.remove("hide")
+        firstPage.classList.remove("fadePageBlack")
+        storyPage.classList.add("fadeToNormal")
         waveSound.play()
-    }, 9000 )
+    }, 7000 )
 })
 
 
