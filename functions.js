@@ -7,21 +7,3 @@ function revealCurrentPage(page) {
         }
     })
 }
-
-
-storyModeButton.addEventListener(e =>{
-    
-    firstPage.classList.add("hide")
-    storyPage.classList.remove("hide")
-
-})
-
-// function fadePage(currentPage, nextPage) {
-//     if(currentPage == "storyPage"){
-//         storyModeButton.addEventListener()
-
-//     }
-
-    
-
-// }
