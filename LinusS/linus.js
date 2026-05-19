@@ -3,7 +3,7 @@ function ScoreboardParticipantsAndAverageScore(disciplineId, seasonId) {
     let averageScore;
     let participantName;
 
-    let allParticipants = participants.map(participant => participant.Id)
+    let allParticipants = participants.map(player => player.id)
 
     let disciplineIdNumb = Number(disciplineId)
     let seasonIdNumb = Number(seasonId)
@@ -69,6 +69,36 @@ function updateScoreboard() {
         `
     }
 }
+
+function getParticipantSkills(participantId, seasonId) {
+
+    let currentPlayer = {
+        skills: {
+            S01Strength: 0,
+            S02Speed: 0,
+            S03Knowledge: 0,
+            S04Camoflauge: 0,
+            S05Endurance: 0,
+        },
+        playerId: participantId
+    }
+
+    let allDisciplines = [1, 2, 3, 4, 5]
+
+    let allAverageScoresForAllDisciplines = []
+    let correctSeason = seasons.find(season => season.year == seasonId)
+
+    for(let discipline of allDisciplines) {
+        allAverageScoresForAllDisciplines.push(ScoreboardParticipantsAndAverageScore(discipline, seasonId))
+    }
+    console.log(allAverageScoresForAllDisciplines);
+    
+
+    
+
+}
+
+getParticipantSkills(170, 5)
 
 let subSound = document.querySelector("#subSound")
 let waveSound = document.querySelector("#waveSound")
