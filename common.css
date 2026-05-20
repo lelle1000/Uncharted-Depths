@@ -21,3 +21,12 @@
 .text {
     font-family: textFont;
 }
+
+#continueStoryContainer{
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    box-sizing: border-box;
+    padding: 40px;
+    width: 100%;
+}

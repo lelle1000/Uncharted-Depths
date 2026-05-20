@@ -15,9 +15,9 @@
 
     <audio id="waveSound" src="./audioFile/WaveSound.mp3"></audio>
     <audio id="subSound" src="./audioFile/SubmarineSonar.mp3"></audio>
-    <audio id="pirateStory" src="./audioFile/pirateAudio.mp3"></audio>
+    <audio id="pirateStory" src="./audioFile/audio_part1.mp3"></audio>
 
-    <main id="firstPage" class="">
+    <main id="firstPage" class="hide">
         <div id="firstPageItemContainer">
             <img id="firstPageLogo" src="./images/Logo.png" alt="">
             <button id="storyModeButton" class="firstPageButtons title">Story Mode</button>
@@ -34,11 +34,9 @@
             <img src="./images/pirateJaw.png" alt="" class="pirateJaw animation">
         </div>
         <div class="storyText"></div>
-
-
-
-
-
+        <div id="continueStoryContainer">
+            <button id="continueButtonStory" class="firstPageButtons title hide">Continue</button>
+        </div>
     </main>
 
     <main id="portalPage" class="hide">
@@ -49,7 +47,7 @@
         <div class="storyText"></div>
     </main>
 
-    <main id="landingPageContainer" class="hide">
+    <main id="landingPageContainer" class="">
         <div id="topSectionLandingPage">
             <div id="topCreaturesContainer">
 
@@ -183,6 +181,7 @@
     </main>
 
     <script src="d3.v7.min.js"></script>
+    <script src="Frontend/dataset.v2.js"></script>
     <script src="functions.js"></script>
     <script src="classes.js"></script>
     <script src="LinusS/linus.js"></script>

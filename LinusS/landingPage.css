@@ -6,30 +6,30 @@ body {
 
 @keyframes fadePageToBlack {
     0% {
-        opacity: 0;
+        filter: brightness(1);
     }
 
     100% {
-        opacity: 1;
+        filter: brightness(0);
     }
 }
 
 @keyframes fadePageToNormal {
     0% {
-        opacity: 1;
+        filter: brightness(0);
     }
 
     100% {
-        opacity: 0;
+        filter: brightness(1);
     }
 }
 
-.FadePageBlack {
-    animation: fadePageToBlack 5s forwards;
+.fadePageBlack {
+    animation: fadePageToBlack 5s ease-in forwards;
 }
 
-.fadeToNoraml {
-    animation: fadePageToNormal 5s forwards;
+.fadeToNormal {
+    animation: fadePageToNormal 5s ease-out forwards;
 }
 
 #firstPage {
@@ -58,6 +58,11 @@ body {
     font-weight: 400;
     background: none;
     border: 0;
+}
+
+.firstPageButtons:hover {
+    cursor: pointer;
+    background-color: #6D3A1847;
 }
 
 #firstPageItemContainer {
@@ -253,7 +258,7 @@ body {
 }
 
 .animation {
-    animation: MoveJaw 0.25s infinite ease-in-out alternate;
+    animation: MoveJaw 0.15s infinite ease-in-out alternate;
 }
 
 @keyframes MoveJaw {
