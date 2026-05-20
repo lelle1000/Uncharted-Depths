@@ -11,7 +11,7 @@
 
 <body>
 
-    <main id="storyPage">
+    <main id="storyPage" class="hide">
         <div id="pirateSkull">
             <img src="./images/pirateFace.png" alt="" class="pirateSkull">
             <img src="./images/pirateJaw.png" alt="" class="pirateJaw animation">
@@ -23,7 +23,7 @@
 
 
     <main id="creditsPage" class="hide">
-        <img src="../images/backArrow.png" id="backArrow" alt="">
+        <img src="../images/backArrow.png" class="backArrow" id="backArrowCredits" alt="">
 
 
         <div id="containerCredits">
@@ -61,34 +61,19 @@
 
 
 
-    STORY PAGE
-    <main id="storyPage">
-        <div id="storyDiv">
-            <p id="storyText">Bla bla bla story</p>
-        </div>
 
-    </main>
-
-    <!-- MONSTER CARDS PAGE
     <main id="comparePage">
-        <img src="../images/backArrow.png" id="backArrow" alt="">
+        <img src="../images/backArrow.png" id="backArrowCompare" class="backArrow" alt="">
         <div id="containerParticipants">
 
             <h2 class="containerTitle">Participants</h2>
             <input type="text" id="inputIdField" placeholder="Search Monster Id">
 
             <div id="containerAllMonstersBox">
-                <div class="monsterCard">
-                    <div class="colorBar" id="colorBar1"></div>
+                <!-- <div class="monsterCard">
                 </div>
-                <div class="monsterCard"></div>
-                <div class="monsterCard"></div>
-                <div class="monsterCard"></div>
-                <div class="monsterCard"></div>
-                <div class="monsterCard"></div>
-                <div class="monsterCard"></div>
-                <div class="monsterCard"></div>
-                <div class="monsterCard"></div>
+                <div class="monsterCard"></div> -->
+
 
 
             </div>
@@ -115,7 +100,8 @@
 
     <script src="../Frontend/dataset.v2.js"></script>
     <script src="../d3.v7.min.js"></script>
-    <script src="saraK.js"></script>
+    <script type="module" src="saraK.js"></script>
+    <script type="module" src="monsterClass.js"></script>
 </body>
 
 </html>

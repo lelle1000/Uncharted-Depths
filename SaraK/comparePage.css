@@ -48,13 +48,15 @@ body {
     background-color: rgba(47, 65, 67, 0.7);
     background-blend-mode: lighten;
     padding: 10px 60px;
+    height: 100vh;
 }
 
-#backArrow {
+.backArrow {
     height: 30px;
     position: absolute;
     left: 20px;
     top: 20px;
+    z-index: 9999;
 }
 
 #containerParticipants {
@@ -80,6 +82,7 @@ body {
     flex-wrap: wrap;
     overflow: scroll;
     gap: 15px;
+    height: 100vh;
 }
 
 .chosenMonsterCard {
@@ -104,8 +107,12 @@ body {
 }
 
 .containerTitle {
-    font-size: 32px;
+
+
+    font-size: 34px;
     color: #C2AD89;
+    font-family: titleFont;
+    margin: 0px;
 }
 
 #containerButtons {
@@ -217,4 +224,35 @@ body {
 
 .textDiv p {
     font-family: "textFont";
+}
+
+.monsterCard {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.monsterName {
+    color: #C2AD89;
+    font-family: titleFont;
+    font-size: 20px;
+}
+
+.monsterImage {
+    height: 80px;
+}
+
+.colorLine {
+    height: 5px;
+    width: 70%;
+
+}
+
+.idName {
+    color: #C2AD89;
+    font-family: textFont;
+}
+
+.hideCard {
+    display: none;
 }
