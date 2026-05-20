@@ -134,6 +134,7 @@ ClearSectionClickEvent();
 BackButtonClickEvent();
 SelectRandomMonsterButton();
 GetArrayFromChosenCards();
+GetSeasonFromDropown();
 
 //filtrera säsong 1
 //filtrera alla participants 206
@@ -171,6 +172,18 @@ function GetArrayFromChosenCards() {
         arrayToCompare.push(text)
         console.log(arrayToCompare);
     });
+}
+
+function GetSeasonFromDropown() {
+    let seasonsDropDown = document.getElementById("seasonsDropDown");
+    let options = document.querySelectorAll("#seasonsDropDown option")
+
+    options.forEach(option => {
+        option.addEventListener("click", event => {
+            let chosenSeasonToCompare = event.target.value;
+            console.log(chosenSeasonToCompare);
+        })
+    })
 }
 
 
