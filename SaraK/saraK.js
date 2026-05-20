@@ -14,10 +14,10 @@ function ClearSectionClickEvent() {
         containerAllMonstersBox.forEach(card => {
             if (card.classList.contains("chosenMonsterCard")) {
                 card.classList.toggle("chosenMonsterCard")
+                GetArrayFromChosenCards()
             }
         })
     })
-
 }
 
 
@@ -36,15 +36,17 @@ function SelectRandomMonsterButton() {
         chosenCardCounter = 0;
         let allMonsterCards = document.querySelectorAll("#containerAllMonstersBox .monsterCard")
         allMonsterCards.forEach(card => {
-            console.log(card.classList)
             card.classList.remove("chosenMonsterCard")
+            // GetArrayFromChosenCards()
         })
         for (let i = 0; i < 2; i++) {
             let randomNumber = RandomNumber()
             allMonsterCards[randomNumber]
             allMonsterCards[randomNumber].classList.add("chosenMonsterCard")
+
             chosenCardCounter++;
         }
+        GetArrayFromChosenCards()
     })
 }
 
@@ -57,7 +59,6 @@ function createAllMonsters(monstersArray) {
 
         let containerAllMonstersBoxId = document.getElementById("containerAllMonstersBox")
         let monster1 = new monsterCardClass(monstersArray[i]);
-        console.log(monster1)
 
         let monsterCard = document.createElement("div");
         monsterCard.classList.add("monsterCard")
@@ -83,7 +84,6 @@ function InputFieldClickEvent() {
         if (event.key == "Enter") {
 
             let allMonsterCards = document.querySelectorAll("#containerAllMonstersBox .monsterCard")
-            console.log(allMonsterCards)
             allMonsterCards.forEach(monster => {
 
                 let spanId = monster.querySelector("#monsterId")
@@ -102,8 +102,6 @@ function InputFieldClickEvent() {
                 }
             })
         }
-
-
     })
 
 }
@@ -115,11 +113,13 @@ function ChosenCardClickEvent() {
 
             if (chosenCardCounter < 2 && (!card.classList.contains("chosenMonsterCard"))) {
                 card.classList.add("chosenMonsterCard")
+                GetArrayFromChosenCards()
                 chosenCardCounter++;
             }
 
             else if (chosenCardCounter <= 2 && card.classList.contains("chosenMonsterCard")) {
                 card.classList.remove("chosenMonsterCard")
+                GetArrayFromChosenCards()
                 chosenCardCounter--;
             }
 
@@ -133,6 +133,7 @@ InputFieldClickEvent();
 ClearSectionClickEvent();
 BackButtonClickEvent();
 SelectRandomMonsterButton();
+GetArrayFromChosenCards();
 
 //filtrera säsong 1
 //filtrera alla participants 206
@@ -153,7 +154,6 @@ function getMonsterAverageScore(requestedSeason, requestedParticipantId) {
     //     score: score.score
     // }))
 
-    console.log(pointsArrayForId)
     totalScore = pointsArrayForId.reduce((sum, s) => sum + s.score, 0)
     totalScore = Math.round(totalScore / pointsArrayForId.length);
 
@@ -162,8 +162,20 @@ function getMonsterAverageScore(requestedSeason, requestedParticipantId) {
 
 }
 
-function CreateScoresChart(compareScoreArray) {
+//hämta id,färg  från chosen cards
+function GetArrayFromChosenCards() {
+    let arrayToCompare = []
+    let activecards = document.querySelectorAll("#containerAllMonstersBox .monsterCard.chosenMonsterCard")
+    activecards.forEach(card => {
+        const text = Number(card.querySelector(".idName #monsterId").textContent);
+        arrayToCompare.push(text)
+        console.log(arrayToCompare);
+    });
+}
 
+
+//skapa svg charten
+function CreateScoresChart(compareScoreArray) {
 
 
 }
