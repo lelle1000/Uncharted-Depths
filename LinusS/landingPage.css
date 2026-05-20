@@ -89,7 +89,7 @@ body {
 
 #topSectionLandingPage {
     height: 34vh;
-    background-color: aqua;
+    background-color: white;
 }
 
 #bottomSectionLandingPage {
@@ -290,4 +290,41 @@ body {
     background-color: #00173A;
     border: 1px solid #FFA300;
     box-shadow: 0 0 5px white;
+}
+
+
+
+#topCreatureStats{
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+#specialtyContainer {
+    height: 234px;
+    width: 500px;
+    border-radius: 20px;
+    display: grid;
+    overflow: hidden;
+    grid-template-columns: 1fr 1fr;
+    border: 5px solid #896241
+    
+}
+
+#monsterPic {
+    background: rgba(11, 20, 34, 0.76);
+}
+
+#rates{
+    background-image: url(../images/scoreaboardBackground.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: green;
+    display: grid;
+    grid-template-rows: 1fr 80px 1fr;
+}
+
+#rates div{
+    border-bottom: 2px solid #896241
 }
