@@ -72,72 +72,106 @@ function updateScoreboard() {
 
 function getParticipantSkills(participantId, seasonId) {
 
-    let currentPlayerSkills = {
-        skills: {
-            S01Strength: 0,
-            S02Speed: 0,
-            S03Knowledge: 0,
-            S04Camoflauge: 0,
-            S05Endurance: 0,
-        },
-        playerId: participantId
-    }
-
-    let currentPlayerPointsInDisciplines = {
-        Maze: 0,
-        Hunt: 0,
-        HideNSeek: 0,
-        Race: 0,
-        Fighting: 0
-    }
-
-    let allParticipantsDisciplineAndSkillTotalScore = {};
-
-    let allDisciplines = [1, 2, 3, 4, 5]
+    let highestSkillScore = -Infinity;
+    let lowestSkillScore = Infinity;
 
     let allAverageScoresForAllDisciplines = {}
+    let allDisciplines = [1, 2, 3, 4, 5]
 
     let correctSeason = seasons.find(season => season.year == seasonId)
 
     for(let discipline of allDisciplines) {
-        if(discipline == 1) {
-            allAverageScoresForAllDisciplines.Maze = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
+        if (discipline == 1) {
+            allAverageScoresForAllDisciplines.Maze1 = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
         } else if (discipline == 2) {
-            allAverageScoresForAllDisciplines.Hunt = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
+            allAverageScoresForAllDisciplines.Hunt2 = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
         } else if (discipline == 3) {
-            allAverageScoresForAllDisciplines.HideNSeek = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
+            allAverageScoresForAllDisciplines.HideNSeek3 = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
         } else if (discipline == 4) {
-            allAverageScoresForAllDisciplines.Race = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
+            allAverageScoresForAllDisciplines.Race4 = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
         } else {
-            allAverageScoresForAllDisciplines.Fighting = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
-        }
-    }
-
-    let highestScore = -Infinity;
-    let lowestScore = Infinity;
-
-    for (let discipline in allAverageScoresForAllDisciplines) {
-        for (let playerObj of allAverageScoresForAllDisciplines[discipline]) {
-
-            if(playerObj.participantId == participantId) {
-                currentPlayerPointsInDisciplines[discipline] = playerObj.averageScore
-            }
-
-            
-            
+            allAverageScoresForAllDisciplines.Fighting5 = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
         }
     }
 
     console.log(allAverageScoresForAllDisciplines);
-    console.log(currentPlayerPointsInDisciplines);
 
+    let allDisciplinesTotalSkillScore = {
+        Maze1: [],
+        Hunt2: [],
+        HideNSeek3: [],
+        Race4: [],
+        Fighting5: [],
+    };
 
+    for (let disciplineName in allAverageScoresForAllDisciplines) {
+        let disciplineId = Number(disciplineName[disciplineName.length - 1])
+        let disciplineObj = disciplines.find(obj => obj.id === disciplineId)
+
+        let participantsInCurrentDiscipline = allAverageScoresForAllDisciplines[disciplineName]
+
+        for (let participant of participantsInCurrentDiscipline) {
+            let skillScores = { participantId: participant.participantId}
+
+            for (let skillKey in disciplineObj.skillFactors) {
+                skillScores[skillKey] = participant.averageScore * disciplineObj.skillFactors[skillKey]
+            }
+            allDisciplinesTotalSkillScore[disciplineName].push(skillScores)
+        }
+    }
+
+    console.log(allDisciplinesTotalSkillScore);
+
+    let participantSkillSum = {}
+
+    for (let discipline in allDisciplinesTotalSkillScore) {
+        for (let participant of allDisciplinesTotalSkillScore[discipline]) {
+
+            if (!participantSkillSum[participant.participantId]) {
+                participantSkillSum[participant.participantId] = {}
+            }
+
+            for (let key in participant) {
+                if (key === "participantId") {
+                    continue
+                }
+                if (!participantSkillSum[participant.participantId][key]) {
+                    participantSkillSum[participant.participantId][key] = 0
+                }
+                participantSkillSum[participant.participantId][key] += participant[key]
+            }
+        }
+    }
+
+    console.log(participantSkillSum);
+
+    for (let participant in participantSkillSum) {
+        for (let skillKey in participantSkillSum[participant]) {
+            highestSkillScore = Math.max(highestSkillScore, participantSkillSum[participant][skillKey])
+            lowestSkillScore = Math.min(lowestSkillScore, participantSkillSum[participant][skillKey])
+        }
+    }
+    console.log(highestSkillScore);
+    console.log(lowestSkillScore);
+
+    let minSkillFactor = 10;
+    let maxSkillFactor = 20;
+
+    let skillScale = d3.scaleLinear()
+        .domain([lowestSkillScore, highestSkillScore])
+        .range([minSkillFactor, maxSkillFactor])
     
-    return currentPlayerSkills
+    let results = { participantId: participantId}
+
+    for (let skillKey in participantSkillSum[participantId]) {
+        results[skillKey] = Math.round(skillScale(participantSkillSum[participantId][skillKey]))
+    }
+    console.log(results);
+    
+    return results
 
 }
 
-getParticipantSkills(170, 5)
 
 let subSound = document.querySelector("#subSound")
 let waveSound = document.querySelector("#waveSound")
