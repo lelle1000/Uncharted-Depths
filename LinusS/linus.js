@@ -70,15 +70,9 @@ function updateScoreboard() {
     }
 }
 
-function getParticipantSkills(participantId, seasonId) {
-
-    let highestSkillScore = -Infinity;
-    let lowestSkillScore = Infinity;
-
+function getDisciplineScores(seasonId) {
     let allAverageScoresForAllDisciplines = {}
     let allDisciplines = [1, 2, 3, 4, 5]
-
-    let correctSeason = seasons.find(season => season.year == seasonId)
 
     for(let discipline of allDisciplines) {
         if (discipline == 1) {
@@ -94,8 +88,10 @@ function getParticipantSkills(participantId, seasonId) {
         }
     }
 
-    console.log(allAverageScoresForAllDisciplines);
+    return allAverageScoresForAllDisciplines
+}
 
+function calculateTotalSkillScoreOverDisciplines(allAverageScoresForAllDisciplines) {
     let allDisciplinesTotalSkillScore = {
         Maze1: [],
         Hunt2: [],
@@ -120,8 +116,10 @@ function getParticipantSkills(participantId, seasonId) {
         }
     }
 
-    console.log(allDisciplinesTotalSkillScore);
+    return allDisciplinesTotalSkillScore
+}
 
+function getCombinedSkillScorePerParticipant(allDisciplinesTotalSkillScore) {
     let participantSkillSum = {}
 
     for (let discipline in allDisciplinesTotalSkillScore) {
@@ -143,7 +141,12 @@ function getParticipantSkills(participantId, seasonId) {
         }
     }
 
-    console.log(participantSkillSum);
+    return participantSkillSum
+}
+
+function getSkillFactorForParticipant(participantId, participantSkillSum) {
+    let highestSkillScore = -Infinity;
+    let lowestSkillScore = Infinity;
 
     for (let participant in participantSkillSum) {
         for (let skillKey in participantSkillSum[participant]) {
@@ -151,8 +154,6 @@ function getParticipantSkills(participantId, seasonId) {
             lowestSkillScore = Math.min(lowestSkillScore, participantSkillSum[participant][skillKey])
         }
     }
-    console.log(highestSkillScore);
-    console.log(lowestSkillScore);
 
     let minSkillFactor = 10;
     let maxSkillFactor = 20;
@@ -166,12 +167,28 @@ function getParticipantSkills(participantId, seasonId) {
     for (let skillKey in participantSkillSum[participantId]) {
         results[skillKey] = Math.round(skillScale(participantSkillSum[participantId][skillKey]))
     }
-    console.log(results);
+
+    results["Strength"] = results["S01"]
+    results["Speed"] = results["S02"]
+    results["Knowledge"] = results["S03"]
+    results["Camoflauge"] = results["S04"]
+    results["Endurance"] = results["S05"]
+
+    for (let i = 0; i <= 5; i++) {
+        delete results[`S0${i}`]
+    }
     
     return results
-
 }
 
+function getParticipantSkills(participantId, seasonId) {
+    const disciplineScores = getDisciplineScores(seasonId)
+    const disciplineCombinedScores = calculateTotalSkillScoreOverDisciplines(disciplineScores)
+    const totalSkillSum = getCombinedSkillScorePerParticipant(disciplineCombinedScores)
+    return skillFactorForParticipant = getSkillFactorForParticipant(participantId, totalSkillSum)
+}
+
+console.log(getParticipantSkills(170, 5))
 
 let subSound = document.querySelector("#subSound")
 let waveSound = document.querySelector("#waveSound")
