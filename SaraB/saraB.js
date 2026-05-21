@@ -1,4 +1,34 @@
 
+
+
+
+class monsterCardClass {
+
+    constructor(data) {
+        this.name = data.name;
+        this.id = data.id;
+        this.color = colorGenerator();
+        this.imgUrl = randomPictureGenerator();
+    }
+
+}
+
+function colorGenerator() { //generera en färg till monster
+
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
+function randomPictureGenerator() { //generera en random monster URL
+    let monsterPicNum = Math.ceil(Math.random() * 3)
+    return `../images/monster${monsterPicNum}.png`
+}
+
+/////////////////////////////////////////////////
+
 let allPlayersAndScores = []
 let totalPlayerScore = []
 let allEvents = []
@@ -247,3 +277,76 @@ for (let player of topFivePlayers) {
 
 console.log(playerSpecialtyWins);
 
+
+
+
+
+function createAllMonsters(monstersArray) {
+    for (let i = 0; i < monstersArray.length; i++) {
+
+        let containerAllMonstersBoxId = document.getElementById("containerAllMonstersBox")
+        let monster1 = new monsterCardClass(monstersArray[i]);
+
+        let monsterCard = document.createElement("div");
+        monsterCard.classList.add("monsterCard")
+        monsterCard.innerHTML = `
+                       
+        <p class="monsterName">${monster1.name}</p>
+        <img src="${monster1.imgUrl}" class="monsterImage">
+        <div class="colorLine"> </div>
+        <p class="idName"> Id : <span id="monsterId">${monster1.id}</span></p>
+        `
+        let colorLine = monsterCard.querySelector(".colorLine");
+        colorLine.style.backgroundColor = `${monster1.color}`
+        containerAllMonstersBoxId.appendChild(monsterCard);
+
+    }
+}
+
+
+
+
+
+
+
+let topMonsters = topFivePlayers.map(player =>
+    participants.find(p => p.id === player.participantId)
+)
+
+createAllMonsters(topMonsters)
+let rankingDOM = document.getElementById("monsterRanking");
+let specialtyDOM = document.getElementById("specialty");
+let winRateDOM = document.getElementById("winRate");
+
+let monsterCards = document.querySelectorAll(".monsterCard")
+
+
+
+console.log(topMonsters);
+
+
+monsterCards.forEach(card => {
+
+    card.addEventListener("click", e => {
+
+        let id = card.querySelector(".idName span").textContent
+
+        let player = playerSpecialtyWins.find(
+            p => p.participantId == id
+        )
+
+        let index = topMonsters.findIndex(
+            m => m.id == id
+        )
+
+        rankingDOM.innerHTML = ""
+        specialtyDOM.innerHTML = ""
+        winRateDOM.innerHTML = ""
+
+        if (player) {
+            winRateDOM.innerHTML = `<p>${Math.round(player.winRate)}</p>`
+            specialtyDOM.innerHTML = `<p>${player.specialty}</p>`
+            rankingDOM.innerHTML = `<p>${index + 1}</p>`
+        }
+    })
+})

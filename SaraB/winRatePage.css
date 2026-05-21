@@ -1,4 +1,4 @@
-/* 
+
 #specialtyContainer {
     height: 290px;
     width: 500px;
@@ -26,4 +26,10 @@
 
 #rates div{
     border-bottom: 2px solid #896241
-} */
+}
+
+
+.child{
+    color: white;
+
+}
