@@ -47,29 +47,6 @@ function ScoreboardParticipantsAndAverageScore(disciplineId, seasonId) {
     return ParticipantAndScore
 }
 
-function updateScoreboard() {
-    creatureScoreboardStats.innerHTML = ""
-
-    let arrayWithScoreAndParticipantId = ScoreboardParticipantsAndAverageScore(selectedDiscipline, selectedSeason)
-
-    arrayWithScoreAndParticipantId.sort((a, b) => b.averageScore - a.averageScore)
-
-    for(let obj of arrayWithScoreAndParticipantId) {
-        
-        let creaturePlacement = arrayWithScoreAndParticipantId.indexOf(obj) + 1     
-        let creatureName = obj.name
-        let creaturePoints = obj.averageScore
-
-        creatureScoreboardStats.innerHTML += `
-            <div class="creatureScoreboard">
-                <p class="text">${creaturePlacement}</p>
-                <p class="text">${creatureName}</p>
-                <p class="text">${creaturePoints} Pts</p>
-            </div>
-        `
-    }
-}
-
 function getDisciplineScores(seasonId) {
     let allAverageScoresForAllDisciplines = {}
     let allDisciplines = [1, 2, 3, 4, 5]
@@ -188,7 +165,28 @@ function getParticipantSkills(participantId, seasonId) {
     return skillFactorForParticipant = getSkillFactorForParticipant(participantId, totalSkillSum)
 }
 
-console.log(getParticipantSkills(170, 5))
+function updateScoreboard() {
+    creatureScoreboardStats.innerHTML = ""
+
+    let arrayWithScoreAndParticipantId = ScoreboardParticipantsAndAverageScore(selectedDiscipline, selectedSeason)
+
+    arrayWithScoreAndParticipantId.sort((a, b) => b.averageScore - a.averageScore)
+
+    for(let obj of arrayWithScoreAndParticipantId) {
+        
+        let creaturePlacement = arrayWithScoreAndParticipantId.indexOf(obj) + 1     
+        let creatureName = obj.name
+        let creaturePoints = obj.averageScore
+
+        creatureScoreboardStats.innerHTML += `
+            <div class="creatureScoreboard">
+                <p class="text">${creaturePlacement}</p>
+                <p class="text">${creatureName}</p>
+                <p class="text">${creaturePoints} Pts</p>
+            </div>
+        `
+    }
+}
 
 let subSound = document.querySelector("#subSound")
 let waveSound = document.querySelector("#waveSound")
@@ -302,7 +300,6 @@ disciplineButtons.forEach(btn => btn.addEventListener("click", () => {
         updateScoreboard()
     }
 
-
 }))
 
 seasonButtons.forEach(btn => btn.addEventListener("click", () => {
@@ -320,3 +317,15 @@ seasonButtons.forEach(btn => btn.addEventListener("click", () => {
 
 }))
 
+let radarChartData = getParticipantSkills(170, 5)
+const radarChartLabels = ["Strength", "Speed", "Endurance", "Knowledge", "Camoflauge"]
+
+let svgHeightandWidth = 350;
+
+let svgContainer = d3.select("#radarChartContainer")
+    .append("svg")
+    .attr("width", svgHeightandWidth)
+    .attr("height", svgHeightandWidth)
+
+let cx = svgHeightandWidth / 2;
+let cy = svgHeightandWidth / 2;

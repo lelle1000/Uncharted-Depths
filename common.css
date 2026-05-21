@@ -30,3 +30,13 @@
     padding: 40px;
     width: 100%;
 }
+
+#radarChartContainer {
+    display: flex;
+    height: 400px;
+    width: 400px;
+    border: 1px solid black;
+    box-sizing: content-box;
+    justify-content: center;
+    align-items: center;
+}
