@@ -21,7 +21,7 @@
     background-size: cover;
     background-color: green;
     display: grid;
-    grid-template-rows: 1fr 80px 1fr;
+    grid-template-rows: 1fr 60px 1fr;
 }
 
 #rates div{
@@ -33,17 +33,30 @@
     display: flex;
     align-items: center;
     color: white;
+    justify-content: space-between;
+    padding: 0 15px 0 15px;
 
 }
 
 .child p{
     color: rgba(250, 223, 138, 0.60);
-    text-align: center;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
     line-height: 30px;
-    margin-left: 10px;
+}
+
+.child img{
+    width: 110px;
+    position: relative;
+}
+
+#smallRanking{
+      font-size: 16px;
+      position: absolute;
+      left: 431px;
+      color: white;
+      top: 34px;
 }
 
 #monsterPic{
@@ -69,3 +82,18 @@
     left: 77px;
 }
 
+
+div #winRate {
+    flex-direction: column;
+    align-self: center;
+    border-bottom: 0px;
+}
+
+#winRate p {
+    margin: 0;
+    font-size: 14px;
+}
+
+#procentualRate {
+    font-size: 20px !important;
+}

@@ -352,11 +352,17 @@ monsterCards.forEach(card => {
         if (player) {
             smallMonsterPic.innerHTML += `<img src="${monsterImage}">`
             rankMonsterName.textContent = monsterName
-            winRateDOM.innerHTML += `<p>winRate:<br>${Math.round(player.winRate)}</p>`
-            specialtyDOM.innerHTML += `<p>specialty:<br> ${player.specialty}</p>`
+            winRateDOM.innerHTML += `
+            <p>Win rate for all ${player.specialty} matches:</p>
+            <p id="procentualRate">${Math.round(player.winRate)}%</p>
+            `
+            specialtyDOM.innerHTML += `
+            <p>Specialty:</p>
+            <p>${player.specialty}</p>`
             rankingDOM.innerHTML += `
-                <img src="${../saraK/}
-                <p>Ranking:<br> ${index + 1}</p>
+            <p>Ranking:<br> ${index + 1}</p>
+            <img src="../images/rankingPic.png">
+            <p id="smallRanking">${index + 1}</p>
             `
         }
     })
