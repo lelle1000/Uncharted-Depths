@@ -7,15 +7,21 @@ let containerAllMonstersBox = document.querySelectorAll("#containerAllMonstersBo
 let chosenCardCounter = 0;
 
 
-class monsterCardClass {
+class MonsterCardClass {
+
+    static allMonsters = [];
 
     constructor(data) {
         this.name = data.name;
         this.id = data.id;
         this.color = colorGenerator();
         this.imgUrl = randomPictureGenerator();
-    }
 
+        MonsterCardClass.allMonsters.push(this);
+    }
+    static getAllMonsters() {
+        return MonsterCardClass.allMonsters;
+    }
 }
 
 function colorGenerator() { //generera en färg till monster
@@ -83,10 +89,12 @@ function RandomNumber() {
 }
 
 function CreateAllMonsters(monstersArray) {
+    let containerAllMonstersBoxId = document.getElementById("containerAllMonstersBox")
+    containerAllMonstersBoxId.innerHTML = ``
+
     for (let i = 0; i < monstersArray.length; i++) {
 
-        let containerAllMonstersBoxId = document.getElementById("containerAllMonstersBox")
-        let monster1 = new monsterCardClass(monstersArray[i]);
+        let monster1 = new MonsterCardClass(monstersArray[i]);
 
         let monsterCard = document.createElement("div");
         monsterCard.classList.add("monsterCard")
@@ -99,6 +107,32 @@ function CreateAllMonsters(monstersArray) {
         `
         let colorLine = monsterCard.querySelector(".colorLine");
         colorLine.style.backgroundColor = `${monster1.color}`
+        containerAllMonstersBoxId.appendChild(monsterCard);
+    }
+
+}
+
+function ShowAllMonsters() {
+    let containerAllMonstersBoxId = document.getElementById("containerAllMonstersBox")
+    containerAllMonstersBoxId.innerHTML = ``
+    let monstersArray = MonsterCardClass.getAllMonsters()
+
+    console.log(MonsterCardClass.getAllMonsters());
+    console.log(monstersArray)
+
+    for (let i = 0; i < monstersArray.length; i++) {
+
+        let monsterCard = document.createElement("div");
+        monsterCard.classList.add("monsterCard")
+        monsterCard.innerHTML = `
+                       
+        <p class="monsterName">${monstersArray[i].name}</p>
+        <img src="${monstersArray[i].imgUrl}" class="monsterImage">
+        <div class="colorLine"> </div>
+        <p class="idName"> Id : <span id="monsterId">${monstersArray[i].id}</span></p>
+        `
+        let colorLine = monsterCard.querySelector(".colorLine");
+        colorLine.style.backgroundColor = `${monstersArray[i].color}`
         containerAllMonstersBoxId.appendChild(monsterCard);
     }
 
@@ -209,7 +243,7 @@ function CompareCreatures() {
 
         let arrayFromChosenCardsIdAndColor = GetArrayFromChosenCards()
         let seasonFromDropDown = GetSeasonFromDropown()
-        let seasonFromDropDownNum = Number(seasonFromDropDown[seasonFromDropDown.length - 1])
+        let seasonFromDropDownNum = Number(seasonFromDropDown.split("season")[1])
         console.log(seasonFromDropDownNum)
         // getMonsterAverageScore(seasonFromDropDownNum, arrayFromChosenCardsIdAndColor)
         let arrayToCompare = getMonsterAverageScore(seasonFromDropDownNum, arrayFromChosenCardsIdAndColor)
@@ -237,6 +271,7 @@ function GetArrayFromChosenCards() {
 function GetSeasonFromDropown() {
     let seasonsDropDown = document.getElementById("seasonsDropDown");
     let chosenSeasonToCompare = seasonsDropDown.value;
+
     return chosenSeasonToCompare;
 }
 
@@ -300,6 +335,55 @@ function CreateChartSvg(compareScoreArray) {
 
 
 }
+
+function GetAllParticipantsForTheSeason() {
+    let seasonsDropDown = document.getElementById("seasonsDropDown");
+    seasonsDropDown.addEventListener("change", () => {
+        console.log("klick")
+        let chosenSeasonToCompare = Number(seasonsDropDown.value.split("season")[1]);
+        console.log(chosenSeasonToCompare)
+        if (!chosenSeasonToCompare) {
+            ShowAllMonsters()
+            console.log("du har inte valt säsong")
+        }
+        else {
+            let currentSeasonMonstersIdArray = seasons.filter(season => season.year == chosenSeasonToCompare)
+                .flatMap(element => element.coaches)
+                .map(coachesElement => coachesElement.participantId)
+
+            console.log(currentSeasonMonstersIdArray)
+            containerAllMonstersBox = document.querySelectorAll("#containerAllMonstersBox .monsterCard");
+
+            containerAllMonstersBox.forEach(monster => {
+                if (monster.classList.contains("hide")) {
+                    monster.classList.remove("hide")
+                }
+                let spanId = monster.querySelector("#monsterId")
+
+                let isIdInArray = currentSeasonMonstersIdArray.find(
+                    monster1 => monster1 == Number(spanId.textContent)
+                );
+
+                if (!isIdInArray) {
+                    monster.classList.add("hide");
+                }
+
+            });
+            console.log(currentSeasonMonstersIdArray)
+
+        }
+
+        // .filter(trainers => trainers.participantId)
+
+        // .map(trainers => trainers.participantId)
+
+
+    })
+
+    //loopa igenom säsongerna som är vald
+    //skriv ut korten för den säsonge 
+
+}
 //du behöver en array med id och average score för säsongen
 
 CreateAllMonsters(allMonstersObjectArray);
@@ -310,4 +394,5 @@ BackButtonClickEvent();
 GetArrayFromChosenCards();
 CompareCreatures();
 SelectRandomMonsterButton();
+GetAllParticipantsForTheSeason();
 

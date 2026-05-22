@@ -1,13 +1,20 @@
 // export 
 class monsterCardClass {
 
+
+    static allMonsters = [];
+
     constructor(data) {
         this.name = data.name;
         this.id = data.id;
         this.color = colorGenerator();
         this.imgUrl = randomPictureGenerator();
-    }
 
+        MonsterCardClass.allMonsters.push(this);
+    }
+    static getAllMonsters() {
+        return MonsterCardClass.allMonsters;
+    }
 }
 
 function colorGenerator() { //generera en färg till monster
