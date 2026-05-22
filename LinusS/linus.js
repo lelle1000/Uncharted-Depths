@@ -220,6 +220,8 @@ let season8 = document.querySelector("#season8Landing")
 let season9 = document.querySelector("#season9Landing")
 let season10 = document.querySelector("#season10Landing")
 
+let backArrowCredits = document.querySelector("#backArrowCredits")
+
 let continueButtonStory = document.querySelector("#continueButtonStory")
 
 let creatureScoreboardStats = document.querySelector("#creatureScoreboardStats")
@@ -301,6 +303,12 @@ creditsButton.addEventListener("click", () => {
         firstPage.classList.remove("fadePageBlack")
         creditsPage.classList.add("fadeToNormal")
     }, 5000 )
+})
+
+backArrowCredits.addEventListener("click", () => {
+    creditsPage.classList.remove("fadeToNormal")
+    creditsPage.classList.add("hide")
+    firstPage.classList.remove("hide")
 })
 
 let disciplineButtons = [fightingButton, raceButton, hidenseekButton, mazeButton, huntButton]
