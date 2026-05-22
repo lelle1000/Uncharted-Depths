@@ -47,6 +47,124 @@ function ScoreboardParticipantsAndAverageScore(disciplineId, seasonId) {
     return ParticipantAndScore
 }
 
+function getDisciplineScores(seasonId) {
+    let allAverageScoresForAllDisciplines = {}
+    let allDisciplines = [1, 2, 3, 4, 5]
+
+    for(let discipline of allDisciplines) {
+        if (discipline == 1) {
+            allAverageScoresForAllDisciplines.Maze1 = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
+        } else if (discipline == 2) {
+            allAverageScoresForAllDisciplines.Hunt2 = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
+        } else if (discipline == 3) {
+            allAverageScoresForAllDisciplines.HideNSeek3 = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
+        } else if (discipline == 4) {
+            allAverageScoresForAllDisciplines.Race4 = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
+        } else {
+            allAverageScoresForAllDisciplines.Fighting5 = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
+        }
+    }
+
+    return allAverageScoresForAllDisciplines
+}
+
+function calculateTotalSkillScoreOverDisciplines(allAverageScoresForAllDisciplines) {
+    let allDisciplinesTotalSkillScore = {
+        Maze1: [],
+        Hunt2: [],
+        HideNSeek3: [],
+        Race4: [],
+        Fighting5: [],
+    };
+
+    for (let disciplineName in allAverageScoresForAllDisciplines) {
+        let disciplineId = Number(disciplineName[disciplineName.length - 1])
+        let disciplineObj = disciplines.find(obj => obj.id === disciplineId)
+
+        let participantsInCurrentDiscipline = allAverageScoresForAllDisciplines[disciplineName]
+
+        for (let participant of participantsInCurrentDiscipline) {
+            let skillScores = { participantId: participant.participantId}
+
+            for (let skillKey in disciplineObj.skillFactors) {
+                skillScores[skillKey] = participant.averageScore * disciplineObj.skillFactors[skillKey]
+            }
+            allDisciplinesTotalSkillScore[disciplineName].push(skillScores)
+        }
+    }
+
+    return allDisciplinesTotalSkillScore
+}
+
+function getCombinedSkillScorePerParticipant(allDisciplinesTotalSkillScore) {
+    let participantSkillSum = {}
+
+    for (let discipline in allDisciplinesTotalSkillScore) {
+        for (let participant of allDisciplinesTotalSkillScore[discipline]) {
+
+            if (!participantSkillSum[participant.participantId]) {
+                participantSkillSum[participant.participantId] = {}
+            }
+
+            for (let key in participant) {
+                if (key === "participantId") {
+                    continue
+                }
+                if (!participantSkillSum[participant.participantId][key]) {
+                    participantSkillSum[participant.participantId][key] = 0
+                }
+                participantSkillSum[participant.participantId][key] += participant[key]
+            }
+        }
+    }
+
+    return participantSkillSum
+}
+
+function getSkillFactorForParticipant(participantId, participantSkillSum) {
+    let highestSkillScore = -Infinity;
+    let lowestSkillScore = Infinity;
+
+    for (let participant in participantSkillSum) {
+        for (let skillKey in participantSkillSum[participant]) {
+            highestSkillScore = Math.max(highestSkillScore, participantSkillSum[participant][skillKey])
+            lowestSkillScore = Math.min(lowestSkillScore, participantSkillSum[participant][skillKey])
+        }
+    }
+
+    let minSkillFactor = 10;
+    let maxSkillFactor = 20;
+
+    let skillScale = d3.scaleLinear()
+        .domain([lowestSkillScore, highestSkillScore])
+        .range([minSkillFactor, maxSkillFactor])
+    
+    let results = { participantId: participantId}
+
+    for (let skillKey in participantSkillSum[participantId]) {
+        results[skillKey] = Math.round(skillScale(participantSkillSum[participantId][skillKey]))
+    }
+
+    results["Strength"] = results["S01"]
+    results["Speed"] = results["S02"]
+    results["Knowledge"] = results["S03"]
+    results["Camoflauge"] = results["S04"]
+    results["Endurance"] = results["S05"]
+
+    for (let i = 0; i <= 5; i++) {
+        delete results[`S0${i}`]
+    }
+    
+    return results
+}
+
+function getParticipantSkills(participantId, seasonId) {
+    const disciplineScores = getDisciplineScores(seasonId)
+    const disciplineCombinedScores = calculateTotalSkillScoreOverDisciplines(disciplineScores)
+    const totalSkillSum = getCombinedSkillScorePerParticipant(disciplineCombinedScores)
+    return skillFactorForParticipant = getSkillFactorForParticipant(participantId, totalSkillSum)
+}
+
 function updateScoreboard() {
     creatureScoreboardStats.innerHTML = ""
 
@@ -69,75 +187,6 @@ function updateScoreboard() {
         `
     }
 }
-
-function getParticipantSkills(participantId, seasonId) {
-
-    let currentPlayerSkills = {
-        skills: {
-            S01Strength: 0,
-            S02Speed: 0,
-            S03Knowledge: 0,
-            S04Camoflauge: 0,
-            S05Endurance: 0,
-        },
-        playerId: participantId
-    }
-
-    let currentPlayerPointsInDisciplines = {
-        Maze: 0,
-        Hunt: 0,
-        HideNSeek: 0,
-        Race: 0,
-        Fighting: 0
-    }
-
-    let allParticipantsDisciplineAndSkillTotalScore = {};
-
-    let allDisciplines = [1, 2, 3, 4, 5]
-
-    let allAverageScoresForAllDisciplines = {}
-
-    let correctSeason = seasons.find(season => season.year == seasonId)
-
-    for(let discipline of allDisciplines) {
-        if(discipline == 1) {
-            allAverageScoresForAllDisciplines.Maze = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
-        } else if (discipline == 2) {
-            allAverageScoresForAllDisciplines.Hunt = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
-        } else if (discipline == 3) {
-            allAverageScoresForAllDisciplines.HideNSeek = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
-        } else if (discipline == 4) {
-            allAverageScoresForAllDisciplines.Race = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
-        } else {
-            allAverageScoresForAllDisciplines.Fighting = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
-        }
-    }
-
-    let highestScore = -Infinity;
-    let lowestScore = Infinity;
-
-    for (let discipline in allAverageScoresForAllDisciplines) {
-        for (let playerObj of allAverageScoresForAllDisciplines[discipline]) {
-
-            if(playerObj.participantId == participantId) {
-                currentPlayerPointsInDisciplines[discipline] = playerObj.averageScore
-            }
-
-            
-            
-        }
-    }
-
-    console.log(allAverageScoresForAllDisciplines);
-    console.log(currentPlayerPointsInDisciplines);
-
-
-    
-    return currentPlayerSkills
-
-}
-
-getParticipantSkills(170, 5)
 
 let subSound = document.querySelector("#subSound")
 let waveSound = document.querySelector("#waveSound")
@@ -251,7 +300,6 @@ disciplineButtons.forEach(btn => btn.addEventListener("click", () => {
         updateScoreboard()
     }
 
-
 }))
 
 seasonButtons.forEach(btn => btn.addEventListener("click", () => {
@@ -269,3 +317,76 @@ seasonButtons.forEach(btn => btn.addEventListener("click", () => {
 
 }))
 
+const radarChartLabels = ["Strength", "Speed", "Endurance", "Knowledge", "Camouflage"];
+
+let svgHeightandWidth = 375;
+let cx = svgHeightandWidth / 2;
+let cy = svgHeightandWidth / 2;
+let radius = svgHeightandWidth / 2 - 40;
+
+let maxValue = 20;
+let numOfAxes = 5;
+let circleSlice = (2 * Math.PI) / numOfAxes;
+
+function toXY(angle, r) {
+    return {
+        x: cx + r * Math.cos(angle - Math.PI / 2),
+        y: cy + r * Math.sin(angle - Math.PI / 2)
+    };
+}
+
+let svgContainer = d3.select("#radarChartContainer")
+    .append("svg")
+    .attr("width", svgHeightandWidth)
+    .attr("height", svgHeightandWidth);
+
+const ringLevels = 5;
+for (let i = 1; i <= ringLevels; i++) {
+    svgContainer.append("circle")
+        .attr("cx", cx)
+        .attr("cy", cy)
+        .attr("r", radius * (i / ringLevels))
+        .attr("fill", "none")
+        .attr("stroke", "#000000")
+        .attr("stroke-width", "0.8");
+}
+
+radarChartLabels.forEach((label, i) => {
+    const angle = circleSlice * i;
+    const axisTip = toXY(angle, radius);
+
+    svgContainer.append("line")
+        .attr("x1", cx)
+        .attr("y1", cy)
+        .attr("x2", axisTip.x)
+        .attr("y2", axisTip.y)
+        .attr("stroke", "#ccc");
+
+    const labelposition = toXY(angle, radius + 20);
+    svgContainer.append("text")
+        .attr("x", labelposition.x)
+        .attr("y", labelposition.y)
+        .attr("text-anchor", "middle")
+        .attr("dominant-baseline", "middle")
+        .attr("font-size", 13)
+        .text(label);
+});
+
+function drawRadarChart(data, strokeColor) {
+    const values = Object.values(data).slice(1);
+
+    const points = values.map((val, i) => {
+        const r = (val / maxValue) * radius;
+        const pos = toXY(circleSlice * i, r);
+        return `${pos.x},${pos.y}`;
+    }).join(" ");
+
+    svgContainer.append("polygon")
+        .attr("points", points)
+        .attr("stroke", strokeColor)
+        .attr("fill", "none")
+        .attr("stroke-width", 2);
+}
+
+drawRadarChart(getParticipantSkills(170, 1), "blue")
+drawRadarChart(getParticipantSkills(190, 1), "red")
