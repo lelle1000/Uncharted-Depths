@@ -317,15 +317,76 @@ seasonButtons.forEach(btn => btn.addEventListener("click", () => {
 
 }))
 
-let radarChartData = getParticipantSkills(170, 5)
-const radarChartLabels = ["Strength", "Speed", "Endurance", "Knowledge", "Camoflauge"]
+const radarChartLabels = ["Strength", "Speed", "Endurance", "Knowledge", "Camouflage"];
 
-let svgHeightandWidth = 350;
+let svgHeightandWidth = 375;
+let cx = svgHeightandWidth / 2;
+let cy = svgHeightandWidth / 2;
+let radius = svgHeightandWidth / 2 - 40;
+
+let maxValue = 20;
+let numOfAxes = 5;
+let circleSlice = (2 * Math.PI) / numOfAxes;
+
+function toXY(angle, r) {
+    return {
+        x: cx + r * Math.cos(angle - Math.PI / 2),
+        y: cy + r * Math.sin(angle - Math.PI / 2)
+    };
+}
 
 let svgContainer = d3.select("#radarChartContainer")
     .append("svg")
     .attr("width", svgHeightandWidth)
-    .attr("height", svgHeightandWidth)
+    .attr("height", svgHeightandWidth);
 
-let cx = svgHeightandWidth / 2;
-let cy = svgHeightandWidth / 2;
+const ringLevels = 5;
+for (let i = 1; i <= ringLevels; i++) {
+    svgContainer.append("circle")
+        .attr("cx", cx)
+        .attr("cy", cy)
+        .attr("r", radius * (i / ringLevels))
+        .attr("fill", "none")
+        .attr("stroke", "#000000")
+        .attr("stroke-width", "0.8");
+}
+
+radarChartLabels.forEach((label, i) => {
+    const angle = circleSlice * i;
+    const axisTip = toXY(angle, radius);
+
+    svgContainer.append("line")
+        .attr("x1", cx)
+        .attr("y1", cy)
+        .attr("x2", axisTip.x)
+        .attr("y2", axisTip.y)
+        .attr("stroke", "#ccc");
+
+    const labelposition = toXY(angle, radius + 20);
+    svgContainer.append("text")
+        .attr("x", labelposition.x)
+        .attr("y", labelposition.y)
+        .attr("text-anchor", "middle")
+        .attr("dominant-baseline", "middle")
+        .attr("font-size", 13)
+        .text(label);
+});
+
+function drawRadarChart(data, strokeColor) {
+    const values = Object.values(data).slice(1);
+
+    const points = values.map((val, i) => {
+        const r = (val / maxValue) * radius;
+        const pos = toXY(circleSlice * i, r);
+        return `${pos.x},${pos.y}`;
+    }).join(" ");
+
+    svgContainer.append("polygon")
+        .attr("points", points)
+        .attr("stroke", strokeColor)
+        .attr("fill", "none")
+        .attr("stroke-width", 2);
+}
+
+drawRadarChart(getParticipantSkills(170, 1), "blue")
+drawRadarChart(getParticipantSkills(190, 1), "red")
