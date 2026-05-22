@@ -61,8 +61,8 @@
                             <div id="specialty" class="child"></div>
                             <div id="winRate" class="child"></div>
                         </div>
+                    </div>
                 </div>
-            </div>
 
             </div>
         </div>
@@ -110,27 +110,15 @@
     </main>
 
 
-    <main id="comparePage" class="hide">
-        <img src="../images/backArrow.png" id="backArrow" alt="">
+    <main id="comparePage">
+        <img src="../images/backArrow.png" id="backArrowCompare" class="backArrow" alt="">
         <div id="containerParticipants">
 
             <h2 class="containerTitle">Participants</h2>
             <input type="text" id="inputIdField" placeholder="Search Monster Id">
 
+
             <div id="containerAllMonstersBox">
-                <div class="monsterCard">
-                    <div class="colorBar" id="colorBar1"></div>
-                </div>
-                <div class="monsterCard"></div>
-                <div class="monsterCard"></div>
-                <div class="monsterCard"></div>
-                <div class="monsterCard"></div>
-                <div class="monsterCard"></div>
-                <div class="monsterCard"></div>
-                <div class="monsterCard"></div>
-                <div class="monsterCard"></div>
-
-
             </div>
 
             <div id="containerButtons">
@@ -142,6 +130,26 @@
 
         <div id="containerGraphs">
             <h2 class="containerTitle">Skill Points</h2>
+
+            <div id="searchBars">
+
+                <select name="seasonsDropDown" id="seasonsDropDown">
+                    <option value="">--Choose a season--</option>
+                    <option value="season1">Season 1</option>
+                    <option value="season2">Season 2</option>
+                    <option value="season3">Season 3</option>
+                    <option value="season4">Season 4</option>
+                    <option value="season5">Season 5</option>
+                    <option value="season6">Season 6</option>
+                    <option value="season7">Season 7</option>
+                    <option value="season8">Season 8</option>
+                    <option value="season9">Season 9</option>
+                    <option value="season10">Season 10</option>
+                </select>
+
+                <button id="compareButton">Compare Creatures</button>
+            </div>
+
             <div id="skillDistrubution">
                 <h3 class="graphTitle">Skill Distribution</h3>
             </div>
