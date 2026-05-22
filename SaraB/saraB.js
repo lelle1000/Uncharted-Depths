@@ -324,12 +324,16 @@ let monsterCards = document.querySelectorAll(".monsterCard")
 
 console.log(topMonsters);
 
+let rankMonsterName = document.getElementById("rankMonsterName")
+let smallMonsterPic = document.getElementById("smallMonsterPic")
 
 monsterCards.forEach(card => {
 
     card.addEventListener("click", e => {
 
         let id = card.querySelector(".idName span").textContent
+        let monsterName =card.querySelector(".monsterName").textContent
+        let monsterImage =card.querySelector(".monsterImage").src
 
         let player = playerSpecialtyWins.find(
             p => p.participantId == id
@@ -342,11 +346,18 @@ monsterCards.forEach(card => {
         rankingDOM.innerHTML = ""
         specialtyDOM.innerHTML = ""
         winRateDOM.innerHTML = ""
+        rankMonsterName.innerHTML = ""
+        smallMonsterPic.innerHTML = ""
 
         if (player) {
-            winRateDOM.innerHTML = `<p>${Math.round(player.winRate)}</p>`
-            specialtyDOM.innerHTML = `<p>${player.specialty}</p>`
-            rankingDOM.innerHTML = `<p>${index + 1}</p>`
+            smallMonsterPic.innerHTML += `<img src="${monsterImage}">`
+            rankMonsterName.textContent = monsterName
+            winRateDOM.innerHTML += `<p>winRate:<br>${Math.round(player.winRate)}</p>`
+            specialtyDOM.innerHTML += `<p>specialty:<br> ${player.specialty}</p>`
+            rankingDOM.innerHTML += `
+                <img src="${../saraK/}
+                <p>Ranking:<br> ${index + 1}</p>
+            `
         }
     })
 })
