@@ -326,6 +326,9 @@ console.log(topMonsters);
 
 let rankMonsterName = document.getElementById("rankMonsterName")
 let smallMonsterPic = document.getElementById("smallMonsterPic")
+let smallPicBorder = document.getElementById("smallPicBorder")
+let smallLine = document.getElementById("smallLine")
+let cropBox = document.querySelector(".cropBox")
 
 monsterCards.forEach(card => {
 
@@ -334,6 +337,11 @@ monsterCards.forEach(card => {
         let id = card.querySelector(".idName span").textContent
         let monsterName =card.querySelector(".monsterName").textContent
         let monsterImage =card.querySelector(".monsterImage").src
+        
+        cropBox.innerHTML = `<img src="${monsterImage}">`
+        smallPicBorder.style.display = "flex"
+        smallLine.style.display = "flex"
+        
 
         let player = playerSpecialtyWins.find(
             p => p.participantId == id
@@ -353,14 +361,14 @@ monsterCards.forEach(card => {
             smallMonsterPic.innerHTML += `<img src="${monsterImage}">`
             rankMonsterName.textContent = monsterName
             winRateDOM.innerHTML += `
-            <p>Win rate for all ${player.specialty} matches:</p>
+            <p class="rankingText">Win rate for all ${player.specialty} matches:</p>
             <p id="procentualRate">${Math.round(player.winRate)}%</p>
             `
             specialtyDOM.innerHTML += `
-            <p>Specialty:</p>
+            <p class="rankingText">Specialty:</p>
             <p>${player.specialty}</p>`
             rankingDOM.innerHTML += `
-            <p>Ranking:<br> ${index + 1}</p>
+            <p class="rankingText">Ranking:<br> ${index + 1}</p>
             <img src="../images/rankingPic.png">
             <p id="smallRanking">${index + 1}</p>
             `
