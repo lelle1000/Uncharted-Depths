@@ -190,7 +190,8 @@ function updateScoreboard() {
 
 let subSound = document.querySelector("#subSound")
 let waveSound = document.querySelector("#waveSound")
-let pirateStory = document.querySelector("#pirateStory")
+let pirateStory1 = document.querySelector("#pirateStoryPart1")
+let pirateStory2 = document.querySelector("#pirateStoryPart2")
 
 let firstPage = document.querySelector("#firstPage")
 let creditsPage = document.querySelector("#creditsPage")
@@ -224,9 +225,11 @@ let continueButtonStory = document.querySelector("#continueButtonStory")
 let creatureScoreboardStats = document.querySelector("#creatureScoreboardStats")
 
 let storyPart1 = "The story begins in the 1600s, when the pirate fleet Royal Fortune flees from the British East India Company. In a desperate attempt to escape, they sail into a violent storm, but are instead pulled into a massive whirlpool and vanish without a trace in the depths of the ocean. From the world’s perspective, the pirates are presumed dead, and over time the event becomes nothing more than a forgotten footnote in history. More than 450 years later, in 2104, a research submersible discovers a mysterious underwater cave containing an enormous energy source. When the expedition enters the cave, they end up in the same supernatural place as the pirates.";
-let storyPart2 = "The pirates had survived inside a gigantic underwater cavern with five colored portals leading to different dangerous and strange worlds filled with monsters and unknown environments. After heavy losses, they learn to survive, tame creatures, and eventually build a functioning society, where an arena with monster battles becomes the center of culture and economy. When the modern expedition arrives, the group is split up and enters different portals. In one of the worlds, the protagonist ends up in a timeless system where people from different eras are trapped in an arena. To return, they must win three matches in a row, but each loss resets their progress. The story ends with the realization that escape may take an extremely long time—but also with hope of understanding the system and one day finding a way back.";
-const skullJaw = document.querySelector(".pirateJaw")
-let storyTextElement = document.querySelector(".storyText")
+let storyPart2 = "The pirates had survived inside a gigantic underwater cavern with five colored portals leading to different dangerous and strange worlds filled with monsters and unknown environments. After heavy losses, they learn to survive, tame creatures, and eventually build a functioning society, where an arena with monster battles becomes the center of culture and economy. When the modern expedition arrives, the group is split up and enters different portals. In one of the worlds, the protagonist ends up in a timeless system where people from different eras are trapped in an arena. To return, they must win three matches in a row, but each loss resets their progress. The story ends with the realization that escape may take an extremely long time, but also with hope of understanding the system and one day finding a way back.";
+const skullJaw1 = document.querySelector("#skullJaw1")
+const skullJaw2 = document.querySelector("#skullJaw2")
+let storyPart1LiveText = document.querySelector("#storyTextPart1")
+let storyPart2LiveText = document.querySelector("#storyTextPart2")
 
 let storypart1Array = storyPart1.split("")
 let storypart2Array = storyPart2.split("")
@@ -244,16 +247,16 @@ storyModeButton.addEventListener("click", () => {
         storyPage.classList.add("fadeToNormal")
         waveSound.play()
         waveSound.volume = 0.5
-        pirateStory.play()
+        pirateStory1.play()
 
         const TypeWriter = setInterval(() => {
-            storyTextElement.textContent += storypart1Array[currentLetter]
+            storyPart1LiveText.textContent += storypart1Array[currentLetter]
             currentLetter++
 
             if (currentLetter === storypart1Array.length) {
                 storyPage.classList.remove("fadeToNormal")
                 clearInterval(TypeWriter)
-                skullJaw.classList.remove("animation")
+                skullJaw1.classList.remove("animation")
                 continueButtonStory.classList.remove("hide")
             }
         }, 70)
@@ -261,13 +264,32 @@ storyModeButton.addEventListener("click", () => {
 })
 
 continueButtonStory.addEventListener("click", () => {
+    currentLetter = 0
     storyPage.classList.add("fadePageBlack")
     setTimeout(() => {
         storyPage.classList.add("hide")
         storyPage.classList.remove("fadePageBlack")
         portalPage.classList.remove("hide")
         portalPage.classList.add("fadeToNormal")
+        pirateStory2.play()
+
+        const TypeWriter = setInterval(() => {
+            storyPart2LiveText.textContent += storypart2Array[currentLetter]
+            currentLetter++
+
+            if (currentLetter === storypart2Array.length) {
+                portalPage.classList.remove("fadeToNormal")
+                clearInterval(TypeWriter)
+                skullJaw2.classList.remove("animation")
+                continueButtonStory.classList.remove("hide")
+            }
+        }, 70)
     }, 5000 )
+})
+
+quickModeButton.addEventListener("click", () => {
+    firstPage.classList.add("hide")
+    landingPage.classList.remove("hide")
 })
 
 creditsButton.addEventListener("click", () => {
