@@ -1,4 +1,5 @@
-export class monsterCardClass {
+// export 
+class monsterCardClass {
 
     constructor(data) {
         this.name = data.name;

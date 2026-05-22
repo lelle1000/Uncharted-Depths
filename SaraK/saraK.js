@@ -1,10 +1,38 @@
-import { monsterCardClass } from "./monsterClass.js";
+// import { monsterCardClass } from "monsterClass.js";
 
 const mainContainer = document.getElementById("comparePage")
 const selectRandomButton = document.getElementById("selectRandomButton")
 let allMonstersObjectArray = participants;
 let containerAllMonstersBox = document.querySelectorAll("#containerAllMonstersBox .monsterCard");
 let chosenCardCounter = 0;
+
+
+class monsterCardClass {
+
+    constructor(data) {
+        this.name = data.name;
+        this.id = data.id;
+        this.color = colorGenerator();
+        this.imgUrl = randomPictureGenerator();
+    }
+
+}
+
+function colorGenerator() { //generera en färg till monster
+
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
+function randomPictureGenerator() { //generera en random monster URL
+    let monsterPicNum = Math.ceil(Math.random() * 16)
+    return `../images/monster${monsterPicNum}.png`
+}
+
+
 
 function ClearSectionClickEvent() {
     const clearSelectionButton = document.getElementById("clearSelectionButton")
@@ -171,24 +199,6 @@ function getMonsterAverageScore(requestedSeason, requestedParticipantIdAndColor)
     return compareScoreArray
 }
 
-console.log(getMonstersTotalScoreFromId(148))
-console.log(getMonsterAverageScore(3, [{ id: 148, rgb: "rgb(116, 39, 151)" }]))
-
-
-// let totalScore = 0;
-//     let pointsArrayForId = seasons.filter(year => year.year == requestedSeason)
-//         .flatMap(season => season.competitionDays)
-//         .flatMap(day => day.events)
-//         .flatMap(events => events.scores)
-//         .filter(score => score.participantId == requestedParticipantId)
-
-//     totalScore = pointsArrayForId.reduce((sum, s) => sum + s.score, 0)
-//     totalScore = Math.round(totalScore / pointsArrayForId.length);
-
-//     compareScoreArray.push({ id: requestedParticipantId, score: totalScore })
-//     return { id: requestedParticipantId, score: totalScore }
-
-
 
 function CompareCreatures() {
     let compareButton = document.getElementById("compareButton");
@@ -300,3 +310,4 @@ BackButtonClickEvent();
 GetArrayFromChosenCards();
 CompareCreatures();
 SelectRandomMonsterButton();
+
