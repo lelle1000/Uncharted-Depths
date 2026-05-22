@@ -15,9 +15,10 @@
 
     <audio id="waveSound" src="./audioFile/WaveSound.mp3"></audio>
     <audio id="subSound" src="./audioFile/SubmarineSonar.mp3"></audio>
-    <audio id="pirateStory" src="./audioFile/audio_part1.mp3"></audio>
+    <audio id="pirateStoryPart1" src="./audioFile/audio_part1.mp3"></audio>
+    <audio id="pirateStoryPart2" src="./audioFile/audio_part2.mp3"></audio>
 
-    <main id="firstPage" class="hide">
+    <main id="firstPage" class="">
         <div id="firstPageItemContainer">
             <img id="firstPageLogo" src="./images/Logo.png" alt="">
             <button id="storyModeButton" class="firstPageButtons title">Story Mode</button>
@@ -31,9 +32,9 @@
     <main id="storyPage" class="hide">
         <div id="pirateSkull">
             <img src="./images/pirateFace.png" alt="" class="pirateSkull">
-            <img src="./images/pirateJaw.png" alt="" class="pirateJaw animation">
+            <img src="./images/pirateJaw.png" alt="" class="pirateJaw animation" id="skullJaw1">
         </div>
-        <div class="storyText"></div>
+        <div class="storyText" id="storyTextPart1"></div>
         <div id="continueStoryContainer">
             <button id="continueButtonStory" class="firstPageButtons title hide">Continue</button>
         </div>
@@ -42,9 +43,9 @@
     <main id="portalPage" class="hide">
         <div id="pirateSkull">
             <img src="./images/pirateFace.png" alt="" class="pirateSkull">
-            <img src="./images/pirateJaw.png" alt="" class="pirateJaw animation">
+            <img src="./images/pirateJaw.png" alt="" class="pirateJaw animation" id="skullJaw2">
         </div>
-        <div class="storyText"></div>
+        <div class="storyText" id="storyTextPart2"></div>
     </main>
 
     <main id="landingPageContainer" class="hide">
@@ -110,7 +111,7 @@
     </main>
 
 
-    <main id="comparePage">
+    <main id="comparePage" class="hide">
         <img src="../images/backArrow.png" id="backArrowCompare" class="backArrow" alt="">
         <div id="containerParticipants">
 
