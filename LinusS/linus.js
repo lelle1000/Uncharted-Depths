@@ -317,11 +317,10 @@ seasonButtons.forEach(btn => btn.addEventListener("click", () => {
 
 }))
 
-const radarChartLabels = ["Strength", "Speed", "Endurance", "Knowledge", "Camouflage"];
+const radarChartLabels = ["Strength", "Speed", "Endurance", "Knowledge", "Camo"];
 
-let svgHeightandWidth = 375;
-let cx = svgHeightandWidth / 2;
-let cy = svgHeightandWidth / 2;
+let svgHeightandWidth = 325;
+let cxandcy = svgHeightandWidth / 2;
 let radius = svgHeightandWidth / 2 - 40;
 
 let maxValue = 20;
@@ -330,8 +329,8 @@ let circleSlice = (2 * Math.PI) / numOfAxes;
 
 function toXY(angle, r) {
     return {
-        x: cx + r * Math.cos(angle - Math.PI / 2),
-        y: cy + r * Math.sin(angle - Math.PI / 2)
+        x: cxandcy + r * Math.cos(angle - Math.PI / 2),
+        y: cxandcy + r * Math.sin(angle - Math.PI / 2)
     };
 }
 
@@ -343,12 +342,13 @@ let svgContainer = d3.select("#radarChartContainer")
 const ringLevels = 5;
 for (let i = 1; i <= ringLevels; i++) {
     svgContainer.append("circle")
-        .attr("cx", cx)
-        .attr("cy", cy)
+        .attr("cx", cxandcy)
+        .attr("cy", cxandcy)
         .attr("r", radius * (i / ringLevels))
         .attr("fill", "none")
-        .attr("stroke", "#000000")
-        .attr("stroke-width", "0.8");
+        .attr("stroke", "#848276")
+        .attr("stroke-width", "1")
+
 }
 
 radarChartLabels.forEach((label, i) => {
@@ -356,20 +356,22 @@ radarChartLabels.forEach((label, i) => {
     const axisTip = toXY(angle, radius);
 
     svgContainer.append("line")
-        .attr("x1", cx)
-        .attr("y1", cy)
+        .attr("x1", cxandcy)
+        .attr("y1", cxandcy)
         .attr("x2", axisTip.x)
         .attr("y2", axisTip.y)
         .attr("stroke", "#ccc");
 
-    const labelposition = toXY(angle, radius + 20);
+    const labelposition = toXY(angle, radius + 25);
     svgContainer.append("text")
         .attr("x", labelposition.x)
         .attr("y", labelposition.y)
         .attr("text-anchor", "middle")
         .attr("dominant-baseline", "middle")
-        .attr("font-size", 13)
+        .attr("font-size", 18)
+        .attr("fill", "#848276")
         .text(label);
+        
 });
 
 function drawRadarChart(data, strokeColor) {
@@ -384,9 +386,8 @@ function drawRadarChart(data, strokeColor) {
     svgContainer.append("polygon")
         .attr("points", points)
         .attr("stroke", strokeColor)
-        .attr("fill", "none")
-        .attr("stroke-width", 2);
+        .attr("fill", `${strokeColor}`)
+        .attr("fill-opacity", 0.3)
+        .attr("stroke-width", 2)
 }
 
-drawRadarChart(getParticipantSkills(170, 1), "blue")
-drawRadarChart(getParticipantSkills(190, 1), "red")
