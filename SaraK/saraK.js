@@ -1,4 +1,4 @@
-import { monsterCardClass } from "./monsterClass.js";
+// import { monsterCardClass } from "monsterClass.js";
 
 const mainContainer = document.getElementById("comparePage")
 const selectRandomButton = document.getElementById("selectRandomButton")
@@ -6,9 +6,51 @@ let allMonstersObjectArray = participants;
 let containerAllMonstersBox = document.querySelectorAll("#containerAllMonstersBox .monsterCard");
 let chosenCardCounter = 0;
 
+
+class MonsterCardClass {
+
+    static allMonsters = [];
+
+    constructor(data) {
+        this.name = data.name;
+        this.id = data.id;
+        this.color = colorGenerator();
+        this.imgUrl = randomPictureGenerator();
+
+        MonsterCardClass.allMonsters.push(this);
+    }
+    static getAllMonsters() {
+        return MonsterCardClass.allMonsters;
+    }
+}
+
+function colorGenerator() { //generera en färg till monster
+
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
+function randomPictureGenerator() { //generera en random monster URL
+    let monsterPicNum = Math.ceil(Math.random() * 16)
+    return `./images/monster${monsterPicNum}.png`
+}
+
+
+
 function ClearSectionClickEvent() {
     const clearSelectionButton = document.getElementById("clearSelectionButton")
     clearSelectionButton.addEventListener("click", () => { //clear Selection av monsters knapp
+        svgContainer.selectAll("polygon").remove()
+
+        let svg = d3.select("#pointsDistrubution")
+        svg.selectAll("rect").remove()
+
+
+
+
         chosenCardCounter = 0;
 
         containerAllMonstersBox.forEach(card => {
@@ -54,11 +96,13 @@ function RandomNumber() {
     return Math.floor(Math.random() * allMonstersObjectArray.length)
 }
 
-function createAllMonsters(monstersArray) {
+function CreateAllMonsters(monstersArray) {
+    let containerAllMonstersBoxId = document.getElementById("containerAllMonstersBox")
+    containerAllMonstersBoxId.innerHTML = ``
+
     for (let i = 0; i < monstersArray.length; i++) {
 
-        let containerAllMonstersBoxId = document.getElementById("containerAllMonstersBox")
-        let monster1 = new monsterCardClass(monstersArray[i]);
+        let monster1 = new MonsterCardClass(monstersArray[i]);
 
         let monsterCard = document.createElement("div");
         monsterCard.classList.add("monsterCard")
@@ -72,11 +116,35 @@ function createAllMonsters(monstersArray) {
         let colorLine = monsterCard.querySelector(".colorLine");
         colorLine.style.backgroundColor = `${monster1.color}`
         containerAllMonstersBoxId.appendChild(monsterCard);
-
     }
 
 }
 
+function ShowAllMonsters() {
+    let containerAllMonstersBoxId = document.getElementById("containerAllMonstersBox")
+    containerAllMonstersBoxId.innerHTML = ``
+    let monstersArray = MonsterCardClass.getAllMonsters()
+
+    console.log(MonsterCardClass.getAllMonsters());
+    console.log(monstersArray)
+
+    for (let i = 0; i < monstersArray.length; i++) {
+
+        let monsterCard = document.createElement("div");
+        monsterCard.classList.add("monsterCard")
+        monsterCard.innerHTML = `
+                       
+        <p class="monsterName">${monstersArray[i].name}</p>
+        <img src="${monstersArray[i].imgUrl}" class="monsterImage">
+        <div class="colorLine"> </div>
+        <p class="idName"> Id : <span id="monsterId">${monstersArray[i].id}</span></p>
+        `
+        let colorLine = monsterCard.querySelector(".colorLine");
+        colorLine.style.backgroundColor = `${monstersArray[i].color}`
+        containerAllMonstersBoxId.appendChild(monsterCard);
+    }
+
+}
 
 function InputFieldClickEvent() {
     const inputIdField = document.getElementById("inputIdField");
@@ -127,144 +195,225 @@ function ChosenCardClickEvent() {
     })
 }
 
-createAllMonsters(allMonstersObjectArray);
-ChosenCardClickEvent();
-InputFieldClickEvent();
-ClearSectionClickEvent();
-BackButtonClickEvent();
-SelectRandomMonsterButton();
-GetArrayFromChosenCards();
-GetSeasonFromDropown();
+
 
 //filtrera säsong 1
 //filtrera alla participants 206
 //ta ett monsters poäng under en säsong / medelvärdet
 
-
-let compareScoreArray = []
-function getMonsterAverageScore(requestedSeason, requestedParticipantId) {
-
+function getMonstersTotalScoreFromId(reqId) { ///stödfunktion
     let totalScore = 0;
-    let pointsArrayForId = seasons.filter(year => year.year == requestedSeason)
+    let pointsArrayForId = seasons.filter(year => year.year == 1)
         .flatMap(season => season.competitionDays)
         .flatMap(day => day.events)
         .flatMap(events => events.scores)
-        .filter(score => score.participantId == requestedParticipantId)
-    // .map(score => ({
-    //     participantId: score.participantId,
-    //     score: score.score
-    // }))
+        .filter(score => score.participantId == reqId)
 
     totalScore = pointsArrayForId.reduce((sum, s) => sum + s.score, 0)
     totalScore = Math.round(totalScore / pointsArrayForId.length);
+    console.log(totalScore)
+    return totalScore;
 
-    compareScoreArray.push({ id: requestedParticipantId, score: totalScore })
-    return { id: requestedParticipantId, score: totalScore }
+}
 
+
+function getMonsterAverageScore(requestedSeason, requestedParticipantIdAndColor) {
+    let compareScoreArray = requestedParticipantIdAndColor; // loopa ingenom array med id färg, lägg till score och season i arrayen 
+
+    console.log(requestedParticipantIdAndColor)
+    console.log(requestedSeason)
+    console.log(compareScoreArray)
+    requestedParticipantIdAndColor.forEach(participant => {
+        let totalScore = 0;
+        let pointsArrayForId = seasons.filter(year => year.year == requestedSeason)
+            .flatMap(season => season.competitionDays)
+            .flatMap(day => day.events)
+            .flatMap(events => events.scores)
+            .filter(score => score.participantId == participant.id)
+
+        console.log(pointsArrayForId)
+        totalScore = pointsArrayForId.reduce((sum, s) => sum + s.score, 0)
+        totalScore = pointsArrayForId.length > 0 ? Math.round(totalScore / pointsArrayForId.length) : 0;
+        console.log(totalScore)
+        participant.score = totalScore;
+    })
+
+    return compareScoreArray
+}
+
+
+function CompareCreatures() {
+    let compareButton = document.getElementById("compareButton");
+    compareButton.addEventListener("click", () => {
+
+        svgContainer.selectAll("polygon").remove()
+
+        console.log("klickk")
+        console.log(GetArrayFromChosenCards());
+        console.log(GetSeasonFromDropown())
+
+        let arrayFromChosenCardsIdAndColor = GetArrayFromChosenCards()
+        let seasonFromDropDown = GetSeasonFromDropown()
+        let seasonFromDropDownNum = Number(seasonFromDropDown.split("season")[1])
+        console.log(seasonFromDropDownNum)
+        // getMonsterAverageScore(seasonFromDropDownNum, arrayFromChosenCardsIdAndColor)
+        let arrayToCompare = getMonsterAverageScore(seasonFromDropDownNum, arrayFromChosenCardsIdAndColor)
+        console.log(arrayToCompare)
+        CreateChartSvg(arrayToCompare)
+
+        let participantId1 = arrayFromChosenCardsIdAndColor[0].id
+        let color1 = arrayFromChosenCardsIdAndColor[0].rgb
+
+        let participantId2 = arrayFromChosenCardsIdAndColor[1].id
+        let color2 = arrayFromChosenCardsIdAndColor[1].rgb
+
+
+        drawRadarChart(getParticipantSkills(participantId1, seasonFromDropDownNum), color1)
+        drawRadarChart(getParticipantSkills(participantId2, seasonFromDropDownNum), color2)
+    })
 }
 
 //hämta id,färg  från chosen cards
 function GetArrayFromChosenCards() {
-    let arrayToCompare = []
+    let arrayWithIdToCompare = []
     let activecards = document.querySelectorAll("#containerAllMonstersBox .monsterCard.chosenMonsterCard")
     activecards.forEach(card => {
-        const text = Number(card.querySelector(".idName #monsterId").textContent);
-        arrayToCompare.push(text)
-        console.log(arrayToCompare);
+        const monsterId = Number(card.querySelector(".idName #monsterId").textContent);
+        const colorRgb = card.querySelector(".colorLine").style.backgroundColor
+        console.log(colorRgb)
+        arrayWithIdToCompare.push({ id: monsterId, rgb: colorRgb })
+        console.log(arrayWithIdToCompare);
+        // CreateScoresChart(arrayWithIdToCompare)
     });
+    return arrayWithIdToCompare;
 }
+
 
 function GetSeasonFromDropown() {
     let seasonsDropDown = document.getElementById("seasonsDropDown");
-    let options = document.querySelectorAll("#seasonsDropDown option")
+    let chosenSeasonToCompare = seasonsDropDown.value;
 
-    options.forEach(option => {
-        option.addEventListener("click", event => {
-            let chosenSeasonToCompare = event.target.value;
-            console.log(chosenSeasonToCompare);
-        })
+    return chosenSeasonToCompare;
+}
+
+function CreateChartSvg(compareScoreArray) {
+    let data = compareScoreArray;
+
+    d3.select("#pointsDistrubution").select("svg").remove();
+    let scoreBox = document.getElementById("pointsDistrubution")
+
+    const margin = { top: 40, right: 20, bottom: 30, left: 60 },
+        width = scoreBox.offsetWidth - margin.left - margin.right,
+        height = scoreBox.offsetHeight - margin.top - margin.bottom;
+
+    // Skapa SVG
+    let svg = d3.select("#pointsDistrubution")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // 3. X-axel: Baserad direkt på ID (Sträng-konverterat för scaleBand)
+    const x = d3.scaleBand()
+        .domain(data.map(d => `ID: ${d.id}`))
+        .range([0, width])
+        .padding(0.4); // Justera bredden på staplarna här (högre tal = smalare staplar)
+
+    // 4. Y-axel: Låst till 800 - 2000
+    const y = d3.scaleLinear()
+        .domain([800, 1600])
+        .range([height, 0]);
+
+    // 5. Rita axlarna
+    svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", `translate(0,${height})`)
+        .call(d3.axisBottom(x));
+
+    svg.append("g")
+        .attr("class", "axis")
+        .call(d3.axisLeft(y).ticks(6));
+
+    // 6. Rita de två staplarna
+    svg.selectAll("rect")
+        .data(data)
+        .join("rect")
+        .attr("x", d => x(`ID: ${d.id}`))
+        // Hindrar stapeln från att ritas utanför om score råkar vara under 800
+        .attr("y", d => y(Math.max(800, d.score)))
+        .attr("width", x.bandwidth())
+        .attr("height", d => height - y(Math.max(800, d.score)))
+        .attr("fill", d => d.rgb)
+        .attr("rx", 4) // Snygga, lätt rundade hörn i toppen
+        .attr("opacity", 0.8)
+        .attr("stroke", "#5E9F99")
+        // .attr("stroke-width", 3)
+        .attr("stdDeviation", 0.5)
+        .attr("flood-color", "#5E9F99")
+
+
+
+
+}
+
+function GetAllParticipantsForTheSeason() {
+    let seasonsDropDown = document.getElementById("seasonsDropDown");
+    seasonsDropDown.addEventListener("change", () => {
+        console.log("klick")
+        let chosenSeasonToCompare = Number(seasonsDropDown.value.split("season")[1]);
+        console.log(chosenSeasonToCompare)
+        if (!chosenSeasonToCompare) {
+            ShowAllMonsters()
+            console.log("du har inte valt säsong")
+        }
+        else {
+            let currentSeasonMonstersIdArray = seasons.filter(season => season.year == chosenSeasonToCompare)
+                .flatMap(element => element.coaches)
+                .map(coachesElement => coachesElement.participantId)
+
+            console.log(currentSeasonMonstersIdArray)
+            containerAllMonstersBox = document.querySelectorAll("#containerAllMonstersBox .monsterCard");
+
+            containerAllMonstersBox.forEach(monster => {
+                if (monster.classList.contains("hide")) {
+                    monster.classList.remove("hide")
+                }
+                let spanId = monster.querySelector("#monsterId")
+
+                let isIdInArray = currentSeasonMonstersIdArray.find(
+                    monster1 => monster1 == Number(spanId.textContent)
+                );
+
+                if (!isIdInArray) {
+                    monster.classList.add("hide");
+                }
+
+            });
+            console.log(currentSeasonMonstersIdArray)
+
+        }
+
+        // .filter(trainers => trainers.participantId)
+
+        // .map(trainers => trainers.participantId)
+
+
     })
-}
 
-
-//skapa svg charten
-function CreateScoresChart(compareScoreArray) {
-
+    //loopa igenom säsongerna som är vald
+    //skriv ut korten för den säsonge 
 
 }
+//du behöver en array med id och average score för säsongen
 
-CreateScoresChart(compareScoreArray)
-console.log(compareScoreArray)
+CreateAllMonsters(allMonstersObjectArray);
+ChosenCardClickEvent();
+InputFieldClickEvent();
+ClearSectionClickEvent();
+BackButtonClickEvent();
+GetArrayFromChosenCards();
+CompareCreatures();
+SelectRandomMonsterButton();
+GetAllParticipantsForTheSeason();
 
-console.log(getMonsterAverageScore(1, 206))
-console.log(getMonsterAverageScore(1, 141))
-// console.log(getMonsterAverageScore(2, 141))
-// console.log(getMonsterAverageScore(1, 6))
-
-
-//skapa klass för varje kort 
-//namn, id, bild, 
-
-
-//att göra på sidan
-//1. koppla monster till card, göra en klass?
-//2. söka på monsters id 
-//3. koppla samman färger
-//4. koppla samman grafen, medelvärde av poängen baserat på hur många gånger de tävlat alla tävlor olika måpnga gånger
-
-
-
-// function startStoryP1() {
-//     let storyPage = document.getElementById("storyPage")
-//     storyPage.classList.remove("hide")
-//     let portalPage = document.getElementById("portalPage");
-//     portalPage.classList.add("hide")
-//     let storyTextP1 = document.getElementById("storyTextP1");
-//     const skullJaw = document.querySelector(".pirateJaw")
-//     let currentLetter = 0;
-//     let storyPart1 = "The story begins in the 1600s, when the pirate fleet Royal Fortune flees from the British East India Company. In a desperate attempt to escape, they sail into a violent storm, but are instead pulled into a massive whirlpool and vanish without a trace in the depths of the ocean. From the world’s perspective, the pirates are presumed dead, and over time the event becomes nothing more than a forgotten footnote in history. More than 450 years later, in 2104, a research submersible discovers a mysterious underwater cave containing an enormous energy source. When the expedition enters the cave, they end up in the same supernatural place as the pirates.";
-//     let storypart1Array = storyPart1.split("")
-
-
-//     const typeWriterP1 = setInterval(() => {
-//         storyTextP1.textContent += storypart1Array[currentLetter]
-//         currentLetter++
-
-//         if (currentLetter === storypart1Array.length) {
-//             clearInterval(typeWriterP1)
-//             skullJaw.classList.remove("animation")
-
-//             storyTextP1.classList.add("hide");
-//             storyTextP2.classList.remove("hide");
-
-//             startStoryP2();
-//         }
-//     }, 10)
-
-
-// }
-// function startStoryP2() {
-//     let portalPage = document.getElementById("portalPage");
-//     let storyPage = document.getElementById("storyPage")
-//     storyPage.classList.add("hide")
-//     portalPage.classList.remove("hide")
-//     let storyTextElement = document.querySelector(".storyText");
-//     let storyTextP2 = document.getElementById("storyTextP2");
-
-//     let storyPart2 = "The pirates had survived inside a gigantic underwater cavern with five colored portals leading to different dangerous and strange worlds filled with monsters and unknown environments. After heavy losses, they learn to survive, tame creatures, and eventually build a functioning society, where an arena with monster battles becomes the center of culture and economy. When the modern expedition arrives, the group is split up and enters different portals. In one of the worlds, the protagonist ends up in a timeless system where people from different eras are trapped in an arena. To return, they must win three matches in a row, but each loss resets their progress. The story ends with the realization that escape may take an extremely long time—but also with hope of understanding the system and one day finding a way back.";
-//     const skullJaw = document.querySelector(".pirateJaw")
-//     let storypart2Array = storyPart2.split("")
-//     let currentLetter = 0;
-//     storyTextP2.textContent = "";
-
-//     const TypeWriterP2 = setInterval(() => {
-//         storyTextP2.textContent += storypart2Array[currentLetter]
-//         currentLetter++
-
-//         if (currentLetter === storypart2Array.length) {
-//             clearInterval(TypeWriterP2)
-//             skullJaw.classList.remove("animation")
-//         }
-//     }, 10)
-
-// }
