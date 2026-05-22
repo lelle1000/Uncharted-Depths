@@ -44,7 +44,13 @@ function ClearSectionClickEvent() {
     const clearSelectionButton = document.getElementById("clearSelectionButton")
     clearSelectionButton.addEventListener("click", () => { //clear Selection av monsters knapp
         svgContainer.selectAll("polygon").remove()
+
+        let svg = d3.select("#pointsDistrubution")
         svg.selectAll("rect").remove()
+
+
+
+
         chosenCardCounter = 0;
 
         containerAllMonstersBox.forEach(card => {
@@ -260,7 +266,7 @@ function CompareCreatures() {
 
         let participantId2 = arrayFromChosenCardsIdAndColor[1].id
         let color2 = arrayFromChosenCardsIdAndColor[1].rgb
-        
+
 
         drawRadarChart(getParticipantSkills(participantId1, seasonFromDropDownNum), color1)
         drawRadarChart(getParticipantSkills(participantId2, seasonFromDropDownNum), color2)
