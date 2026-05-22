@@ -37,6 +37,8 @@ function randomPictureGenerator() { //generera en random monster URL
 function ClearSectionClickEvent() {
     const clearSelectionButton = document.getElementById("clearSelectionButton")
     clearSelectionButton.addEventListener("click", () => { //clear Selection av monsters knapp
+        svgContainer.selectAll("polygon").remove()
+        svg.selectAll("rect").remove()
         chosenCardCounter = 0;
 
         containerAllMonstersBox.forEach(card => {
@@ -203,6 +205,9 @@ function getMonsterAverageScore(requestedSeason, requestedParticipantIdAndColor)
 function CompareCreatures() {
     let compareButton = document.getElementById("compareButton");
     compareButton.addEventListener("click", () => {
+
+        svgContainer.selectAll("polygon").remove()
+
         console.log("klickk")
         console.log(GetArrayFromChosenCards());
         console.log(GetSeasonFromDropown())
@@ -215,6 +220,16 @@ function CompareCreatures() {
         let arrayToCompare = getMonsterAverageScore(seasonFromDropDownNum, arrayFromChosenCardsIdAndColor)
         console.log(arrayToCompare)
         CreateChartSvg(arrayToCompare)
+
+        let participantId1 = arrayFromChosenCardsIdAndColor[0].id
+        let color1 = arrayFromChosenCardsIdAndColor[0].rgb
+
+        let participantId2 = arrayFromChosenCardsIdAndColor[1].id
+        let color2 = arrayFromChosenCardsIdAndColor[1].rgb
+        
+
+        drawRadarChart(getParticipantSkills(participantId1, seasonFromDropDownNum), color1)
+        drawRadarChart(getParticipantSkills(participantId2, seasonFromDropDownNum), color2)
     })
 }
 

@@ -386,10 +386,8 @@ function drawRadarChart(data, strokeColor) {
     svgContainer.append("polygon")
         .attr("points", points)
         .attr("stroke", strokeColor)
-        .attr("fill", "none")
+        .attr("fill", `${strokeColor}`)
+        .attr("fill-opacity", 0.3)
         .attr("stroke-width", 2)
-        .attr("")
 }
 
-drawRadarChart(getParticipantSkills(170, 1), "blue")
-drawRadarChart(getParticipantSkills(190, 1), "red")
