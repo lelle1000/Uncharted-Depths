@@ -131,6 +131,11 @@ body {
     font-size: 20px;
 }
 
+.buttonParticipants:hover {
+    background-color: #092a39;
+
+}
+
 
 /* *********************  */
 #containerGraphs {
@@ -150,9 +155,9 @@ body {
 
 
 #pointsDistrubution {
-    height: 250px;
+    height: 100%;
     width: 100%;
-    background-color: #040C14;
+    background-image: url(../images/creditsPage.png);
     border-radius: 10px;
     color: #C2AD89;
 }
@@ -257,6 +262,11 @@ body {
     display: none;
 }
 
+#searchBars {
+    display: flex;
+    gap: 20px;
+}
+
 #seasonsDropDown {
     padding: 3px;
     width: 200px;
@@ -266,4 +276,20 @@ body {
     color: black;
     opacity: 80%;
     border: solid 2px #2a3d3b;
+}
+
+#compareButton {
+    padding: 3px;
+    width: 200px;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #446360;
+    color: black;
+    opacity: 80%;
+    border: solid 2px #2a3d3b;
+}
+
+#compareButton:hover {
+    background-color: #3b5552;
+    cursor: pointer;
 }

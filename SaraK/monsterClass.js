@@ -19,7 +19,7 @@ function colorGenerator() { //generera en färg till monster
 }
 
 function randomPictureGenerator() { //generera en random monster URL
-    let monsterPicNum = Math.ceil(Math.random() * 3)
+    let monsterPicNum = Math.ceil(Math.random() * 16)
     return `../images/monster${monsterPicNum}.png`
 }
 
