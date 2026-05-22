@@ -149,16 +149,16 @@ body {
 #skillDistrubution {
     height: 400px;
     width: 100%;
-    background-color: #040C14;
     border-radius: 10px;
     color: #C2AD89;
+    background-image: url("../images/creditsPage.png");
 }
 
 
 #pointsDistrubution {
     height: 100%;
     width: 100%;
-    background-image: url(../images/creditsPage.png);
+    background-image: url("../images/creditsPage.png");
     border-radius: 10px;
     color: #C2AD89;
 }
