@@ -84,7 +84,6 @@ body {
     flex-wrap: wrap;
     overflow: scroll;
     gap: 15px;
-    height: 100vh;
     margin-right: 25px;
 }
 
