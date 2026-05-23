@@ -10,6 +10,10 @@
     
 }
 
+#topSectionLandingPage{
+    display: flex;
+}
+
 #monsterPic {
     background: rgba(11, 20, 34, 0.76);
 }
@@ -29,6 +33,9 @@
 }
 
 
+#monsterRanking{
+    position: relative;
+}
 .child{
     display: flex;
     align-items: center;
@@ -55,9 +62,9 @@
 #smallRanking{
       font-size: 16px;
       position: absolute;
-      left: 433px;
+      top: 27px;
+      left: 146px;
       color: white;
-      top: 32px;
 }
 
 #monsterPic{
@@ -71,7 +78,7 @@
 #monsterPic p{
     color: #C2AD89;
     text-align: center;
-    font-size: 22px;
+    font-size: 26px;
     font-weight: 700;
 
 }
@@ -119,6 +126,7 @@ div #winRate {
 }
 
 #rankMonsterName{
+    font-family: titleFont;
     position: absolute;
     top: 10px;
     left: 10px;

@@ -85,6 +85,7 @@ body {
     overflow: scroll;
     gap: 15px;
     height: 100vh;
+    margin-right: 25px;
 }
 
 .chosenMonsterCard {
@@ -96,8 +97,8 @@ body {
 .monsterCard {
     background-image: url(../images/monsterCard.png);
     background-size: contain;
-    width: 163px;
-    height: 228px;
+    width: 153px;
+    height: 218px;
     display: flex;
     justify-content: center;
     align-items: center;

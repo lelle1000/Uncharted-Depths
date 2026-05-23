@@ -50,23 +50,25 @@
 
     <main id="landingPageContainer" class="">
         <div id="topSectionLandingPage">
-            <div id="topCreaturesContainer">
-
-            </div>
-            <div id="topCreatureStats">
-                <div id="topCreatureStats">
-                    <div id="specialtyContainer">
-                        <div id="monsterPic"></div>
-                        <div id="rates">
-                            <div id="monsterRanking" class="child"></div>
-                            <div id="specialty" class="child"></div>
-                            <div id="winRate" class="child"></div>
-                        </div>
-                    </div>
+            <div id="containerAllMonstersBox"></div>
+            <div id="specialtyContainer">
+                <div id="monsterPic">
+                    <img src="./images/smallPicBorder.svg" id="smallPicBorder" style="display: none;">
+                    <img src="./images/Line 4.svg" id="smallLine" style="display: none;">
+                    <div class="cropBox"></div>
+                    <p id="rankMonsterName"></p>
+                    <img src="./images/glassGlobe.png" alt="">
+                    <div id="smallMonsterPic"></div>
                 </div>
-
+                <div id="rates">
+                    <div id="monsterRanking" class="child"></div>
+                    <div id="specialty" class="child"></div>
+                    <div id="winRate" class="child"></div>
+                </div>
             </div>
+                
         </div>
+    
 
         <div id="bottomSectionLandingPage">
             <div id="scoreboardContainer">
@@ -78,7 +80,7 @@
                         Seek</button>
                     <button class="disciplineButton title" id="mazeDiscipline" data-disciplineid="1">Maze</button>
                     <button class="disciplineButton title" id="huntDiscipline" data-disciplineid="2">Hunt</button>
-                    <button class="disciplineButton title" id="calcRatesButton">Calculate Rates</button>
+                    <button class="disciplineButton title" id="calcRatesButton">Coaches Impact</button>
                 </div>
                 <div id="scoreboardBottomSection">
                     <div id="scoreboardSeasonContainer">
@@ -163,6 +165,23 @@
         </div>
     </main>
 
+    <main id="coachGraphPage" class="hide">
+        <img src="../images/backArrow.png" id="backArrowCompare" class="backArrow" alt="">
+        <div id="coachInfoText">
+            <h2>Coaching Impact Overview</h2>
+            <p>- The graph shows how coaches perform based on the total points their participants earn across different competitions.<br>- The points for each placement for an event are shown under the graph.</p>
+        </div>
+        <div id="coachGrafButtonContainer">
+            <select id="seasonSelect"></select>
+            <select id="eventSelect"></select>
+        </div>
+        <div id="chart"></div>
+        <div id="placementInfo">
+            <h4>Point Placement System:</h4>
+            <p>1st = 15 pts,&nbsp;&nbsp;&nbsp;&nbsp;2nd = 10 pts,&nbsp;&nbsp;&nbsp;&nbsp;3rd = 6 pts,&nbsp;&nbsp;&nbsp;&nbsp;4th = 3 pts,&nbsp;&nbsp;&nbsp;&nbsp;5th = 1 pt</p>
+        </div>
+    </main>
+
     <main id="creditsPage" class="hide">
         <img src="./images/backArrow.png" id="backArrowCredits" class="backArrow" alt="">
 
@@ -206,9 +225,9 @@
     <script src="Frontend/dataset.v2.js"></script>
     <script src="functions.js"></script>
     <script type="module" src="/SaraK/monsterClass.js"></script>
+    <script src="SaraK/saraK.js"></script>
     <script src="LinusS/linus.js"></script>
     <script src="SaraB/saraB.js"></script>
-    <script src="SaraK/saraK.js"></script>
 </body>
 
 </html>

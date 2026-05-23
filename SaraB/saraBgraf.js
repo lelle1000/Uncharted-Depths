@@ -1,6 +1,6 @@
 
 
-let disciplinesElements = ["Maze", "Hunt", "HidenSeek", "Fighting", "Race"];
+let disciplineAlternatives = ["Maze", "Hunt", "HidenSeek", "Fighting", "Race"];
 
 
 
@@ -24,23 +24,23 @@ sortedDisciplines.forEach(d => {
     opt.value = d.id;
 
     // MAP ID → NAME
-    opt.textContent = disciplinesElements[d.id - 1];
+    opt.textContent = disciplineAlternatives[d.id - 1];
 
     eventSelect.appendChild(opt);
 });
 
 
-let selectedSeason = 1;
-let selectedDiscipline = sortedDisciplines[0].id;
+let deafultSeason = 1;
+let defaultDiscipline = sortedDisciplines[0].id;
 
 
 seasonSelect.addEventListener("change", e => {
-    selectedSeason = +e.target.value;
+    deafultSeason = +e.target.value;
     updateCoachPerformanceChart();
 });
 
 eventSelect.addEventListener("change", e => {
-    selectedDiscipline = +e.target.value;
+    defaultDiscipline = +e.target.value;
     updateCoachPerformanceChart();
 });
 
@@ -81,7 +81,7 @@ gYAxis.attr("transform", `translate(${margin.left}, 0)`);
 
 function updateCoachPerformanceChart() {
 
-    let season = seasons[selectedSeason - 1];
+    let season = seasons[deafultSeason - 1];
     let placementPoints = [15, 10, 6, 3, 1];
 
     let coachPoints = coaches.map(c => ({
@@ -92,7 +92,7 @@ function updateCoachPerformanceChart() {
     for (let compDay of season.competitionDays) {
         for (let event of compDay.events) {
 
-            if (event.disciplineId !== selectedDiscipline) continue;
+            if (event.disciplineId !== defaultDiscipline) continue;
 
             let sorted = [...event.scores]
                 .sort((a, b) => b.score - a.score);
