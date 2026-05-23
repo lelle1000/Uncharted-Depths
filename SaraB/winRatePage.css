@@ -142,3 +142,63 @@ div #winRate {
 .rankingText {
     color: white !important;
 }
+
+#chart svg {
+    margin-top: 200px;
+}
+
+select {
+    width: 170px;
+    height: 54px;
+    border-radius: 10px;
+    border: 2px solid #A2844F;
+    background: #051922;
+    color: #C2AD89;
+    padding: 0 12px;
+
+    font-family: Piazzolla;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+#coachGrafButtonContainer{
+    display: flex;
+    position: absolute;
+    left: 950px;
+    top: 50px;
+    gap: 15px;
+
+}
+
+
+#coachGraphPage {
+    width: 100vw;
+    min-height: 100vh;
+
+    background-image: url("../images/coachGrafBackgroundPic.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#coachInfoText{
+    position: absolute;
+    color: #C2AD89;
+    left: 180px;
+    top: 50px;
+}
+
+#coachInfoText p{
+    margin-top: 25px;
+}
+
+#placementInfo{
+    margin-left: 200px;
+    color: #C2AD89;
+
+}
