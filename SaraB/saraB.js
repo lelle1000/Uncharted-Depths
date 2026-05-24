@@ -1,11 +1,21 @@
 let disciplineAlternatives = ["Maze", "Hunt", "HidenSeek", "Fighting", "Race"];
-
+let comparePageButton = document.getElementById("comparePageButton")
+let landingPageContainer = document.getElementById("landingPageContainer")
+let comparePage = document.getElementById("comparePage")
 
 
 let seasonSelect = document.getElementById("seasonSelect");
 seasonSelect.classList.add("selectC") 
 let eventSelect = document.getElementById("eventSelect");
 eventSelect.classList.add("selectC") 
+
+comparePageButton.addEventListener("click", e => {
+    landingPageContainer.classList.add("hide")
+    comparePage.classList.remove("hide")
+
+})
+
+
 
 
 

@@ -92,6 +92,7 @@ body {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    margin-top: 10px;
 }
 
 #bottomSectionLandingPage {
