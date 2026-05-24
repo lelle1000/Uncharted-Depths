@@ -1,30 +1,27 @@
 function ScoreboardParticipantsAndAverageScore(disciplineId, seasonId) {
-    let ParticipantAndScore = []
-    let averageScore;
-    let participantName;
-
-    let allParticipants = participants.map(player => player.id)
+    let participantAndScoreArray = []
 
     let disciplineIdNumb = Number(disciplineId)
     let seasonIdNumb = Number(seasonId)
 
     let correctSeason = seasons.find(obj => obj.year === seasonIdNumb)
-    let compDays = correctSeason.competitionDays
+    let compDaysArray = correctSeason.competitionDays
 
-    for(let day of compDays) {
-        let events = day.events
-        let correctDisciplinesArrays = events.filter(event => event.disciplineId === disciplineIdNumb)
+    for(let day of compDaysArray) {
+        let event = day.events
+
+        let correctDisciplinesObj = event.find(evnt => evnt.disciplineId === disciplineIdNumb)
         
-        let scores = correctDisciplinesArrays[0].scores
-        for(let scoreObj of scores) {
+        let currentScoresObj = correctDisciplinesObj.scores
+        for(let scoreObj of currentScoresObj) {
 
-            let existing = ParticipantAndScore.find(p => p.participantId == scoreObj.participantId)
+            let existing = participantAndScoreArray.find(p => p.participantId == scoreObj.participantId)
 
             if(existing) {
                 existing.totalScore += scoreObj.score
                 existing.matchesPlayed += 1
             } else {
-                ParticipantAndScore.push({
+                participantAndScoreArray.push({
                     participantId: scoreObj.participantId,
                     totalScore: scoreObj.score,
                     matchesPlayed: 1
@@ -32,8 +29,8 @@ function ScoreboardParticipantsAndAverageScore(disciplineId, seasonId) {
             }
         }
     }   
-
-    for(let participant of ParticipantAndScore) {
+    
+    for(let participant of participantAndScoreArray) {
 
         let correctParticipant = participants.find(p => p.id == participant.participantId)
 
@@ -44,26 +41,24 @@ function ScoreboardParticipantsAndAverageScore(disciplineId, seasonId) {
         
     }
     
-    return ParticipantAndScore
+    return participantAndScoreArray
 }
+
+const disciplineNames = {
+        1: "Maze1",
+        2: "Hunt2",
+        3: "HideNSeek3",
+        4: "Race4",
+        5: "Fighting5"
+    }
 
 function getDisciplineScores(seasonId) {
     let allAverageScoresForAllDisciplines = {}
-    let allDisciplines = [1, 2, 3, 4, 5]
 
-    for(let discipline of allDisciplines) {
-        if (discipline == 1) {
-            allAverageScoresForAllDisciplines.Maze1 = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
-        } else if (discipline == 2) {
-            allAverageScoresForAllDisciplines.Hunt2 = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
-        } else if (discipline == 3) {
-            allAverageScoresForAllDisciplines.HideNSeek3 = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
-        } else if (discipline == 4) {
-            allAverageScoresForAllDisciplines.Race4 = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
-        } else {
-            allAverageScoresForAllDisciplines.Fighting5 = (ScoreboardParticipantsAndAverageScore(discipline, seasonId))
-        }
-    }
+    disciplines.forEach(discipline => {
+        let disciplineName = disciplineNames[discipline.id]
+        allAverageScoresForAllDisciplines[disciplineName] = ScoreboardParticipantsAndAverageScore(discipline.id, seasonId)
+    })
 
     return allAverageScoresForAllDisciplines
 }
