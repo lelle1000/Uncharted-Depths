@@ -2,6 +2,7 @@
 
 const mainContainer = document.getElementById("comparePage")
 let allMonstersObjectArray = participants;
+console.log(participants)
 let containerAllMonstersBox = document.querySelectorAll("#containerAllMonstersBox .monsterCard");
 let chosenCardCounter = 0;
 let svg, xScale, yScale, xAxisGroup, yAxisGroup, chartHeight, chartWidth, marginCompareChart;
@@ -127,7 +128,6 @@ function CreateAllMonsters(monstersArray) {
         `;
 
         let colorLine = monsterCard.querySelector(".colorLine");
-
         colorLine.style.backgroundColor = monster1.color;
 
         monsterCards.push(monsterCard);
@@ -405,6 +405,7 @@ function GetArrayOfParticipantsSeason() {
 }
 
 CreateAllMonsters(allMonstersObjectArray);
+ShowAllMonsters();
 ChosenCardClickEvent();
 InputFieldClickEvent();
 ClearSectionClickEvent();
