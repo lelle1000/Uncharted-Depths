@@ -221,3 +221,19 @@ div #winRate {
     height: 250px;
 
 }
+
+#comparePageButton{
+    position: absolute;
+    top: 290px;
+    left: 350px;
+
+
+    width: 254px;
+    height: 31px;
+    padding: 0 15px;
+
+    border-radius: 5px;
+    border: 1px solid #A2844F;
+    background: #040E16;
+    color: #C2AD89
+}
