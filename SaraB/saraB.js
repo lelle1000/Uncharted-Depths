@@ -2,6 +2,31 @@ let disciplineAlternatives = ["Maze", "Hunt", "HidenSeek", "Fighting", "Race"];
 let comparePageButton = document.getElementById("comparePageButton")
 let landingPageContainer = document.getElementById("landingPageContainer")
 let comparePage = document.getElementById("comparePage")
+let coachesImpactButton = document.getElementById("coachesImpactButton")
+let coachGraphPage = document.getElementById("coachGraphPage")
+let coachBackArrow = document.getElementById("coachBackArrow")
+
+comparePageButton.addEventListener("click", e => {
+    landingPageContainer.classList.add("hide")
+    comparePage.classList.remove("hide")
+    
+})
+
+coachesImpactButton.addEventListener("click", e => {
+    landingPageContainer.classList.add("hide")
+    coachGraphPage.classList.remove("hide")
+    
+})
+
+
+coachBackArrow.addEventListener("click", e => {
+    coachGraphPage.classList.add("hide")
+    landingPageContainer.classList.remove("hide")
+    
+})
+
+
+
 
 
 let seasonSelect = document.getElementById("seasonSelect");
@@ -71,7 +96,7 @@ let height = 400;
 let marginC = { top: 40, right: 100, bottom: 80, left: 250 };
 
 let svgC = d3.select("#chart")
-    .append("svgC")
+    .append("svg")
     .attr("width", width)
     .attr("height", height);
 
