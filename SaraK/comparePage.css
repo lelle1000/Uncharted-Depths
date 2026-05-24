@@ -100,7 +100,7 @@ body {
 
 .monsterCard {
     background-image: url(../images/monsterCard.png);
-    background-size: contain;
+    background-size: cover;
     width: 153px;
     height: 218px;
     display: flex;
