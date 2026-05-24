@@ -4,6 +4,7 @@ let landingPageContainer = document.getElementById("landingPageContainer")
 let comparePage = document.getElementById("comparePage")
 let coachesImpactButton = document.getElementById("coachesImpactButton")
 let coachGraphPage = document.getElementById("coachGraphPage")
+let coachBackArrow = document.getElementById("coachBackArrow")
 
 comparePageButton.addEventListener("click", e => {
     landingPageContainer.classList.add("hide")
@@ -16,6 +17,14 @@ coachesImpactButton.addEventListener("click", e => {
     coachGraphPage.classList.remove("hide")
     
 })
+
+
+coachBackArrow.addEventListener("click", e => {
+    coachGraphPage.classList.add("hide")
+    landingPageContainer.classList.remove("hide")
+    
+})
+
 
 
 
