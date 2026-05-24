@@ -39,11 +39,11 @@
 }
 
 #portalPageGLow {
-    background-image: url("./images/");
+    background-image: url("./images/EllipsePortal.png");
     background-position: center;
     background-size: cover;
-    background: black;
-    position: absolute;
+    background-color: transparent;
+    position: sticky;
     border: 0;
 
     height: 43%;
