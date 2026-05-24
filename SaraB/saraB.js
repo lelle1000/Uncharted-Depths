@@ -3,7 +3,9 @@ let disciplineAlternatives = ["Maze", "Hunt", "HidenSeek", "Fighting", "Race"];
 
 
 let seasonSelect = document.getElementById("seasonSelect");
+seasonSelect.classList.add("selectC") 
 let eventSelect = document.getElementById("eventSelect");
+eventSelect.classList.add("selectC") 
 
 
 

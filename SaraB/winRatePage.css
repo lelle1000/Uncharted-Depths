@@ -158,7 +158,7 @@ div #winRate {
     margin-top: 200px;
 }
 
-select {
+.eventSelect {
     width: 170px;
     height: 54px;
     border-radius: 10px;
