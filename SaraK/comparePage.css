@@ -54,8 +54,8 @@ body {
     background-color: rgba(47, 65, 67, 0.7);
     background-blend-mode: lighten;
     padding: 10px 60px;
-    /* height: 100%; */
     width: 100%;
+    overflow: scroll;
 }
 
 .backArrow {
