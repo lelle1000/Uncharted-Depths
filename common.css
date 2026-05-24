@@ -37,3 +37,19 @@
     justify-content: center;
     align-items: center;
 }
+
+#portalPageGLow {
+    background-image: url("./images/");
+    background-position: center;
+    background-size: cover;
+    background: black;
+    position: absolute;
+    border: 0;
+
+    height: 43%;
+    width: 15%;
+
+    top: 50%;
+    left: 44%;
+
+}
