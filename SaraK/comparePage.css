@@ -125,7 +125,8 @@ body {
     font-size: 34px;
     color: #C2AD89;
     font-family: titleFont;
-    margin: 0px;
+    margin: 0;
+    margin-left :20px;
 }
 
 #containerButtons {
