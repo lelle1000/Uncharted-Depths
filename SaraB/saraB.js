@@ -438,8 +438,8 @@ let topMonsters = topFivePlayers.map(player =>
     participants.find(p => p.id === player.participantId)
 );
 
-CreateAllMonsters(topMonsters);
-
+let containerAllMonstersBoxLanding = document.getElementById("containerAllMonstersBoxLanding")
+containerAllMonstersBoxLanding.append(CreateAllMonsters(topMonsters))
 
 
 
