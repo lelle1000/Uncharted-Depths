@@ -55,25 +55,25 @@ const maxPoints = 2300;
 
 let width = 1400;
 let height = 400;
-let margin = { top: 40, right: 100, bottom: 80, left: 250 };
+let marginC = { top: 40, right: 100, bottom: 80, left: 250 };
 
-let svg = d3.select("#chart")
-    .append("svg")
+let svgC = d3.select("#chart")
+    .append("svgC")
     .attr("width", width)
     .attr("height", height);
 
-let gBars = svg.append("g");
-let gLabels = svg.append("g");
-let gXAxis = svg.append("g");
-let gYAxis = svg.append("g");
+let gBars = svgC.append("g");
+let gLabels = svgC.append("g");
+let gXAxis = svgC.append("g");
+let gYAxis = svgC.append("g");
 
 // FIX Y SCALE (11 coaches)
 let y = d3.scaleBand()
     .domain(coaches.map(c => c.id).sort((a, b) => a - b))
-    .range([margin.top, height - margin.bottom])
+    .range([marginC.top, height - marginC.bottom])
     .padding(0.8);
 
-gYAxis.attr("transform", `translate(${margin.left}, 0)`);
+gYAxis.attr("transform", `translate(${marginC.left}, 0)`);
 
 
 
@@ -126,7 +126,7 @@ function drawChart(coachData) {
 
     let x = d3.scaleLinear()
         .domain([0, maxPoints])
-        .range([margin.left, width - margin.right]);
+        .range([marginC.left, width - marginC.right]);
 
     // AXES
     gXAxis
@@ -134,7 +134,7 @@ function drawChart(coachData) {
         .duration(800)
         .attr("font-size", "14px")
         .attr("stroke", "#C2AD89")
-        .attr("transform", `translate(0, ${height - margin.bottom})`)
+        .attr("transform", `translate(0, ${height - marginC.bottom})`)
         .call(d3.axisBottom(x).ticks(6));
 
         gXAxis.select(".domain")
@@ -166,7 +166,7 @@ function drawChart(coachData) {
         .attr("fill", "#C2AD89");
  
 
-    svg.append("text")
+    svgC.append("text")
         .attr("x", 800)
         .attr("y", height - 10)
         .attr("text-anchor", "middle")
@@ -175,7 +175,7 @@ function drawChart(coachData) {
         .text("Total Points");
 
 
-    svg.append("text")
+    svgC.append("text")
         .attr("x", 210)
         .attr("y", 17)
         .attr("fill", "#C2AD89")
@@ -438,8 +438,18 @@ let topMonsters = topFivePlayers.map(player =>
     participants.find(p => p.id === player.participantId)
 );
 
+
+
 let containerAllMonstersBoxLanding = document.getElementById("containerAllMonstersBoxLanding")
-containerAllMonstersBoxLanding.append(CreateAllMonsters(topMonsters))
+let coachCards = CreateAllMonsters(topMonsters)
+
+containerAllMonstersBoxLanding.innerHTML = "";
+
+coachCards.forEach(card => {
+    containerAllMonstersBoxLanding.appendChild(card);
+});
+
+
 
 
 

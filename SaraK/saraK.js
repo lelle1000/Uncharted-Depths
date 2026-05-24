@@ -107,30 +107,39 @@ function RandomNumber() {
 }
 
 function CreateAllMonsters(monstersArray) {
-    let containerAllMonstersBoxId = document.getElementById("containerAllMonstersBox")
-    containerAllMonstersBoxId.innerHTML = ``
+
+    let monsterCards = [];
 
     for (let i = 0; i < monstersArray.length; i++) {
 
         let monster1 = new MonsterCardClass(monstersArray[i]);
 
         let monsterCard = document.createElement("div");
-        monsterCard.classList.add("monsterCard")
+        monsterCard.classList.add("monsterCard");
+
         monsterCard.innerHTML = `
-                       
-        <p class="monsterName">${monster1.name}</p>
-        <img src="${monster1.imgUrl}" class="monsterImage">
-        <div class="colorLine"> </div>
-        <p class="idName"> Id : <span id="monsterId">${monster1.id}</span></p>
-        `
+            <p class="monsterName">${monster1.name}</p>
+            <img src="${monster1.imgUrl}" class="monsterImage">
+            <div class="colorLine"></div>
+            <p class="idName">
+                Id : <span class="monsterId">${monster1.id}</span>
+            </p>
+        `;
+
         let colorLine = monsterCard.querySelector(".colorLine");
-        colorLine.style.backgroundColor = `${monster1.color}`
-        containerAllMonstersBoxId.appendChild(monsterCard);
+
+        colorLine.style.backgroundColor = monster1.color;
+
+        monsterCards.push(monsterCard);
     }
 
+    return monsterCards;
 }
 
+
+
 function ShowAllMonsters(participantsForTheSeason) {
+
     let containerAllMonstersBoxId = document.getElementById("containerAllMonstersBox")
     containerAllMonstersBoxId.innerHTML = ``
 
