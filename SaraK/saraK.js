@@ -43,7 +43,7 @@ function randomPictureGenerator() { //generera en random monster URL
 function ClearSectionClickEvent() {
 
     const clearSelectionButton = document.getElementById("clearSelectionButton")
-    clearSelectionButton.addEventListener("click", () => { //clear Selection av monsters knapp
+    clearSelectionButton.addEventListener("click", () => {
         containerAllMonstersBox = document.querySelectorAll("#containerAllMonstersBox .monsterCard");
 
         svgContainer.selectAll("polygon").remove()
@@ -224,22 +224,6 @@ function ChosenCardClickEvent() {
 
         })
     })
-}
-
-
-function getMonstersTotalScoreFromId(reqId) {
-    let totalScore = 0;
-    let pointsArrayForId = seasons.filter(year => year.year == 1)
-        .flatMap(season => season.competitionDays)
-        .flatMap(day => day.events)
-        .flatMap(events => events.scores)
-        .filter(score => score.participantId == reqId)
-
-    totalScore = pointsArrayForId.reduce((sum, s) => sum + s.score, 0)
-    totalScore = Math.round(totalScore / pointsArrayForId.length);
-    console.log(totalScore)
-    return totalScore;
-
 }
 
 
