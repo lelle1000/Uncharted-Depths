@@ -48,6 +48,7 @@ function ClearSectionClickEvent() {
         containerAllMonstersBox = document.querySelectorAll("#containerAllMonstersBox .monsterCard");
 
         svgContainer.selectAll("polygon").remove()
+        xAxisGroup.selectAll("text").remove();
 
         let svg = d3.select("#pointsDistrubution")
         svg.selectAll("rect").remove()
@@ -340,7 +341,6 @@ function CreateChartSvg() {
 function changeChartStats(compareScoreArray) {
     let data = compareScoreArray;
     console.log(data)
-
     xScaleCompare.domain(data.map(data => `ID: ${data.id}`));
     xAxisGroup.call(d3.axisBottom(xScaleCompare));
 
