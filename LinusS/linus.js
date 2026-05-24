@@ -190,7 +190,8 @@ function updateScoreboard() {
 
 let subSound = document.querySelector("#subSound")
 let waveSound = document.querySelector("#waveSound")
-let pirateStory = document.querySelector("#pirateStory")
+let pirateStory1 = document.querySelector("#pirateStoryPart1")
+let pirateStory2 = document.querySelector("#pirateStoryPart2")
 
 let firstPage = document.querySelector("#firstPage")
 let creditsPage = document.querySelector("#creditsPage")
@@ -219,14 +220,18 @@ let season8 = document.querySelector("#season8Landing")
 let season9 = document.querySelector("#season9Landing")
 let season10 = document.querySelector("#season10Landing")
 
+let backArrowCredits = document.querySelector("#backArrowCredits")
+
 let continueButtonStory = document.querySelector("#continueButtonStory")
 
 let creatureScoreboardStats = document.querySelector("#creatureScoreboardStats")
 
 let storyPart1 = "The story begins in the 1600s, when the pirate fleet Royal Fortune flees from the British East India Company. In a desperate attempt to escape, they sail into a violent storm, but are instead pulled into a massive whirlpool and vanish without a trace in the depths of the ocean. From the world’s perspective, the pirates are presumed dead, and over time the event becomes nothing more than a forgotten footnote in history. More than 450 years later, in 2104, a research submersible discovers a mysterious underwater cave containing an enormous energy source. When the expedition enters the cave, they end up in the same supernatural place as the pirates.";
-let storyPart2 = "The pirates had survived inside a gigantic underwater cavern with five colored portals leading to different dangerous and strange worlds filled with monsters and unknown environments. After heavy losses, they learn to survive, tame creatures, and eventually build a functioning society, where an arena with monster battles becomes the center of culture and economy. When the modern expedition arrives, the group is split up and enters different portals. In one of the worlds, the protagonist ends up in a timeless system where people from different eras are trapped in an arena. To return, they must win three matches in a row, but each loss resets their progress. The story ends with the realization that escape may take an extremely long time—but also with hope of understanding the system and one day finding a way back.";
-const skullJaw = document.querySelector(".pirateJaw")
-let storyTextElement = document.querySelector(".storyText")
+let storyPart2 = "The pirates had survived inside a gigantic underwater cavern with five colored portals leading to different dangerous and strange worlds filled with monsters and unknown environments. After heavy losses, they learn to survive, tame creatures, and eventually build a functioning society, where an arena with monster battles becomes the center of culture and economy. When the modern expedition arrives, the group is split up and enters different portals. In one of the worlds, the protagonist ends up in a timeless system where people from different eras are trapped in an arena. To return, they must win three matches in a row, but each loss resets their progress. The story ends with the realization that escape may take an extremely long time, but also with hope of understanding the system and one day finding a way back.";
+const skullJaw1 = document.querySelector("#skullJaw1")
+const skullJaw2 = document.querySelector("#skullJaw2")
+let storyPart1LiveText = document.querySelector("#storyTextPart1")
+let storyPart2LiveText = document.querySelector("#storyTextPart2")
 
 let storypart1Array = storyPart1.split("")
 let storypart2Array = storyPart2.split("")
@@ -244,16 +249,16 @@ storyModeButton.addEventListener("click", () => {
         storyPage.classList.add("fadeToNormal")
         waveSound.play()
         waveSound.volume = 0.5
-        pirateStory.play()
+        pirateStory1.play()
 
         const TypeWriter = setInterval(() => {
-            storyTextElement.textContent += storypart1Array[currentLetter]
+            storyPart1LiveText.textContent += storypart1Array[currentLetter]
             currentLetter++
 
             if (currentLetter === storypart1Array.length) {
                 storyPage.classList.remove("fadeToNormal")
                 clearInterval(TypeWriter)
-                skullJaw.classList.remove("animation")
+                skullJaw1.classList.remove("animation")
                 continueButtonStory.classList.remove("hide")
             }
         }, 70)
@@ -261,13 +266,32 @@ storyModeButton.addEventListener("click", () => {
 })
 
 continueButtonStory.addEventListener("click", () => {
+    currentLetter = 0
     storyPage.classList.add("fadePageBlack")
     setTimeout(() => {
         storyPage.classList.add("hide")
         storyPage.classList.remove("fadePageBlack")
         portalPage.classList.remove("hide")
         portalPage.classList.add("fadeToNormal")
+        pirateStory2.play()
+
+        const TypeWriter = setInterval(() => {
+            storyPart2LiveText.textContent += storypart2Array[currentLetter]
+            currentLetter++
+
+            if (currentLetter === storypart2Array.length) {
+                portalPage.classList.remove("fadeToNormal")
+                clearInterval(TypeWriter)
+                skullJaw2.classList.remove("animation")
+                continueButtonStory.classList.remove("hide")
+            }
+        }, 70)
     }, 5000 )
+})
+
+quickModeButton.addEventListener("click", () => {
+    firstPage.classList.add("hide")
+    landingPage.classList.remove("hide")
 })
 
 creditsButton.addEventListener("click", () => {
@@ -279,6 +303,12 @@ creditsButton.addEventListener("click", () => {
         firstPage.classList.remove("fadePageBlack")
         creditsPage.classList.add("fadeToNormal")
     }, 5000 )
+})
+
+backArrowCredits.addEventListener("click", () => {
+    creditsPage.classList.remove("fadeToNormal")
+    creditsPage.classList.add("hide")
+    firstPage.classList.remove("hide")
 })
 
 let disciplineButtons = [fightingButton, raceButton, hidenseekButton, mazeButton, huntButton]
@@ -390,4 +420,516 @@ function drawRadarChart(data, strokeColor) {
         .attr("fill-opacity", 0.3)
         .attr("stroke-width", 2)
 }
+
+
+
+////Coach graph
+
+
+let disciplineAlternatives = ["Maze", "Hunt", "HidenSeek", "Fighting", "Race"];
+
+
+
+let seasonSelect = document.getElementById("seasonSelect");
+let eventSelect = document.getElementById("eventSelect");
+
+
+
+for (let i = 1; i <= 10; i++) {
+    let opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = `Season ${i}`;
+    seasonSelect.appendChild(opt);
+}
+
+
+let sortedDisciplines = [...disciplines].sort((a, b) => a.id - b.id);
+
+sortedDisciplines.forEach(d => {
+    let opt = document.createElement("option");
+    opt.value = d.id;
+
+    // MAP ID → NAME
+    opt.textContent = disciplineAlternatives[d.id - 1];
+
+    eventSelect.appendChild(opt);
+});
+
+
+let deafultSeason = 1;
+let defaultDiscipline = sortedDisciplines[0].id;
+
+
+seasonSelect.addEventListener("change", e => {
+    deafultSeason = +e.target.value;
+    updateCoachPerformanceChart();
+});
+
+eventSelect.addEventListener("change", e => {
+    defaultDiscipline = +e.target.value;
+    updateCoachPerformanceChart();
+});
+
+
+
+let coachColors = {};
+coaches.forEach(c => {
+    coachColors[c.id] = `hsl(${c.id * 32}, 70%, 60%)`;
+});
+
+
+
+const maxPoints = 2300;
+
+let width = 1400;
+let height = 400;
+let margin = { top: 40, right: 100, bottom: 80, left: 250 };
+
+let svg = d3.select("#chart")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+let gBars = svg.append("g");
+let gLabels = svg.append("g");
+let gXAxis = svg.append("g");
+let gYAxis = svg.append("g");
+
+// FIX Y SCALE (11 coaches)
+let y = d3.scaleBand()
+    .domain(coaches.map(c => c.id).sort((a, b) => a - b))
+    .range([margin.top, height - margin.bottom])
+    .padding(0.8);
+
+gYAxis.attr("transform", `translate(${margin.left}, 0)`);
+
+
+
+function updateCoachPerformanceChart() {
+
+    let season = seasons[deafultSeason - 1];
+    let placementPoints = [15, 10, 6, 3, 1];
+
+    let coachPoints = coaches.map(c => ({
+        coachId: c.id,
+        totalPoints: 0
+    }));
+
+    for (let compDay of season.competitionDays) {
+        for (let event of compDay.events) {
+
+            if (event.disciplineId !== defaultDiscipline) continue;
+
+            let sorted = [...event.scores]
+                .sort((a, b) => b.score - a.score);
+
+            sorted.slice(0, 5).forEach((p, index) => {
+
+                let points = placementPoints[index];
+
+                let seasonCoach = season.coaches.find(
+                    c => c.participantId == p.participantId
+                );
+
+                let coach = coaches.find(
+                    c => c.id == seasonCoach.coachId
+                );
+
+                if (!coach) return;
+
+                let target = coachPoints.find(
+                    c => c.coachId === coach.id
+                );
+
+                target.totalPoints += points;
+            });
+        }
+    }
+
+    drawChart(coachPoints);
+}
+
+
+function drawChart(coachData) {
+
+    let x = d3.scaleLinear()
+        .domain([0, maxPoints])
+        .range([margin.left, width - margin.right]);
+
+    // AXES
+    gXAxis
+        .transition()
+        .duration(800)
+        .attr("font-size", "14px")
+        .attr("stroke", "#C2AD89")
+        .attr("transform", `translate(0, ${height - margin.bottom})`)
+        .call(d3.axisBottom(x).ticks(6));
+
+        gXAxis.select(".domain")
+        .attr("stroke", "#C2AD89");
+    
+        gXAxis.selectAll(".tick line")
+            .attr("stroke", "#C2AD89");
+    
+        gXAxis.selectAll(".tick text")
+            .attr("fill", "#C2AD89");
+
+    gYAxis
+        .transition()
+        .duration(800)
+        .attr("font-size", "14px")
+        .attr("stroke", "#C2AD89")
+        .call(d3.axisLeft(y).tickFormat(id => `Coach ${id}`));
+
+    gYAxis
+        .call(d3.axisLeft(y));
+
+    gYAxis.select(".domain")
+        .attr("stroke", "#C2AD89");
+
+    gYAxis.selectAll(".tick line")
+        .attr("stroke", "#C2AD89");
+
+    gYAxis.selectAll(".tick text")
+        .attr("fill", "#C2AD89");
+ 
+
+    svg.append("text")
+        .attr("x", 800)
+        .attr("y", height - 10)
+        .attr("text-anchor", "middle")
+        .attr("font-size", "16px")
+        .attr("fill", "#C2AD89")
+        .text("Total Points");
+
+
+    svg.append("text")
+        .attr("x", 210)
+        .attr("y", 17)
+        .attr("fill", "#C2AD89")
+        .attr("font-size", "16pxpx")
+        .text("Coaches");
+
+        // BARS
+    let barUpdate = gBars
+        .selectAll("rect")
+        .data(coachData, d => d.coachId);
+
+    let barEnter = barUpdate.enter()
+        .append("rect")
+        .attr("x", x(0))
+        .attr("y", d => y(d.coachId))
+        .attr("height", y.bandwidth())
+        .attr("fill", d => coachColors[d.coachId])
+        .style("filter", d => `drop-shadow(0px 0px 4px ${coachColors[d.coachId]})`);
+        
+
+    barUpdate.exit().remove();
+
+    let barMerge = barUpdate.merge(barEnter);
+
+    barMerge
+        .transition()
+        .duration(800)
+        .attr("x", x(0))
+        .attr("y", d => y(d.coachId))
+        .attr("width", d => x(d.totalPoints) - x(0))
+        .attr("height", y.bandwidth())
+        
+
+    // LABELS
+    let textUpdate = gLabels
+        .selectAll("text")
+        .data(coachData, d => d.coachId);
+
+    let textEnter = textUpdate.enter()
+        .append("text")
+        .attr("alignment-baseline", "middle")
+        .attr("fill", "#C2AD89")
+        .attr("font-size", "12px")
+        .attr("x", x(0) + 10)
+        .attr("y", d => y(d.coachId) + y.bandwidth() / 2 );
+
+    textUpdate.exit().remove();
+
+    let textMerge = textUpdate.merge(textEnter);
+
+    textMerge
+        .transition()
+        .duration(800)
+        .attr("x", d => x(d.totalPoints) + 10)
+        .attr("y", d => y(d.coachId) + y.bandwidth() / 2)
+        .text(d => d.totalPoints);
+}
+
+
+updateCoachPerformanceChart();
+
+
+//Ranking dashboard
+
+let disciplinesElements = ["Maze", "Hunt", "HidenSeek", "Fighting", "Race" ]
+
+function getAllScores() {
+    let all = [];
+
+    for (let season of seasons) {
+        for (let day of season.competitionDays) {
+            for (let event of day.events) {
+                for (let score of event.scores) {
+                    all.push(score);
+                }
+            }
+        }
+    }
+
+    return all;
+}
+
+
+
+function getTotalPlayerScores(allScores) {
+
+    let totals = [];
+
+    for (let score of allScores) {
+
+        let existing = totals.find(
+            p => p.participantId === score.participantId
+        );
+
+        if (!existing) {
+            existing = {
+                participantId: score.participantId,
+                score: 0
+            };
+            totals.push(existing);
+        }
+
+        existing.score += score.score;
+    }
+
+    totals.sort((a, b) => b.score - a.score);
+
+    return totals;
+}
+
+
+function getTopFivePlayers(totalScores) {
+    return totalScores.slice(0, 5);
+}
+
+
+
+function groupDisciplines() {
+
+    let grouped = [];
+
+    for (let season of seasons) {
+        for (let day of season.competitionDays) {
+            for (let event of day.events) {
+
+                let existing = grouped.find(
+                    d => d.eventID === event.disciplineId
+                );
+
+                if (!existing) {
+                    existing = {
+                        eventID: event.disciplineId,
+                        events: []
+                    };
+                    grouped.push(existing);
+                }
+
+                existing.events.push(event);
+            }
+        }
+    }
+
+    return grouped;
+}
+
+
+function buildResult(grouped, topPlayers) {
+
+    let result = [];
+
+    for (let d of grouped) {
+
+        let disciplineObj = {
+            disciplineID: d.eventID,
+            players: []
+        };
+
+        for (let player of topPlayers) {
+
+            let score = 0;
+
+            for (let event of d.events) {
+                for (let s of event.scores) {
+
+                    if (s.participantId === player.participantId) {
+                        score += s.score;
+                    }
+
+                }
+            }
+
+            disciplineObj.players.push({
+                participantId: player.participantId,
+                score: score
+            });
+        }
+
+        disciplineObj.players.sort((a, b) => b.score - a.score);
+
+        result.push(disciplineObj);
+    }
+
+    return result;
+}
+
+
+function getSpecialties(result, topPlayers) {
+
+    let playerSpecialtyWins = [];
+
+    for (let player of topPlayers) {
+
+        let best = {
+            specialty: "",
+            wins: 0,
+            totalMatches: 0
+        };
+
+        for (let res of result) {
+
+            let disciplineName =
+                disciplinesElements[res.disciplineID - 1];
+
+            let wins = 0;
+            let totalMatches = 0;
+
+            for (let season of seasons) {
+                for (let day of season.competitionDays) {
+                    for (let event of day.events) {
+
+                        if (event.disciplineId !== res.disciplineID) continue;
+
+                        totalMatches++;
+
+                        let sorted = [...event.scores]
+                            .sort((a, b) => b.score - a.score);
+
+                        if (sorted[0].participantId === player.participantId) {
+                            wins++;
+                        }
+                    }
+                }
+            }
+
+            if (wins > best.wins) {
+                best.specialty = disciplineName;
+                best.wins = wins;
+                best.totalMatches = totalMatches;
+            }
+        }
+
+        playerSpecialtyWins.push({
+            participantId: player.participantId,
+            specialty: best.specialty,
+            wins: best.wins,
+            totalMatches: best.totalMatches,
+            winRate: (best.wins / best.totalMatches) * 100
+        });
+    }
+
+    return playerSpecialtyWins;
+}
+
+
+
+let allScores = getAllScores();
+
+let totalScores = getTotalPlayerScores(allScores);
+
+let topFivePlayers = getTopFivePlayers(totalScores);
+
+let grouped = groupDisciplines();
+
+let result = buildResult(grouped, topFivePlayers);
+
+let playerSpecialtyWins = getSpecialties(result, topFivePlayers);
+
+
+let topMonsters = topFivePlayers.map(player =>
+    participants.find(p => p.id === player.participantId)
+);
+
+CreateAllMonsters(topMonsters);
+
+
+
+
+let rankingDOM = document.getElementById("monsterRanking");
+let specialtyDOM = document.getElementById("specialty");
+let winRateDOM = document.getElementById("winRate");
+
+let monsterCards = document.querySelectorAll(".monsterCard");
+
+let rankMonsterName = document.getElementById("rankMonsterName");
+let smallMonsterPic = document.getElementById("smallMonsterPic");
+let smallPicBorder = document.getElementById("smallPicBorder");
+let smallLine = document.getElementById("smallLine");
+let cropBox = document.querySelector(".cropBox");
+
+monsterCards.forEach(card => {
+
+    card.addEventListener("click", () => {
+
+        let id = card.querySelector(".idName span").textContent;
+        let monsterName = card.querySelector(".monsterName").textContent;
+        let monsterImage = card.querySelector(".monsterImage").src;
+
+        cropBox.innerHTML = `<img src="${monsterImage}">`;
+        smallPicBorder.style.display = "flex";
+        smallLine.style.display = "flex";
+
+        let player = playerSpecialtyWins.find(
+            p => p.participantId == id
+        );
+
+        let index = topMonsters.findIndex(
+            m => m.id == id
+        );
+
+        rankingDOM.innerHTML = "";
+        specialtyDOM.innerHTML = "";
+        winRateDOM.innerHTML = "";
+        rankMonsterName.innerHTML = "";
+        smallMonsterPic.innerHTML = "";
+
+        if (player) {
+
+            smallMonsterPic.innerHTML = `<img src="${monsterImage}">`;
+            rankMonsterName.textContent = monsterName;
+
+            winRateDOM.innerHTML = `
+                <p class="rankingText">Win rate for all ${player.specialty} matches:</p>
+                <p id="procentualRate">${Math.round(player.winRate)}%</p>
+            `;
+
+            specialtyDOM.innerHTML = `
+                <p class="rankingText">Specialty:</p>
+                <p>${player.specialty}</p>
+            `;
+
+            rankingDOM.innerHTML = `
+                <p class="rankingText">Ranking:<br> ${index + 1}</p>
+                <img src="./images/rankingPic.png">
+                <p id="smallRanking">${index + 1}</p>
+            `;
+        }
+    });
+});
 
