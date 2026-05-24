@@ -1,8 +1,6 @@
-// import { monsterCardClass } from "monsterClass.js";
 
 const mainContainer = document.getElementById("comparePage")
 let allMonstersObjectArray = participants;
-console.log(participants)
 let containerAllMonstersBox = document.querySelectorAll("#containerAllMonstersBox .monsterCard");
 let chosenCardCounter = 0;
 let compareSvg, xScaleCompare, yScaleCompare, xAxisGroup, yAxisGroup, chartHeight, chartWidth, marginCompareChart;
@@ -25,7 +23,7 @@ class MonsterCardClass {
     }
 }
 
-function colorGenerator() { //generera en färg till monster
+function colorGenerator() {
 
     const r = Math.floor(Math.random() * 256);
     const g = Math.floor(Math.random() * 256);
@@ -34,7 +32,7 @@ function colorGenerator() { //generera en färg till monster
     return `rgb(${r}, ${g}, ${b})`;
 }
 
-function randomPictureGenerator() { //generera en random monster URL
+function randomPictureGenerator() {
     let monsterPicNum = Math.ceil(Math.random() * 16)
     return `./images/monster${monsterPicNum}.png`
 }
@@ -56,7 +54,7 @@ function ClearSectionClickEvent() {
         chosenCardCounter = 0;
 
         containerAllMonstersBox.forEach(card => {
-            console.log(card)
+
             if (card.classList.contains("chosenMonsterCard")) {
 
                 card.classList.remove("chosenMonsterCard")
@@ -80,7 +78,6 @@ function SelectRandomMonsterButton() {
     const selectRandomButton = document.getElementById("selectRandomButton")
     selectRandomButton.addEventListener("click", event => {
         let participantForTheSeasonIds = GetAllParticipantsForTheSeasonChangeEvent();
-        console.log(participantForTheSeasonIds)
 
         chosenCardCounter = 0;
         let allMonsterCards = document.querySelectorAll("#containerAllMonstersBox .monsterCard")
@@ -147,8 +144,6 @@ function ShowAllMonsters(participantsForTheSeason) {
     let monstersArray = MonsterCardClass.getAllMonsters()
 
     let arrayParticipantsSeason;
-    console.log(participantsForTheSeason)
-    console.log(monstersArray)
 
     if (!participantsForTheSeason) {
         arrayParticipantsSeason = monstersArray.map(monster => monster.id);
@@ -156,7 +151,6 @@ function ShowAllMonsters(participantsForTheSeason) {
     else {
         arrayParticipantsSeason = participantsForTheSeason;
     }
-    console.log(arrayParticipantsSeason)
 
     monstersArray.forEach(monster => {
         if (arrayParticipantsSeason.includes(monster.id)) {
@@ -255,16 +249,10 @@ function CompareCreatures() {
 
         svgContainer.selectAll("polygon").remove()
 
-        console.log("klickk")
-        console.log(GetSeasonFromDropown())
-
         let arrayFromChosenCardsIdAndColor = GetArrayFromChosenCards()
-        console.log(arrayFromChosenCardsIdAndColor)
         let seasonFromDropDown = GetSeasonFromDropown()
         let seasonFromDropDownNum = Number(seasonFromDropDown.split("season")[1])
-        console.log(seasonFromDropDownNum)
         let arrayToCompare = getMonsterAverageScore(seasonFromDropDownNum, arrayFromChosenCardsIdAndColor)
-        console.log(arrayToCompare)
         if (arrayToCompare.length != 2) {
             return;
         }
@@ -289,7 +277,6 @@ function GetArrayFromChosenCards() {
         const monsterId = Number(card.querySelector(".idName #monsterId").textContent);
         const colorRgb = card.querySelector(".colorLine").style.backgroundColor
         arrayWithIdToCompare.push({ id: monsterId, rgb: colorRgb })
-        console.log(arrayWithIdToCompare);
     });
     return arrayWithIdToCompare;
 }
@@ -303,7 +290,6 @@ function GetSeasonFromDropown() {
 }
 
 function CreateChartSvg() {
-    // let data = compareScoreArray;
 
     d3.select("#pointsDistrubution").select("svg").remove();
     let scoreBox = document.getElementById("pointsDistrubution")
@@ -340,7 +326,7 @@ function CreateChartSvg() {
 
 function changeChartStats(compareScoreArray) {
     let data = compareScoreArray;
-    console.log(data)
+
     xScaleCompare.domain(data.map(data => `ID: ${data.id}`));
     xAxisGroup.call(d3.axisBottom(xScaleCompare));
 
@@ -357,20 +343,14 @@ function changeChartStats(compareScoreArray) {
         .attr("stroke", "#5E9F99")
         .attr("stdDeviation", 0.5)
         .attr("flood-color", "#5E9F99")
-
-    console.log("score:", data.map(d => d.score));
-    console.log("y:", data.map(d => yScaleCompare(d.score)));
-
 }
 
 function GetAllParticipantsForTheSeasonChangeEvent() {
     let seasonsDropDown = document.getElementById("seasonsDropDown");
     seasonsDropDown.addEventListener("change", () => {
         let chosenSeasonToCompare = Number(seasonsDropDown.value.split("season")[1]);
-        console.log(chosenSeasonToCompare)
         if (!chosenSeasonToCompare) {
             ShowAllMonsters(null)
-            console.log("du har inte valt säsong")
         }
         else {
 
@@ -378,7 +358,6 @@ function GetAllParticipantsForTheSeasonChangeEvent() {
                 .flatMap(element => element.coaches)
                 .map(coachesElement => coachesElement.participantId)
 
-            console.log(currentSeasonMonstersIdArray);
             ShowAllMonsters(currentSeasonMonstersIdArray)
             return currentSeasonMonstersIdArray
 
@@ -398,7 +377,6 @@ function GetArrayOfParticipantsSeason() {
             .flatMap(element => element.coaches)
             .map(coachesElement => coachesElement.participantId)
 
-        console.log(currentSeasonMonstersIdArray);
         return currentSeasonMonstersIdArray
     }
 
