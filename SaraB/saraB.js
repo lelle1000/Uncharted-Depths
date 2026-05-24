@@ -21,9 +21,17 @@ coachesImpactButton.addEventListener("click", e => {
 
 
 let seasonSelect = document.getElementById("seasonSelect");
-seasonSelect.classList.add("selectC") 
+seasonSelect.classList.add("selectC")
 let eventSelect = document.getElementById("eventSelect");
-eventSelect.classList.add("selectC") 
+eventSelect.classList.add("selectC")
+
+comparePageButton.addEventListener("click", e => {
+    landingPageContainer.classList.add("hide")
+    comparePage.classList.remove("hide")
+    CreateChartSvg();
+
+})
+
 
 
 
@@ -158,14 +166,14 @@ function drawChart(coachData) {
         .attr("transform", `translate(0, ${height - marginC.bottom})`)
         .call(d3.axisBottom(x).ticks(6));
 
-        gXAxis.select(".domain")
+    gXAxis.select(".domain")
         .attr("stroke", "#C2AD89");
-    
-        gXAxis.selectAll(".tick line")
-            .attr("stroke", "#C2AD89");
-    
-        gXAxis.selectAll(".tick text")
-            .attr("fill", "#C2AD89");
+
+    gXAxis.selectAll(".tick line")
+        .attr("stroke", "#C2AD89");
+
+    gXAxis.selectAll(".tick text")
+        .attr("fill", "#C2AD89");
 
     gYAxis
         .transition()
@@ -185,7 +193,7 @@ function drawChart(coachData) {
 
     gYAxis.selectAll(".tick text")
         .attr("fill", "#C2AD89");
- 
+
 
     svgC.append("text")
         .attr("x", 800)
@@ -203,7 +211,7 @@ function drawChart(coachData) {
         .attr("font-size", "16pxpx")
         .text("Coaches");
 
-        // BARS
+    // BARS
     let barUpdate = gBars
         .selectAll("rect")
         .data(coachData, d => d.coachId);
@@ -215,7 +223,7 @@ function drawChart(coachData) {
         .attr("height", y.bandwidth())
         .attr("fill", d => coachColors[d.coachId])
         .style("filter", d => `drop-shadow(0px 0px 4px ${coachColors[d.coachId]})`);
-        
+
 
     barUpdate.exit().remove();
 
@@ -228,7 +236,7 @@ function drawChart(coachData) {
         .attr("y", d => y(d.coachId))
         .attr("width", d => x(d.totalPoints) - x(0))
         .attr("height", y.bandwidth())
-        
+
 
     // LABELS
     let textUpdate = gLabels
@@ -241,7 +249,7 @@ function drawChart(coachData) {
         .attr("fill", "#C2AD89")
         .attr("font-size", "12px")
         .attr("x", x(0) + 10)
-        .attr("y", d => y(d.coachId) + y.bandwidth() / 2 );
+        .attr("y", d => y(d.coachId) + y.bandwidth() / 2);
 
     textUpdate.exit().remove();
 
@@ -261,7 +269,7 @@ updateCoachPerformanceChart();
 
 //Ranking dashboard
 
-let disciplinesElements = ["Maze", "Hunt", "HidenSeek", "Fighting", "Race" ]
+let disciplinesElements = ["Maze", "Hunt", "HidenSeek", "Fighting", "Race"]
 
 function getAllScores() {
     let all = [];
@@ -487,9 +495,9 @@ let smallLine = document.getElementById("smallLine");
 let cropBox = document.querySelector(".cropBox");
 
 monsterCards.forEach(card => {
-    
+
     card.addEventListener("click", () => {
-        
+
         monsterCards.forEach(c => c.classList.remove("chosenMonsterCard"));
         card.classList.add("chosenMonsterCard")
 
