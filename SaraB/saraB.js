@@ -1,45 +1,46 @@
 let disciplineAlternatives = ["Maze", "Hunt", "HidenSeek", "Fighting", "Race"];
-let comparePageButton = document.getElementById("comparePageButton")
-let landingPageContainer = document.getElementById("landingPageContainer")
-let comparePage = document.getElementById("comparePage")
-let coachesImpactButton = document.getElementById("coachesImpactButton")
-let coachGraphPage = document.getElementById("coachGraphPage")
-let coachBackArrow = document.getElementById("coachBackArrow")
+let comparePageButton = document.getElementById("comparePageButton");
+let landingPageContainer = document.getElementById("landingPageContainer");
+let comparePage = document.getElementById("comparePage");
+let coachesImpactButton = document.getElementById("coachesImpactButton");
+let coachGraphPage = document.getElementById("coachGraphPage");
+let coachBackArrow = document.getElementById("coachBackArrow");
 
-comparePageButton.addEventListener("click", e => {
-    landingPageContainer.classList.add("hide")
-    comparePage.classList.remove("hide")
+function activateButtons(){
+    comparePageButton.addEventListener("click", e => {
+        landingPageContainer.classList.add("hide");
+        comparePage.classList.remove("hide");
+        
+    });
     
-})
-
-coachesImpactButton.addEventListener("click", e => {
-    landingPageContainer.classList.add("hide")
-    coachGraphPage.classList.remove("hide")
+    coachesImpactButton.addEventListener("click", e => {
+        landingPageContainer.classList.add("hide");
+        coachGraphPage.classList.remove("hide");
+        
+    });
     
-})
-
-
-coachBackArrow.addEventListener("click", e => {
-    coachGraphPage.classList.add("hide")
-    landingPageContainer.classList.remove("hide")
     
-})
+    coachBackArrow.addEventListener("click", e => {
+        coachGraphPage.classList.add("hide");
+        landingPageContainer.classList.remove("hide");
+        
+    });
+};
 
-
-
+activateButtons();
 
 
 let seasonSelect = document.getElementById("seasonSelect");
-seasonSelect.classList.add("selectC")
+seasonSelect.classList.add("selectC");
 let eventSelect = document.getElementById("eventSelect");
-eventSelect.classList.add("selectC")
+eventSelect.classList.add("selectC");
 
 comparePageButton.addEventListener("click", e => {
-    landingPageContainer.classList.add("hide")
-    comparePage.classList.remove("hide")
+    landingPageContainer.classList.add("hide");
+    comparePage.classList.remove("hide");
     CreateChartSvg();
 
-})
+});
 
 
 
@@ -50,7 +51,7 @@ for (let i = 1; i <= 10; i++) {
     opt.value = i;
     opt.textContent = `Season ${i}`;
     seasonSelect.appendChild(opt);
-}
+};
 
 
 let sortedDisciplines = [...disciplines].sort((a, b) => a.id - b.id);
@@ -59,7 +60,6 @@ sortedDisciplines.forEach(d => {
     let opt = document.createElement("option");
     opt.value = d.id;
 
-    // MAP ID → NAME
     opt.textContent = disciplineAlternatives[d.id - 1];
 
     eventSelect.appendChild(opt);
@@ -105,7 +105,7 @@ let gLabels = svgC.append("g");
 let gXAxis = svgC.append("g");
 let gYAxis = svgC.append("g");
 
-// FIX Y SCALE (11 coaches)
+
 let y = d3.scaleBand()
     .domain(coaches.map(c => c.id).sort((a, b) => a - b))
     .range([marginC.top, height - marginC.bottom])
@@ -166,7 +166,6 @@ function drawChart(coachData) {
         .domain([0, maxPoints])
         .range([marginC.left, width - marginC.right]);
 
-    // AXES
     gXAxis
         .transition()
         .duration(800)
@@ -220,7 +219,6 @@ function drawChart(coachData) {
         .attr("font-size", "16pxpx")
         .text("Coaches");
 
-    // BARS
     let barUpdate = gBars
         .selectAll("rect")
         .data(coachData, d => d.coachId);
@@ -247,7 +245,6 @@ function drawChart(coachData) {
         .attr("height", y.bandwidth())
 
 
-    // LABELS
     let textUpdate = gLabels
         .selectAll("text")
         .data(coachData, d => d.coachId);
@@ -486,8 +483,6 @@ containerAllMonstersBoxLanding.innerHTML = "";
 coachCards.forEach(card => {
     containerAllMonstersBoxLanding.appendChild(card);
 });
-
-
 
 
 
