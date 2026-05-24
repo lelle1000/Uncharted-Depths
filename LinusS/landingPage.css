@@ -74,7 +74,7 @@ body {
 }
 
 #landingPageContainer {
-    padding: 30px;
+    padding: 10px;
     box-sizing: border-box;
     min-height: 100vh;
     width: 100%;
@@ -91,6 +91,8 @@ body {
     height: 34vh;
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
+    margin-top: 10px;
 }
 
 #bottomSectionLandingPage {

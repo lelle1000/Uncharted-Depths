@@ -1,11 +1,21 @@
 let disciplineAlternatives = ["Maze", "Hunt", "HidenSeek", "Fighting", "Race"];
-
+let comparePageButton = document.getElementById("comparePageButton")
+let landingPageContainer = document.getElementById("landingPageContainer")
+let comparePage = document.getElementById("comparePage")
 
 
 let seasonSelect = document.getElementById("seasonSelect");
 seasonSelect.classList.add("selectC") 
 let eventSelect = document.getElementById("eventSelect");
 eventSelect.classList.add("selectC") 
+
+comparePageButton.addEventListener("click", e => {
+    landingPageContainer.classList.add("hide")
+    comparePage.classList.remove("hide")
+
+})
+
+
 
 
 
@@ -468,8 +478,11 @@ let smallLine = document.getElementById("smallLine");
 let cropBox = document.querySelector(".cropBox");
 
 monsterCards.forEach(card => {
-
+    
     card.addEventListener("click", () => {
+        
+        monsterCards.forEach(c => c.classList.remove("chosenMonsterCard"));
+        card.classList.add("chosenMonsterCard")
 
         let id = card.querySelector(".idName span").textContent;
         let monsterName = card.querySelector(".monsterName").textContent;

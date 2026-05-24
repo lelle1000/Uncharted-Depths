@@ -37,3 +37,24 @@
     justify-content: center;
     align-items: center;
 }
+
+#portalPageGlow {
+    background-position: center;
+    background-size: cover;
+    background-color: transparent;
+    position: sticky;
+    border: 0;
+    border-radius: 80%;
+
+    height: 43%;
+    width: 15%;
+
+    top: 50%;
+    left: 44%;
+
+}
+
+#portalPageGlow:hover {
+    background-image: url("./images/EllipsePortal.png");
+    cursor: pointer;
+}
