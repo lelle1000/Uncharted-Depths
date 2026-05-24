@@ -220,6 +220,8 @@ let season8 = document.querySelector("#season8Landing")
 let season9 = document.querySelector("#season9Landing")
 let season10 = document.querySelector("#season10Landing")
 
+let backArrowCompare = document.querySelector("#backArrowCompare")
+
 let portalButton = document.querySelector("#portalPageGlow")
 
 let backArrowCredits = document.querySelector("#backArrowCredits")
@@ -311,6 +313,11 @@ backArrowCredits.addEventListener("click", () => {
     creditsPage.classList.remove("fadeToNormal")
     creditsPage.classList.add("hide")
     firstPage.classList.remove("hide")
+})
+
+backArrowCompare.addEventListener("click", () => {
+    comparePage.classList.add("hide")
+    landingPage.classList.remove("hide")
 })
 
 portalButton.addEventListener("click", () => {
