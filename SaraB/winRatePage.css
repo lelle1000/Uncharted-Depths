@@ -1,6 +1,6 @@
 
 #specialtyContainer {
-    height: 290px;
+    height: 320px;
     width: 500px;
     border-radius: 20px;
     display: grid;
@@ -138,7 +138,7 @@ div #winRate {
 #smallPicBorder{
     position: absolute;
     height: 72px;
-    top: 19px;
+    top: 49px;
     right: 17px;
     z-index: 100000;
 }
@@ -214,4 +214,10 @@ div #winRate {
 
 }
 
+#containerAllMonstersBoxLanding{
+    background: rgba(11, 20, 34, 0.76);
+    padding: 40px 20px 40px 20px;
+    border-radius: 20px;
+    height: 250px;
 
+}
