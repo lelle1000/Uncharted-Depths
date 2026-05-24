@@ -1,10 +1,10 @@
 // import { monsterCardClass } from "monsterClass.js";
 
 const mainContainer = document.getElementById("comparePage")
-const selectRandomButton = document.getElementById("selectRandomButton")
 let allMonstersObjectArray = participants;
 let containerAllMonstersBox = document.querySelectorAll("#containerAllMonstersBox .monsterCard");
 let chosenCardCounter = 0;
+let svg, xScale, yScale, xAxisGroup, yAxisGroup, chartHeight, chartWidth, margin;
 
 
 class MonsterCardClass {
@@ -41,22 +41,23 @@ function randomPictureGenerator() { //generera en random monster URL
 
 
 function ClearSectionClickEvent() {
+
     const clearSelectionButton = document.getElementById("clearSelectionButton")
     clearSelectionButton.addEventListener("click", () => { //clear Selection av monsters knapp
+        containerAllMonstersBox = document.querySelectorAll("#containerAllMonstersBox .monsterCard");
+
         svgContainer.selectAll("polygon").remove()
 
         let svg = d3.select("#pointsDistrubution")
         svg.selectAll("rect").remove()
 
-
-
-
         chosenCardCounter = 0;
 
         containerAllMonstersBox.forEach(card => {
+            console.log(card)
             if (card.classList.contains("chosenMonsterCard")) {
-                card.classList.toggle("chosenMonsterCard")
-                GetArrayFromChosenCards()
+
+                card.classList.remove("chosenMonsterCard")
             }
         })
     })
@@ -74,26 +75,35 @@ function BackButtonClickEvent() {
 }
 
 function SelectRandomMonsterButton() {
+    const selectRandomButton = document.getElementById("selectRandomButton")
     selectRandomButton.addEventListener("click", event => {
+        let participantForTheSeasonIds = GetAllParticipantsForTheSeasonChangeEvent();
+        console.log(participantForTheSeasonIds)
+
         chosenCardCounter = 0;
         let allMonsterCards = document.querySelectorAll("#containerAllMonstersBox .monsterCard")
         allMonsterCards.forEach(card => {
             card.classList.remove("chosenMonsterCard")
-            // GetArrayFromChosenCards()
+
         })
         for (let i = 0; i < 2; i++) {
             let randomNumber = RandomNumber()
-            allMonsterCards[randomNumber]
-            allMonsterCards[randomNumber].classList.add("chosenMonsterCard")
-
-            chosenCardCounter++;
+            if (!allMonsterCards[randomNumber] || allMonsterCards[randomNumber].classList.contains("chosenMonsterCard")) {
+                i--;
+                continue;
+            }
+            else {
+                allMonsterCards[randomNumber]
+                allMonsterCards[randomNumber].classList.add("chosenMonsterCard")
+                chosenCardCounter++;
+            }
         }
-        GetArrayFromChosenCards()
     })
 }
 
 function RandomNumber() {
-    return Math.floor(Math.random() * allMonstersObjectArray.length)
+    let allMonstersCurrentSeason = GetArrayOfParticipantsSeason().length
+    return Math.floor(Math.random() * allMonstersCurrentSeason)
 }
 
 function CreateAllMonsters(monstersArray) {
@@ -120,31 +130,43 @@ function CreateAllMonsters(monstersArray) {
 
 }
 
-function ShowAllMonsters() {
+function ShowAllMonsters(participantsForTheSeason) {
     let containerAllMonstersBoxId = document.getElementById("containerAllMonstersBox")
     containerAllMonstersBoxId.innerHTML = ``
+
     let monstersArray = MonsterCardClass.getAllMonsters()
 
-    console.log(MonsterCardClass.getAllMonsters());
+    let arrayParticipantsSeason;
+    console.log(participantsForTheSeason)
     console.log(monstersArray)
 
-    for (let i = 0; i < monstersArray.length; i++) {
-
-        let monsterCard = document.createElement("div");
-        monsterCard.classList.add("monsterCard")
-        monsterCard.innerHTML = `
-                       
-        <p class="monsterName">${monstersArray[i].name}</p>
-        <img src="${monstersArray[i].imgUrl}" class="monsterImage">
-        <div class="colorLine"> </div>
-        <p class="idName"> Id : <span id="monsterId">${monstersArray[i].id}</span></p>
-        `
-        let colorLine = monsterCard.querySelector(".colorLine");
-        colorLine.style.backgroundColor = `${monstersArray[i].color}`
-        containerAllMonstersBoxId.appendChild(monsterCard);
+    if (!participantsForTheSeason) {
+        arrayParticipantsSeason = monstersArray.map(monster => monster.id);
     }
+    else {
+        arrayParticipantsSeason = participantsForTheSeason;
+    }
+    console.log(arrayParticipantsSeason)
 
+    monstersArray.forEach(monster => {
+        if (arrayParticipantsSeason.includes(monster.id)) {
+
+            let monsterCard = document.createElement("div");
+            monsterCard.classList.add("monsterCard")
+            monsterCard.innerHTML = `
+           <p class="monsterName">${monster.name}</p>
+           <img src="${monster.imgUrl}" class="monsterImage">
+           <div class="colorLine"> </div>
+           <p class="idName"> Id : <span id="monsterId">${monster.id}</span></p>
+           `
+            monsterCard.querySelector(".colorLine").style.backgroundColor = monster.color;
+            containerAllMonstersBoxId.appendChild(monsterCard);
+        }
+    })
+    ChosenCardClickEvent();
 }
+
+
 
 function InputFieldClickEvent() {
     const inputIdField = document.getElementById("inputIdField");
@@ -176,7 +198,7 @@ function InputFieldClickEvent() {
 
 function ChosenCardClickEvent() {
     containerAllMonstersBox = document.querySelectorAll("#containerAllMonstersBox .monsterCard");
-    containerAllMonstersBox.forEach(card => { ///  Select card den du klickar på
+    containerAllMonstersBox.forEach(card => {
         card.addEventListener("click", event => {
 
             if (chosenCardCounter < 2 && (!card.classList.contains("chosenMonsterCard"))) {
@@ -196,12 +218,7 @@ function ChosenCardClickEvent() {
 }
 
 
-
-//filtrera säsong 1
-//filtrera alla participants 206
-//ta ett monsters poäng under en säsong / medelvärdet
-
-function getMonstersTotalScoreFromId(reqId) { ///stödfunktion
+function getMonstersTotalScoreFromId(reqId) {
     let totalScore = 0;
     let pointsArrayForId = seasons.filter(year => year.year == 1)
         .flatMap(season => season.competitionDays)
@@ -218,11 +235,8 @@ function getMonstersTotalScoreFromId(reqId) { ///stödfunktion
 
 
 function getMonsterAverageScore(requestedSeason, requestedParticipantIdAndColor) {
-    let compareScoreArray = requestedParticipantIdAndColor; // loopa ingenom array med id färg, lägg till score och season i arrayen 
+    let compareScoreArray = requestedParticipantIdAndColor;
 
-    console.log(requestedParticipantIdAndColor)
-    console.log(requestedSeason)
-    console.log(compareScoreArray)
     requestedParticipantIdAndColor.forEach(participant => {
         let totalScore = 0;
         let pointsArrayForId = seasons.filter(year => year.year == requestedSeason)
@@ -231,10 +245,9 @@ function getMonsterAverageScore(requestedSeason, requestedParticipantIdAndColor)
             .flatMap(events => events.scores)
             .filter(score => score.participantId == participant.id)
 
-        console.log(pointsArrayForId)
+
         totalScore = pointsArrayForId.reduce((sum, s) => sum + s.score, 0)
         totalScore = pointsArrayForId.length > 0 ? Math.round(totalScore / pointsArrayForId.length) : 0;
-        console.log(totalScore)
         participant.score = totalScore;
     })
 
@@ -249,17 +262,19 @@ function CompareCreatures() {
         svgContainer.selectAll("polygon").remove()
 
         console.log("klickk")
-        console.log(GetArrayFromChosenCards());
         console.log(GetSeasonFromDropown())
 
         let arrayFromChosenCardsIdAndColor = GetArrayFromChosenCards()
+        console.log(arrayFromChosenCardsIdAndColor)
         let seasonFromDropDown = GetSeasonFromDropown()
         let seasonFromDropDownNum = Number(seasonFromDropDown.split("season")[1])
         console.log(seasonFromDropDownNum)
-        // getMonsterAverageScore(seasonFromDropDownNum, arrayFromChosenCardsIdAndColor)
         let arrayToCompare = getMonsterAverageScore(seasonFromDropDownNum, arrayFromChosenCardsIdAndColor)
         console.log(arrayToCompare)
-        CreateChartSvg(arrayToCompare)
+        if (arrayToCompare.length != 2) {
+            return;
+        }
+        changeChartStats(arrayToCompare)
 
         let participantId1 = arrayFromChosenCardsIdAndColor[0].id
         let color1 = arrayFromChosenCardsIdAndColor[0].rgb
@@ -273,17 +288,14 @@ function CompareCreatures() {
     })
 }
 
-//hämta id,färg  från chosen cards
 function GetArrayFromChosenCards() {
     let arrayWithIdToCompare = []
     let activecards = document.querySelectorAll("#containerAllMonstersBox .monsterCard.chosenMonsterCard")
     activecards.forEach(card => {
         const monsterId = Number(card.querySelector(".idName #monsterId").textContent);
         const colorRgb = card.querySelector(".colorLine").style.backgroundColor
-        console.log(colorRgb)
         arrayWithIdToCompare.push({ id: monsterId, rgb: colorRgb })
         console.log(arrayWithIdToCompare);
-        // CreateScoresChart(arrayWithIdToCompare)
     });
     return arrayWithIdToCompare;
 }
@@ -302,110 +314,102 @@ function CreateChartSvg(compareScoreArray) {
     d3.select("#pointsDistrubution").select("svg").remove();
     let scoreBox = document.getElementById("pointsDistrubution")
 
-    const margin = { top: 40, right: 20, bottom: 30, left: 60 },
-        width = scoreBox.offsetWidth - margin.left - margin.right,
-        height = scoreBox.offsetHeight - margin.top - margin.bottom;
+    margin = { top: 20, right: 20, bottom: 30, left: 60 },
+        chartWidth = scoreBox.offsetWidth - margin.left - margin.right,
+        chartHeight = scoreBox.offsetHeight - margin.top - margin.bottom;
 
-    // Skapa SVG
-    let svg = d3.select("#pointsDistrubution")
+    svg = d3.select("#pointsDistrubution")
         .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("width", chartWidth + margin.left + margin.right)
+        .attr("height", chartHeight + margin.top + margin.bottom)
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // 3. X-axel: Baserad direkt på ID (Sträng-konverterat för scaleBand)
-    const x = d3.scaleBand()
-        .domain(data.map(d => `ID: ${d.id}`))
-        .range([0, width])
-        .padding(0.4); // Justera bredden på staplarna här (högre tal = smalare staplar)
+    xScale = d3.scaleBand()
+        .range([0, chartWidth])
+        .padding(0.4);
 
-    // 4. Y-axel: Låst till 800 - 2000
-    const y = d3.scaleLinear()
+    yScale = d3.scaleLinear()
         .domain([800, 1600])
-        .range([height, 0]);
+        .range([chartHeight, 0]);
 
-    // 5. Rita axlarna
+    xAxisGroup = svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", `translate(0,${chartHeight})`)
+        .call(d3.axisBottom(xScale));
+
     svg.append("g")
         .attr("class", "axis")
-        .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(x));
-
-    svg.append("g")
-        .attr("class", "axis")
-        .call(d3.axisLeft(y).ticks(6));
-
-    // 6. Rita de två staplarna
-    svg.selectAll("rect")
-        .data(data)
-        .join("rect")
-        .attr("x", d => x(`ID: ${d.id}`))
-        // Hindrar stapeln från att ritas utanför om score råkar vara under 800
-        .attr("y", d => y(Math.max(800, d.score)))
-        .attr("width", x.bandwidth())
-        .attr("height", d => height - y(Math.max(800, d.score)))
-        .attr("fill", d => d.rgb)
-        .attr("rx", 4) // Snygga, lätt rundade hörn i toppen
-        .attr("opacity", 0.8)
-        .attr("stroke", "#5E9F99")
-        // .attr("stroke-width", 3)
-        .attr("stdDeviation", 0.5)
-        .attr("flood-color", "#5E9F99")
-
-
-
+        .call(d3.axisLeft(yScale).ticks(6));
 
 }
 
-function GetAllParticipantsForTheSeason() {
+function changeChartStats(compareScoreArray) {
+    let data = compareScoreArray;
+    console.log(data)
+
+    xScale.domain(data.map(data => `ID: ${data.id}`));
+    xAxisGroup.call(d3.axisBottom(xScale));
+
+    svg.selectAll("rect")
+        .data(data)
+        .join("rect")
+        .attr("x", data => xScale(`ID: ${data.id}`))
+        .attr("y", data => yScale(Math.max(800, data.score)))
+        .attr("width", xScale.bandwidth())
+        .attr("height", data => chartHeight - yScale(Math.max(800, data.score)))
+        .attr("fill", data => data.rgb)
+        .attr("rx", 4)
+        .attr("opacity", 0.8)
+        .attr("stroke", "#5E9F99")
+        .attr("stdDeviation", 0.5)
+        .attr("flood-color", "#5E9F99")
+
+    console.log("score:", data.map(d => d.score));
+    console.log("y:", data.map(d => yScale(d.score)));
+
+}
+
+function GetAllParticipantsForTheSeasonChangeEvent() {
     let seasonsDropDown = document.getElementById("seasonsDropDown");
     seasonsDropDown.addEventListener("change", () => {
-        console.log("klick")
         let chosenSeasonToCompare = Number(seasonsDropDown.value.split("season")[1]);
         console.log(chosenSeasonToCompare)
         if (!chosenSeasonToCompare) {
-            ShowAllMonsters()
+            ShowAllMonsters(null)
             console.log("du har inte valt säsong")
         }
         else {
+
             let currentSeasonMonstersIdArray = seasons.filter(season => season.year == chosenSeasonToCompare)
                 .flatMap(element => element.coaches)
                 .map(coachesElement => coachesElement.participantId)
 
-            console.log(currentSeasonMonstersIdArray)
-            containerAllMonstersBox = document.querySelectorAll("#containerAllMonstersBox .monsterCard");
-
-            containerAllMonstersBox.forEach(monster => {
-                if (monster.classList.contains("hide")) {
-                    monster.classList.remove("hide")
-                }
-                let spanId = monster.querySelector("#monsterId")
-
-                let isIdInArray = currentSeasonMonstersIdArray.find(
-                    monster1 => monster1 == Number(spanId.textContent)
-                );
-
-                if (!isIdInArray) {
-                    monster.classList.add("hide");
-                }
-
-            });
-            console.log(currentSeasonMonstersIdArray)
+            console.log(currentSeasonMonstersIdArray);
+            ShowAllMonsters(currentSeasonMonstersIdArray)
+            return currentSeasonMonstersIdArray
 
         }
-
-        // .filter(trainers => trainers.participantId)
-
-        // .map(trainers => trainers.participantId)
-
-
     })
 
-    //loopa igenom säsongerna som är vald
-    //skriv ut korten för den säsonge 
+}
+
+function GetArrayOfParticipantsSeason() {
+    let seasonsDropDown = document.getElementById("seasonsDropDown");
+    let chosenSeasonToCompare = Number(seasonsDropDown.value.split("season")[1]);
+    if (!chosenSeasonToCompare) {
+        return null;
+    }
+    else {
+        let currentSeasonMonstersIdArray = seasons.filter(season => season.year == chosenSeasonToCompare)
+            .flatMap(element => element.coaches)
+            .map(coachesElement => coachesElement.participantId)
+
+        console.log(currentSeasonMonstersIdArray);
+        return currentSeasonMonstersIdArray
+    }
 
 }
-//du behöver en array med id och average score för säsongen
 
 CreateAllMonsters(allMonstersObjectArray);
 ChosenCardClickEvent();
@@ -415,5 +419,6 @@ BackButtonClickEvent();
 GetArrayFromChosenCards();
 CompareCreatures();
 SelectRandomMonsterButton();
-GetAllParticipantsForTheSeason();
+GetAllParticipantsForTheSeasonChangeEvent();
+CreateChartSvg();
 

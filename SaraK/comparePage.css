@@ -8,6 +8,10 @@
     src: url(../Fonts/Piazzolla/Piazzolla-VariableFont_opsz\,wght.ttf);
 }
 
+body {
+    background-color: #2c4043;
+}
+
 
 #storyPage {
     background-image: url(../images/PiarteShip.png);
@@ -46,10 +50,11 @@ body {
     flex-direction: row;
     background-image: url(../images/landingPageBackground.png);
     background-size: cover;
+    min-height: 100vh;
     background-color: rgba(47, 65, 67, 0.7);
     background-blend-mode: lighten;
     padding: 10px 60px;
-    height: 100vh;
+    /* height: 100%; */
     width: 100%;
 }
 
@@ -66,7 +71,7 @@ body {
     flex-direction: column;
     gap: 20px;
     width: 50%;
-    height: 90%;
+    height: 100%;
 }
 
 #inputIdField {
@@ -84,7 +89,7 @@ body {
     flex-wrap: wrap;
     overflow: scroll;
     gap: 15px;
-    margin-right: 25px;
+    height: 100%;
 }
 
 .chosenMonsterCard {
