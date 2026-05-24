@@ -468,8 +468,11 @@ let smallLine = document.getElementById("smallLine");
 let cropBox = document.querySelector(".cropBox");
 
 monsterCards.forEach(card => {
-
+    
     card.addEventListener("click", () => {
+        
+        monsterCards.forEach(c => c.classList.remove("chosenMonsterCard"));
+        card.classList.add("chosenMonsterCard")
 
         let id = card.querySelector(".idName span").textContent;
         let monsterName = card.querySelector(".monsterName").textContent;
