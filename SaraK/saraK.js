@@ -4,7 +4,7 @@ const mainContainer = document.getElementById("comparePage")
 let allMonstersObjectArray = participants;
 let containerAllMonstersBox = document.querySelectorAll("#containerAllMonstersBox .monsterCard");
 let chosenCardCounter = 0;
-let svg, xScale, yScale, xAxisGroup, yAxisGroup, chartHeight, chartWidth, margin;
+let svg, xScale, yScale, xAxisGroup, yAxisGroup, chartHeight, chartWidth, marginCompareChart;
 
 
 class MonsterCardClass {
@@ -307,16 +307,16 @@ function CreateChartSvg(compareScoreArray) {
     d3.select("#pointsDistrubution").select("svg").remove();
     let scoreBox = document.getElementById("pointsDistrubution")
 
-    margin = { top: 20, right: 20, bottom: 30, left: 60 },
-        chartWidth = scoreBox.offsetWidth - margin.left - margin.right,
-        chartHeight = scoreBox.offsetHeight - margin.top - margin.bottom;
+    marginCompareChart = { top: 10, right: 20, bottom: 30, left: 60 },
+        chartWidth = scoreBox.offsetWidth - marginCompareChart.left - marginCompareChart.right,
+        chartHeight = scoreBox.offsetHeight - marginCompareChart.top - marginCompareChart.bottom;
 
     svg = d3.select("#pointsDistrubution")
         .append("svg")
-        .attr("width", chartWidth + margin.left + margin.right)
-        .attr("height", chartHeight + margin.top + margin.bottom)
+        .attr("width", chartWidth + marginCompareChart.left + marginCompareChart.right)
+        .attr("height", chartHeight + marginCompareChart.top + marginCompareChart.bottom)
         .append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
+        .attr("transform", `translate(${marginCompareChart.left},${marginCompareChart.top})`);
 
     xScale = d3.scaleBand()
         .range([0, chartWidth])
