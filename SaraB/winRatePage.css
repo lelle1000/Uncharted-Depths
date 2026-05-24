@@ -239,6 +239,11 @@ div #winRate {
     color: #C2AD89
 }
 
+#comparePageButton:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}
+
 #creatureText{
     font-family: titleFont;
     position: absolute;
