@@ -89,6 +89,8 @@ body {
 
 #topSectionLandingPage {
     height: 34vh;
+    display: flex;
+    justify-content: space-between;
 }
 
 #bottomSectionLandingPage {
