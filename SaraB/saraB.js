@@ -1,438 +1,244 @@
+let disciplineAlternatives = ["Maze", "Hunt", "HidenSeek", "Fighting", "Race"];
 
 
 
+let seasonSelect = document.getElementById("seasonSelect");
+let eventSelect = document.getElementById("eventSelect");
 
-// class monsterCardClass {
 
-//     constructor(data) {
-//         this.name = data.name;
-//         this.id = data.id;
-//         this.color = colorGenerator();
-//         this.imgUrl = randomPictureGenerator();
-//     }
 
-// }
+for (let i = 1; i <= 10; i++) {
+    let opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = `Season ${i}`;
+    seasonSelect.appendChild(opt);
+}
 
-// function colorGenerator() { //generera en färg till monster
 
-//     const r = Math.floor(Math.random() * 256);
-//     const g = Math.floor(Math.random() * 256);
-//     const b = Math.floor(Math.random() * 256);
+let sortedDisciplines = [...disciplines].sort((a, b) => a.id - b.id);
 
-//     return `rgb(${r}, ${g}, ${b})`;
-// }
+sortedDisciplines.forEach(d => {
+    let opt = document.createElement("option");
+    opt.value = d.id;
 
-// function randomPictureGenerator() { //generera en random monster URL
-//     let monsterPicNum = Math.ceil(Math.random() * 3)
-//     return `../images/monster${monsterPicNum}.png`
-// }
+    // MAP ID → NAME
+    opt.textContent = disciplineAlternatives[d.id - 1];
 
-// /////////////////////////////////////////////////
+    eventSelect.appendChild(opt);
+});
 
-// let allPlayersAndScores = []
-// let totalPlayerScore = []
-// let allEvents = []
-// let allIDs = []
 
+let deafultSeason = 1;
+let defaultDiscipline = sortedDisciplines[0].id;
 
-// for(let season of seasons){
-//    let compDays = season.competitionDays
-//    for(let day of compDays){
-//     allEvents.push(day.events)
-//    }
-// }
 
-// for(let events of allEvents){
-//      for(let event of events){
-//          for(let score of event.scores){
-//             allPlayersAndScores.push(score)
-//          }
-//     }
-     
-// }
+seasonSelect.addEventListener("change", e => {
+    deafultSeason = +e.target.value;
+    updateCoachPerformanceChart();
+});
 
-// allPlayersAndScores.filter(score => {
-//     if(!allIDs.includes(score.participantId)){
-//         allIDs.push(score.participantId)
-//     }
-// })
+eventSelect.addEventListener("change", e => {
+    defaultDiscipline = +e.target.value;
+    updateCoachPerformanceChart();
+});
 
 
-// for (let player of allPlayersAndScores) {
 
-//     let existing = totalPlayerScore.find(
-//         p => p.participantId === player.participantId
-//     )
+let coachColors = {};
+coaches.forEach(c => {
+    coachColors[c.id] = `hsl(${c.id * 32}, 70%, 60%)`;
+});
 
-//     if (!existing) {
-//         existing = {
-//             participantId: player.participantId,
-//             score: 0
-//         };
-//         totalPlayerScore.push(existing)
-//     }
 
-//     existing.score += player.score
-// }
 
-// totalPlayerScore.sort((a, b) => b.score - a.score)
+const maxPoints = 2300;
 
+let width = 1400;
+let height = 400;
+let margin = { top: 40, right: 100, bottom: 80, left: 250 };
 
-// let topFivePlayers = totalPlayerScore.splice(0,5)
-// // console.log(topFivePlayers);
+let svg = d3.select("#chart")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height);
 
-// //
-// let disciplineId = disciplines.map(d => d.id)
+let gBars = svg.append("g");
+let gLabels = svg.append("g");
+let gXAxis = svg.append("g");
+let gYAxis = svg.append("g");
 
+// FIX Y SCALE (11 coaches)
+let y = d3.scaleBand()
+    .domain(coaches.map(c => c.id).sort((a, b) => a - b))
+    .range([margin.top, height - margin.bottom])
+    .padding(0.8);
 
+gYAxis.attr("transform", `translate(${margin.left}, 0)`);
 
-// let disciplinesANDtheirEvents = []
 
-// for (let events of allEvents) {
-//     for (let event of events) {
-//         let disciplineExists = disciplinesANDtheirEvents.find(
-//             i => i.eventID == event.disciplineId
-//         );
 
-//         if (!disciplineExists) {
-//             disciplineExists = {
-//                 eventID: event.disciplineId,
-//                 events: []
-//             };
+function updateCoachPerformanceChart() {
 
-//             disciplinesANDtheirEvents.push(disciplineExists);
-//         }
+    let season = seasons[deafultSeason - 1];
+    let placementPoints = [15, 10, 6, 3, 1];
 
-//         disciplineExists.events.push(event)
-//     }
-// }
+    let coachPoints = coaches.map(c => ({
+        coachId: c.id,
+        totalPoints: 0
+    }));
 
-// // console.log(topFivePlayers)
+    for (let compDay of season.competitionDays) {
+        for (let event of compDay.events) {
 
-// //
+            if (event.disciplineId !== defaultDiscipline) continue;
 
+            let sorted = [...event.scores]
+                .sort((a, b) => b.score - a.score);
 
+            sorted.slice(0, 5).forEach((p, index) => {
 
+                let points = placementPoints[index];
 
-
-
-
-
-// // console.log(disciplinesANDtheirEvents);
-
-
-
-
-
-
-
-// ////
-
-// let result = [];
-
-// for (let d of disciplinesANDtheirEvents) {
-
-//     let disciplineObj = {
-//         disciplineID: d.eventID,
-//         players: []
-//     };
-
-//     for (let player of topFivePlayers) {
-
-//         let score = 0;
-
-//         for (let event of d.events) {
-//             for (let eventScore of event.scores) {
-
-//                 if (eventScore.participantId == player.participantId) {
-//                     score += eventScore.score;
-//                 }
-
-//             }
-//         }
-
-//         disciplineObj.players.push({
-//             participantId: player.participantId,
-//             score: score
-//         });
-//     }
-
-//     result.push(disciplineObj);
-// }
-
-
-
-// for (let d of result) {
-//     d.players.sort((a, b) => b.score - a.score);
-// }
-// // console.log(result);
-
-
-// //specialty
-
-
-
-// let topRankInDiscipline = ""
-// let specialty = ""
-
-// for(let res of result){
-//     topRankInDiscipline = res.players[0]
-//     specialty = disciplinesElements[res.disciplineID - 1]
-
-//     // console.log(topRankInDiscipline, specialty);
-// }
-
-
-
-
-
-// /////
-
-// // let wins = 0
-// // // let participantWins = [];
-
-// // for (let player of topFivePlayers) {
-
-// //     let wins = 0;
-
-// //     for (let season of seasons) {
-// //         for (let compDays of season.competitionDays) {
-// //             for (let event of compDays.events) {
-
-// //                 let winner = event.scores[0];
-
-// //                 if (winner.participantId === player.participantId) {
-// //                     wins++;
-
-// //                 }
-// //             }
-// //         }
-// //     }
-
-
-// //     participantWins.push({
-// //         participantId: player.participantId,
-// //         wins: wins
-// //     });
-// // }
-
-// // console.log(participantWins)
-
-//     // let procentualWins = Math.round(wins/10)
-
-
-// // winsssss
-
-// let playerSpecialtyWins = [];
-// let totalMatches = 0
-// let winRate = 0
-
-// for (let player of topFivePlayers) {
-
-//     let best = {
-//         specialty: "",
-//         wins: 0
-//     };
-
-//     for (let res of result) {
-
-//         let disciplineName =
-//             disciplinesElements[res.disciplineID - 1];
-
-//         let wins = 0;
-
-//         for (let season of seasons) {
-//             for (let compDays of season.competitionDays) {
-//                 for (let event of compDays.events) {
-                    
-
-//                     if (event.disciplineId === res.disciplineID) {
-//                         totalMatches++
-
-//                         let winner = [...event.scores]
-//                             .sort((a, b) => b.score - a.score)[0];
-
-//                         if (winner.participantId === player.participantId) {
-//                             wins++;
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-
-//         if (wins > best.wins) {
-//             best.wins = wins;
-//             best.specialty = disciplineName;
-//         }
-//     }
-
-//     playerSpecialtyWins.push({
-//         participantId: player.participantId,
-//         specialty: best.specialty,
-//         wins: best.wins,
-//         totalMatches:totalMatches, 
-//         winRate: ((best.wins / totalMatches)* 1000)
-//     });
-// }
-
-// console.log(playerSpecialtyWins);
-
-
-
-
-
-// function createAllMonsters(monstersArray) {
-//     for (let i = 0; i < monstersArray.length; i++) {
-
-//         let containerAllMonstersBoxId = document.getElementById("containerAllMonstersBox")
-//         let monster1 = new monsterCardClass(monstersArray[i]);
-
-//         let monsterCard = document.createElement("div");
-//         monsterCard.classList.add("monsterCard")
-//         monsterCard.innerHTML = `
-                       
-//         <p class="monsterName">${monster1.name}</p>
-//         <img src="${monster1.imgUrl}" class="monsterImage">
-//         <div class="colorLine"> </div>
-//         <p class="idName"> Id : <span id="monsterId">${monster1.id}</span></p>
-//         `
-//         let colorLine = monsterCard.querySelector(".colorLine");
-//         colorLine.style.backgroundColor = `${monster1.color}`
-//         containerAllMonstersBoxId.appendChild(monsterCard);
-
-//     }
-// }
-
-
-
-
-
-
-
-// let topMonsters = topFivePlayers.map(player =>
-//     participants.find(p => p.id === player.participantId)
-// )
-
-// createAllMonsters(topMonsters)
-// let rankingDOM = document.getElementById("monsterRanking");
-// let specialtyDOM = document.getElementById("specialty");
-// let winRateDOM = document.getElementById("winRate");
-
-// let monsterCards = document.querySelectorAll(".monsterCard")
-
-
-
-// console.log(topMonsters);
-
-// let rankMonsterName = document.getElementById("rankMonsterName")
-// let smallMonsterPic = document.getElementById("smallMonsterPic")
-// let smallPicBorder = document.getElementById("smallPicBorder")
-// let smallLine = document.getElementById("smallLine")
-// let cropBox = document.querySelector(".cropBox")
-
-// monsterCards.forEach(card => {
-
-//     card.addEventListener("click", e => {
-
-//         let id = card.querySelector(".idName span").textContent
-//         let monsterName =card.querySelector(".monsterName").textContent
-//         let monsterImage =card.querySelector(".monsterImage").src
-        
-//         cropBox.innerHTML = `<img src="${monsterImage}">`
-//         smallPicBorder.style.display = "flex"
-//         smallLine.style.display = "flex"
+                let seasonCoach = season.coaches.find(
+                    c => c.participantId == p.participantId
+                );
+
+                let coach = coaches.find(
+                    c => c.id == seasonCoach.coachId
+                );
+
+                if (!coach) return;
+
+                let target = coachPoints.find(
+                    c => c.coachId === coach.id
+                );
+
+                target.totalPoints += points;
+            });
+        }
+    }
+
+    drawChart(coachPoints);
+}
+
+
+function drawChart(coachData) {
+
+    let x = d3.scaleLinear()
+        .domain([0, maxPoints])
+        .range([margin.left, width - margin.right]);
+
+    // AXES
+    gXAxis
+        .transition()
+        .duration(800)
+        .attr("font-size", "14px")
+        .attr("stroke", "#C2AD89")
+        .attr("transform", `translate(0, ${height - margin.bottom})`)
+        .call(d3.axisBottom(x).ticks(6));
+
+        gXAxis.select(".domain")
+        .attr("stroke", "#C2AD89");
+    
+        gXAxis.selectAll(".tick line")
+            .attr("stroke", "#C2AD89");
+    
+        gXAxis.selectAll(".tick text")
+            .attr("fill", "#C2AD89");
+
+    gYAxis
+        .transition()
+        .duration(800)
+        .attr("font-size", "14px")
+        .attr("stroke", "#C2AD89")
+        .call(d3.axisLeft(y).tickFormat(id => `Coach ${id}`));
+
+    gYAxis
+        .call(d3.axisLeft(y));
+
+    gYAxis.select(".domain")
+        .attr("stroke", "#C2AD89");
+
+    gYAxis.selectAll(".tick line")
+        .attr("stroke", "#C2AD89");
+
+    gYAxis.selectAll(".tick text")
+        .attr("fill", "#C2AD89");
+ 
+
+    svg.append("text")
+        .attr("x", 800)
+        .attr("y", height - 10)
+        .attr("text-anchor", "middle")
+        .attr("font-size", "16px")
+        .attr("fill", "#C2AD89")
+        .text("Total Points");
+
+
+    svg.append("text")
+        .attr("x", 210)
+        .attr("y", 17)
+        .attr("fill", "#C2AD89")
+        .attr("font-size", "16pxpx")
+        .text("Coaches");
+
+        // BARS
+    let barUpdate = gBars
+        .selectAll("rect")
+        .data(coachData, d => d.coachId);
+
+    let barEnter = barUpdate.enter()
+        .append("rect")
+        .attr("x", x(0))
+        .attr("y", d => y(d.coachId))
+        .attr("height", y.bandwidth())
+        .attr("fill", d => coachColors[d.coachId])
+        .style("filter", d => `drop-shadow(0px 0px 4px ${coachColors[d.coachId]})`);
         
 
-//         let player = playerSpecialtyWins.find(
-//             p => p.participantId == id
-//         )
+    barUpdate.exit().remove();
 
-//         let index = topMonsters.findIndex(
-//             m => m.id == id
-//         )
+    let barMerge = barUpdate.merge(barEnter);
 
-//         rankingDOM.innerHTML = ""
-//         specialtyDOM.innerHTML = ""
-//         winRateDOM.innerHTML = ""
-//         rankMonsterName.innerHTML = ""
-//         smallMonsterPic.innerHTML = ""
+    barMerge
+        .transition()
+        .duration(800)
+        .attr("x", x(0))
+        .attr("y", d => y(d.coachId))
+        .attr("width", d => x(d.totalPoints) - x(0))
+        .attr("height", y.bandwidth())
+        
 
-//         if (player) {
-//             smallMonsterPic.innerHTML += `<img src="${monsterImage}">`
-//             rankMonsterName.textContent = monsterName
-//             winRateDOM.innerHTML += `
-//             <p class="rankingText">Win rate for all ${player.specialty} matches:</p>
-//             <p id="procentualRate">${Math.round(player.winRate)}%</p>
-//             `
-//             specialtyDOM.innerHTML += `
-//             <p class="rankingText">Specialty:</p>
-//             <p>${player.specialty}</p>`
-//             rankingDOM.innerHTML += `
-//             <p class="rankingText">Ranking:<br> ${index + 1}</p>
-//             <img src="../images/rankingPic.png">
-//             <p id="smallRanking">${index + 1}</p>
-//             `
-//         }
-//     })
-// })
+    // LABELS
+    let textUpdate = gLabels
+        .selectAll("text")
+        .data(coachData, d => d.coachId);
+
+    let textEnter = textUpdate.enter()
+        .append("text")
+        .attr("alignment-baseline", "middle")
+        .attr("fill", "#C2AD89")
+        .attr("font-size", "12px")
+        .attr("x", x(0) + 10)
+        .attr("y", d => y(d.coachId) + y.bandwidth() / 2 );
+
+    textUpdate.exit().remove();
+
+    let textMerge = textUpdate.merge(textEnter);
+
+    textMerge
+        .transition()
+        .duration(800)
+        .attr("x", d => x(d.totalPoints) + 10)
+        .attr("y", d => y(d.coachId) + y.bandwidth() / 2)
+        .text(d => d.totalPoints);
+}
 
 
+updateCoachPerformanceChart();
 
-// ///////////////////
-// class MonsterCardClass {
 
-//     static allMonsters = [];
-
-//     constructor(data) {
-//         this.name = data.name;
-//         this.id = data.id;
-//         this.color = colorGenerator();
-//         this.imgUrl = randomPictureGenerator();
-
-//         MonsterCardClass.allMonsters.push(this);
-//     }
-//     static getAllMonsters() {
-//         return MonsterCardClass.allMonsters;
-//     }
-// }
-
-// function colorGenerator() { //generera en färg till monster
-
-//     const r = Math.floor(Math.random() * 256);
-//     const g = Math.floor(Math.random() * 256);
-//     const b = Math.floor(Math.random() * 256);
-
-//     return `rgb(${r}, ${g}, ${b})`;
-// }
-
-// function randomPictureGenerator() { //generera en random monster URL
-//     let monsterPicNum = Math.ceil(Math.random() * 16)
-//     return `../images/monster${monsterPicNum}.png`
-// }
-
-// function CreateAllMonsters(monstersArray) {
-//     let containerAllMonstersBoxId = document.getElementById("containerAllMonstersBox")
-//     containerAllMonstersBoxId.innerHTML = ``
-
-//     for (let i = 0; i < monstersArray.length; i++) {
-
-//         let monster1 = new MonsterCardClass(monstersArray[i]);
-
-//         let monsterCard = document.createElement("div");
-//         monsterCard.classList.add("monsterCard")
-//         monsterCard.innerHTML = `
-                       
-//         <p class="monsterName">${monster1.name}</p>
-//         <img src="${monster1.imgUrl}" class="monsterImage">
-//         <div class="colorLine"> </div>
-//         <p class="idName"> Id : <span id="monsterId">${monster1.id}</span></p>
-//         `
-//         let colorLine = monsterCard.querySelector(".colorLine");
-//         colorLine.style.backgroundColor = `${monster1.color}`
-//         containerAllMonstersBoxId.appendChild(monsterCard);
-//     }
-
-// }
+//Ranking dashboard
 
 let disciplinesElements = ["Maze", "Hunt", "HidenSeek", "Fighting", "Race" ]
 
@@ -692,9 +498,10 @@ monsterCards.forEach(card => {
 
             rankingDOM.innerHTML = `
                 <p class="rankingText">Ranking:<br> ${index + 1}</p>
-                <img src="../images/rankingPic.png">
+                <img src="./images/rankingPic.png">
                 <p id="smallRanking">${index + 1}</p>
             `;
         }
     });
 });
+
