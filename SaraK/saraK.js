@@ -5,7 +5,7 @@ let allMonstersObjectArray = participants;
 console.log(participants)
 let containerAllMonstersBox = document.querySelectorAll("#containerAllMonstersBox .monsterCard");
 let chosenCardCounter = 0;
-let svg, xScale, yScale, xAxisGroup, yAxisGroup, chartHeight, chartWidth, marginCompareChart;
+let compareSvg, xScaleCompare, yScaleCompare, xAxisGroup, yAxisGroup, chartHeight, chartWidth, marginCompareChart;
 
 
 class MonsterCardClass {
@@ -301,39 +301,39 @@ function GetSeasonFromDropown() {
     return chosenSeasonToCompare;
 }
 
-function CreateChartSvg(compareScoreArray) {
-    let data = compareScoreArray;
+function CreateChartSvg() {
+    // let data = compareScoreArray;
 
     d3.select("#pointsDistrubution").select("svg").remove();
     let scoreBox = document.getElementById("pointsDistrubution")
 
     marginCompareChart = { top: 10, right: 20, bottom: 30, left: 60 },
         chartWidth = scoreBox.offsetWidth - marginCompareChart.left - marginCompareChart.right,
-        chartHeight = scoreBox.offsetHeight - marginCompareChart.top - marginCompareChart.bottom;
+        chartHeight = 250 - marginCompareChart.top - marginCompareChart.bottom;
 
-    svg = d3.select("#pointsDistrubution")
+    compareSvg = d3.select("#pointsDistrubution")
         .append("svg")
         .attr("width", chartWidth + marginCompareChart.left + marginCompareChart.right)
         .attr("height", chartHeight + marginCompareChart.top + marginCompareChart.bottom)
         .append("g")
         .attr("transform", `translate(${marginCompareChart.left},${marginCompareChart.top})`);
 
-    xScale = d3.scaleBand()
+    xScaleCompare = d3.scaleBand()
         .range([0, chartWidth])
         .padding(0.4);
 
-    yScale = d3.scaleLinear()
+    yScaleCompare = d3.scaleLinear()
         .domain([800, 1600])
         .range([chartHeight, 0]);
 
-    xAxisGroup = svg.append("g")
+    xAxisGroup = compareSvg.append("g")
         .attr("class", "axis")
         .attr("transform", `translate(0,${chartHeight})`)
-        .call(d3.axisBottom(xScale));
+        .call(d3.axisBottom(xScaleCompare));
 
-    svg.append("g")
+    compareSvg.append("g")
         .attr("class", "axis")
-        .call(d3.axisLeft(yScale).ticks(6));
+        .call(d3.axisLeft(yScaleCompare).ticks(6));
 
 }
 
@@ -341,16 +341,16 @@ function changeChartStats(compareScoreArray) {
     let data = compareScoreArray;
     console.log(data)
 
-    xScale.domain(data.map(data => `ID: ${data.id}`));
-    xAxisGroup.call(d3.axisBottom(xScale));
+    xScaleCompare.domain(data.map(data => `ID: ${data.id}`));
+    xAxisGroup.call(d3.axisBottom(xScaleCompare));
 
-    svg.selectAll("rect")
+    compareSvg.selectAll("rect")
         .data(data)
         .join("rect")
-        .attr("x", data => xScale(`ID: ${data.id}`))
-        .attr("y", data => yScale(Math.max(800, data.score)))
-        .attr("width", xScale.bandwidth())
-        .attr("height", data => chartHeight - yScale(Math.max(800, data.score)))
+        .attr("x", data => xScaleCompare(`ID: ${data.id}`))
+        .attr("y", data => yScaleCompare(Math.max(800, data.score)))
+        .attr("width", xScaleCompare.bandwidth())
+        .attr("height", data => chartHeight - yScaleCompare(Math.max(800, data.score)))
         .attr("fill", data => data.rgb)
         .attr("rx", 4)
         .attr("opacity", 0.8)
@@ -359,7 +359,7 @@ function changeChartStats(compareScoreArray) {
         .attr("flood-color", "#5E9F99")
 
     console.log("score:", data.map(d => d.score));
-    console.log("y:", data.map(d => yScale(d.score)));
+    console.log("y:", data.map(d => yScaleCompare(d.score)));
 
 }
 
