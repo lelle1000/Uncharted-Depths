@@ -1,4 +1,3 @@
-// import { monsterCardClass } from "monsterClass.js";
 
 const mainContainer = document.getElementById("comparePage")
 let allMonstersObjectArray = participants;
@@ -24,7 +23,7 @@ class MonsterCardClass {
     }
 }
 
-function colorGenerator() { //generera en färg till monster
+function colorGenerator() {
 
     const r = Math.floor(Math.random() * 256);
     const g = Math.floor(Math.random() * 256);
@@ -33,7 +32,7 @@ function colorGenerator() { //generera en färg till monster
     return `rgb(${r}, ${g}, ${b})`;
 }
 
-function randomPictureGenerator() { //generera en random monster URL
+function randomPictureGenerator() {
     let monsterPicNum = Math.ceil(Math.random() * 16)
     return `./images/monster${monsterPicNum}.png`
 }
@@ -291,7 +290,6 @@ function GetSeasonFromDropown() {
 }
 
 function CreateChartSvg() {
-    // let data = compareScoreArray;
 
     d3.select("#pointsDistrubution").select("svg").remove();
     let scoreBox = document.getElementById("pointsDistrubution")
@@ -345,9 +343,6 @@ function changeChartStats(compareScoreArray) {
         .attr("stroke", "#5E9F99")
         .attr("stdDeviation", 0.5)
         .attr("flood-color", "#5E9F99")
-
-
-
 }
 
 function GetAllParticipantsForTheSeasonChangeEvent() {
