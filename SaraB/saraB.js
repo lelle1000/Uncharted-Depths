@@ -7,11 +7,6 @@ let coachGraphPage = document.getElementById("coachGraphPage");
 let coachBackArrow = document.getElementById("coachBackArrow");
 
 function activateButtons(){
-    comparePageButton.addEventListener("click", e => {
-        landingPageContainer.classList.add("hide");
-        comparePage.classList.remove("hide");
-        
-    });
     
     coachesImpactButton.addEventListener("click", e => {
         landingPageContainer.classList.add("hide");
@@ -25,6 +20,13 @@ function activateButtons(){
         landingPageContainer.classList.remove("hide");
         
     });
+
+    comparePageButton.addEventListener("click", e => {
+        landingPageContainer.classList.add("hide");
+        comparePage.classList.remove("hide");
+        CreateChartSvg();
+
+    });
 };
 
 activateButtons();
@@ -34,14 +36,6 @@ let seasonSelect = document.getElementById("seasonSelect");
 seasonSelect.classList.add("selectC");
 let eventSelect = document.getElementById("eventSelect");
 eventSelect.classList.add("selectC");
-
-comparePageButton.addEventListener("click", e => {
-    landingPageContainer.classList.add("hide");
-    comparePage.classList.remove("hide");
-    CreateChartSvg();
-
-});
-
 
 
 
@@ -189,9 +183,6 @@ function drawChart(coachData) {
         .attr("font-size", "14px")
         .attr("stroke", "#C2AD89")
         .call(d3.axisLeft(y).tickFormat(id => `Coach ${id}`));
-
-    gYAxis
-        .call(d3.axisLeft(y));
 
     gYAxis.select(".domain")
         .attr("stroke", "#C2AD89");
