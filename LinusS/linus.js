@@ -73,6 +73,7 @@ function calculateTotalSkillScoreOverDisciplines(allAverageScoresForAllDisciplin
     };
 
     for (let disciplineName in allAverageScoresForAllDisciplines) {
+
         let disciplineId = Number(disciplineName[disciplineName.length - 1])
         let disciplineObj = disciplines.find(obj => obj.id === disciplineId)
 
@@ -146,7 +147,7 @@ function getSkillFactorForParticipant(participantId, participantSkillSum) {
     results["Camoflauge"] = results["S04"]
     results["Endurance"] = results["S05"]
 
-    for (let i = 0; i <= 5; i++) {
+    for (let i = 1; i <= 5; i++) {
         delete results[`S0${i}`]
     }
     
@@ -167,13 +168,15 @@ function updateScoreboard() {
 
     arrayWithScoreAndParticipantId.sort((a, b) => b.averageScore - a.averageScore)
 
-    for(let obj of arrayWithScoreAndParticipantId) {
-        
-        let creaturePlacement = arrayWithScoreAndParticipantId.indexOf(obj) + 1     
-        let creatureName = obj.name
-        let creaturePoints = obj.averageScore
+    let html = ""
 
-        creatureScoreboardStats.innerHTML += `
+    for(let i = 0; i < arrayWithScoreAndParticipantId.length; i++) {
+        
+        let creaturePlacement = i + 1   
+        let creatureName = arrayWithScoreAndParticipantId[i].name
+        let creaturePoints = arrayWithScoreAndParticipantId[i].averageScore
+
+        html += `
             <div class="creatureScoreboard">
                 <p class="text">${creaturePlacement}</p>
                 <p class="text">${creatureName}</p>
@@ -181,6 +184,8 @@ function updateScoreboard() {
             </div>
         `
     }
+
+    creatureScoreboardStats.innerHTML = html
 }
 
 let subSound = document.querySelector("#subSound")
@@ -370,13 +375,6 @@ let maxValue = 20;
 let numOfAxes = 5;
 let circleSlice = (2 * Math.PI) / numOfAxes;
 
-function toXY(angle, r) {
-    return {
-        x: cx + r * Math.cos(angle - Math.PI / 2),
-        y: cy + r * Math.sin(angle - Math.PI / 2)
-    };
-}
-
 let svgContainer = d3.select("#radarChartContainer")
     .append("svg")
     .attr("width", svgHeightandWidth)
@@ -432,6 +430,13 @@ function drawRadarChart(data, strokeColor) {
         .attr("fill", `${strokeColor}`)
         .attr("fill-opacity", 0.3)
         .attr("stroke-width", 2)
+}
+
+function toXY(angle, r) {
+    return {
+        x: cx + r * Math.cos(angle - Math.PI / 2),
+        y: cy + r * Math.sin(angle - Math.PI / 2)
+    };
 }
 
 
