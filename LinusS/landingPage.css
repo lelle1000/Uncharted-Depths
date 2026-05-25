@@ -33,7 +33,7 @@ body {
 }
 
 #firstPage {
-    background-image: url("../images/SubFinish.png");
+    background-image: url("../images/SubFinish2.png");
 
     background-size: cover;
 
@@ -66,10 +66,10 @@ body {
 }
 
 #firstPageItemContainer {
-    
+
     display: flex;
     flex-direction: column;
-    width: 336px; 
+    width: 336px;
     gap: 20px;
 }
 
@@ -83,7 +83,7 @@ body {
     flex-direction: column;
     gap: 6vh;
 
-    background-image: url("../images/landingPageBackground.png");
+    background-image: url("../images/landingPageBackground2.png");
     background-size: cover;
 }
 
@@ -169,7 +169,7 @@ body {
     padding: 10px;
 }
 
-#scoreboardSeasonContainer p{
+#scoreboardSeasonContainer p {
     padding: 0px 0px 5px 0px;
     margin: 0px;
     color: #A2844F;
@@ -232,7 +232,7 @@ body {
 }
 
 
-#portalPage{
+#portalPage {
     width: 100%;
     height: 100vh;
     background-image: url("../images/Portals.png");
@@ -243,18 +243,18 @@ body {
 }
 
 
-#pirateSkull{
+#pirateSkull {
     position: relative;
     z-index: 10000;
 }
 
-.pirateSkull{
+.pirateSkull {
     position: relative;
     width: 202px;
     height: 189px;
 }
 
-.pirateJaw{
+.pirateJaw {
     position: absolute;
     width: 70px;
     top: 110px;
@@ -267,17 +267,17 @@ body {
 }
 
 @keyframes MoveJaw {
-     from {
+    from {
         top: 110px;
     }
 
     to {
         top: 115px;
     }
-    
+
 }
 
-.storyText{
+.storyText {
     position: absolute;
     background-color: rgba(68, 99, 96, 0.80);
     color: white;
@@ -287,7 +287,7 @@ body {
     padding: 15px 15px 15px 50px;
     top: 60px;
     left: 130px;
-    
+
 }
 
 .clickedDisciplineAndButton {
@@ -299,7 +299,7 @@ body {
 
 
 
-#topCreatureStats{
+#topCreatureStats {
     display: flex;
     justify-content: flex-end;
 
@@ -313,14 +313,13 @@ body {
     overflow: hidden;
     grid-template-columns: 1fr 1fr;
     border: 5px solid #896241
-    
 }
 
 #monsterPic {
     background: rgba(11, 20, 34, 0.76);
 }
 
-#rates{
+#rates {
     background-image: url(../images/scoreaboardBackground.png);
     background-position: center;
     background-repeat: no-repeat;
@@ -330,6 +329,6 @@ body {
     grid-template-rows: 1fr 80px 1fr;
 }
 
-#rates div{
+#rates div {
     border-bottom: 2px solid #896241
 }
