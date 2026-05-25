@@ -5,6 +5,9 @@ let comparePage = document.getElementById("comparePage");
 let coachesImpactButton = document.getElementById("coachesImpactButton");
 let coachGraphPage = document.getElementById("coachGraphPage");
 let coachBackArrow = document.getElementById("coachBackArrow");
+let skillInfo = document.getElementById("skillInfo");
+let skillColorsContainer = document.getElementById("skillColorsContainer");
+
 
 function activateButtons(){
     
@@ -31,12 +34,30 @@ function activateButtons(){
 
 activateButtons();
 
+let skillsElement = ["Strength", "endurance", "Speed", "Camoflauge", "Knowledge"];
+
+function showBestSkillInfo(disciplineId) {
+
+    let result = findBestSkillForDiscipline(disciplineId);
+
+    let skillInfoDiv = document.getElementById("skillInfo");
+    skillInfoDiv.innerHTML = "";
+
+    let index = parseInt(result.bestSkill.replace("S", "")) - 1;
+
+    let skillName = skillsElement[index];
+
+    let p = document.createElement("p");
+    p.textContent = `Best skill to have:  ${skillName}`;
+
+    skillInfoDiv.appendChild(p);
+}
+
 
 let seasonSelect = document.getElementById("seasonSelect");
 seasonSelect.classList.add("selectC");
 let eventSelect = document.getElementById("eventSelect");
 eventSelect.classList.add("selectC");
-
 
 
 
@@ -62,31 +83,73 @@ sortedDisciplines.forEach(d => {
 
 let deafultSeason = 1;
 let defaultDiscipline = sortedDisciplines[0].id;
+showBestSkillInfo(defaultDiscipline)
 
 
 seasonSelect.addEventListener("change", e => {
-    deafultSeason = +e.target.value;
+    deafultSeason = parseInt(e.target.value);
     updateCoachPerformanceChart();
 });
 
 eventSelect.addEventListener("change", e => {
-    defaultDiscipline = +e.target.value;
+    defaultDiscipline = parseInt(e.target.value);
+
+    showBestSkillInfo(defaultDiscipline);
+
     updateCoachPerformanceChart();
 });
 
 
 
-let coachColors = {};
-coaches.forEach(c => {
-    coachColors[c.id] = `hsl(${c.id * 32}, 70%, 60%)`;
-});
+let skillColors = {
+    S01: "#ff4d4d", 
+    S02: "#4da6ff",
+    S03: "#ffd24d",
+    S04: "#4dff88", 
+    S05: "#b84dff"  
+};
+
+function rendersSkillInfo() {
+    let i = 0;
+
+    for (let skill of skillsElement) {
+
+        let skillId = "S0" + (i + 1);
+        let color = skillColors[skillId];
+
+        let skillDiv = document.createElement("div");
+        skillDiv.classList.add("skillskillDiv");
+
+        let circle = document.createElement("div");
+        circle.classList.add("skillColorCircle");
+        circle.style.background = color;
+        circle.style.filter = `drop-shadow(0px 0px 4px ${color})`;
+
+        let text = document.createElement("p");
+        text.textContent = skill;
+
+        skillDiv.appendChild(circle);
+        skillDiv.appendChild(text);
+
+        skillColorsContainer.appendChild(skillDiv);
+
+        i++;
+    }
+}
+
+rendersSkillInfo()
 
 
+function getCoachSkillId(coachId) {
+    let coach = coaches.find(c => c.id == coachId);
+    return coach.skillId;
+}
 
-const maxPoints = 2300;
 
-let width = 1400;
-let height = 400;
+const maxPoints = 450;
+
+let width = 1000;
+let height = 430;
 let marginC = { top: 40, right: 100, bottom: 80, left: 250 };
 
 let svgC = d3.select("#chart")
@@ -119,13 +182,28 @@ function updateCoachPerformanceChart() {
         totalPoints: 0
     }));
 
+
+    let coachParticipantCounts = {};
+
+    coaches.forEach(coach => {
+
+        let amount = season.coaches.filter(
+            c => c.coachId == coach.id
+        ).length;
+
+        coachParticipantCounts[coach.id] = amount ;
+    });
+
     for (let compDay of season.competitionDays) {
+
         for (let event of compDay.events) {
+
 
             if (event.disciplineId !== defaultDiscipline) continue;
 
             let sorted = [...event.scores]
                 .sort((a, b) => b.score - a.score);
+
 
             sorted.slice(0, 5).forEach((p, index) => {
 
@@ -135,24 +213,28 @@ function updateCoachPerformanceChart() {
                     c => c.participantId == p.participantId
                 );
 
+
+
                 let coach = coaches.find(
                     c => c.id == seasonCoach.coachId
                 );
 
-                if (!coach) return;
+
 
                 let target = coachPoints.find(
-                    c => c.coachId === coach.id
+                    c => c.coachId == coach.id
                 );
 
-                target.totalPoints += points;
+                let dividedPoints =
+                    points / coachParticipantCounts[coach.id];
+
+                target.totalPoints += dividedPoints;
             });
         }
     }
 
     drawChart(coachPoints);
 }
-
 
 function drawChart(coachData) {
 
@@ -195,7 +277,7 @@ function drawChart(coachData) {
 
 
     svgC.append("text")
-        .attr("x", 800)
+        .attr("x", width / 2 + 60)
         .attr("y", height - 10)
         .attr("text-anchor", "middle")
         .attr("font-size", "16px")
@@ -219,8 +301,15 @@ function drawChart(coachData) {
         .attr("x", x(0))
         .attr("y", d => y(d.coachId))
         .attr("height", y.bandwidth())
-        .attr("fill", d => coachColors[d.coachId])
-        .style("filter", d => `drop-shadow(0px 0px 4px ${coachColors[d.coachId]})`);
+        .attr("fill", d => {
+            let skillId = getCoachSkillId(d.coachId);
+            return skillColors["S0" + skillId];
+        })
+        .style("filter", d => {
+            let skillId = getCoachSkillId(d.coachId);
+            let color = skillColors["S0" + skillId];
+            return "drop-shadow(0px 0px 4px " + color + ")";
+        });
 
 
     barUpdate.exit().remove();
@@ -257,11 +346,43 @@ function drawChart(coachData) {
         .duration(800)
         .attr("x", d => x(d.totalPoints) + 10)
         .attr("y", d => y(d.coachId) + y.bandwidth() / 2)
-        .text(d => d.totalPoints);
+        .text(d =>  Math.round(d.totalPoints))
 }
 
 
 updateCoachPerformanceChart();
+
+
+function findBestSkillForDiscipline(disciplineId) {
+
+    let d = disciplines.find(d => d.id == disciplineId);
+
+
+    let skillFactors = d.skillFactors;
+
+    let bestSkill = {
+        skill: null,
+        value: -Infinity
+    };
+
+    for (let skill in skillFactors) {
+
+        if (skillFactors[skill] > bestSkill.value) {
+            bestSkill.skill = skill;
+            bestSkill.value = skillFactors[skill];
+        }
+    }
+
+    return {
+        disciplineId: d.id,
+        disciplineName: d.name,
+        bestSkill: bestSkill.skill,
+        bestValue: bestSkill.value
+    };
+}
+
+
+
 
 
 //Ranking dashboard
@@ -285,31 +406,47 @@ function getAllScores() {
 }
 
 
-
-function getTotalPlayerScores(allScores) {
+function getAveragePlayerScoresPerSeason() {
 
     let totals = [];
 
-    for (let score of allScores) {
+    for (let season of seasons) {
+        for (let day of season.competitionDays) {
+            for (let event of day.events) {
+                for (let score of event.scores) {
 
-        let existing = totals.find(
-            p => p.participantId === score.participantId
-        );
+                    let existing = totals.find(
+                        p => p.participantId === score.participantId
+                    );
 
-        if (!existing) {
-            existing = {
-                participantId: score.participantId,
-                score: 0
-            };
-            totals.push(existing);
+                    if (!existing) {
+                        existing = {
+                            participantId: score.participantId,
+                            totalScore: 0,
+                            seasons: []
+                        };
+                        totals.push(existing);
+                    }
+
+                    existing.totalScore += score.score;
+
+                    if (!existing.seasons.includes(season.id)) {
+                        existing.seasons.push(season.id);
+                    }
+                }
+            }
         }
-
-        existing.score += score.score;
     }
 
-    totals.sort((a, b) => b.score - a.score);
+    let result = totals.map(p => ({
+        participantId: p.participantId,
+        score: p.totalScore / p.seasons.length
+    }));
 
-    return totals;
+    result.sort((a, b) => b.score - a.score);
+    
+
+    return result;
 }
 
 
@@ -328,7 +465,7 @@ function groupDisciplines() {
             for (let event of day.events) {
 
                 let existing = grouped.find(
-                    d => d.eventID === event.disciplineId
+                    d => d.eventID == event.disciplineId
                 );
 
                 if (!existing) {
@@ -366,7 +503,7 @@ function buildResult(grouped, topPlayers) {
             for (let event of d.events) {
                 for (let s of event.scores) {
 
-                    if (s.participantId === player.participantId) {
+                    if (s.participantId == player.participantId) {
                         score += s.score;
                     }
 
@@ -419,7 +556,7 @@ function getSpecialties(result, topPlayers) {
                         let sorted = [...event.scores]
                             .sort((a, b) => b.score - a.score);
 
-                        if (sorted[0].participantId === player.participantId) {
+                        if (sorted[0].participantId == player.participantId) {
                             wins++;
                         }
                     }
@@ -449,7 +586,7 @@ function getSpecialties(result, topPlayers) {
 
 let allScores = getAllScores();
 
-let totalScores = getTotalPlayerScores(allScores);
+let totalScores = getAveragePlayerScoresPerSeason();
 
 let topFivePlayers = getTopFivePlayers(totalScores);
 
@@ -461,7 +598,7 @@ let playerSpecialtyWins = getSpecialties(result, topFivePlayers);
 
 
 let topMonsters = topFivePlayers.map(player =>
-    participants.find(p => p.id === player.participantId)
+    participants.find(p => p.id == player.participantId)
 );
 
 

@@ -2,11 +2,11 @@ const disciplines = [{
   "id": 2, // Hunt
   "name": "D01",
   "skillFactors": {
-    "S01": 13,
-    "S02": 12,
-    "S03": 14,
-    "S04": 17,
-    "S05": 20 // Endurance
+    "S01": 13, //strength
+    "S02": 12, // endurance
+    "S03": 14, // speed
+    "S04": 17, //camouflage
+    "S05": 20 // knowledge
   }
 }, {
   "id": 5, // Fighting
@@ -36,15 +36,15 @@ const disciplines = [{
     "S02": 11,
     "S03": 13,
     "S04": 17, // Camoflauge
-    "S05": 17
+    "S05": 17  //knowledge
   }
 }, {
   "id": 5, // Race
   "name": "D05",
   "skillFactors": {
-    "S01": 20,
-    "S02": 12, // Speed
-    "S03": 16,
+    "S01": 20, //speed
+    "S02": 12, 
+    "S03": 16, //speed
     "S04": 14,
     "S05": 13
   }
