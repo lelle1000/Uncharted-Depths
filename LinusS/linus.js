@@ -236,8 +236,6 @@ let storypart1Array = storyPart1.split("")
 let storypart2Array = storyPart2.split("")
 let currentLetter = 0;
 
-let pages = [firstPage, creditsPage, storyPage, portalPage, landingPage]
-
 storyModeButton.addEventListener("click", () => {
     firstPage.classList.add("fadePageBlack")
     subSound.play()
@@ -364,7 +362,8 @@ seasonButtons.forEach(btn => btn.addEventListener("click", () => {
 const radarChartLabels = ["Strength", "Speed", "Endurance", "Knowledge", "Camo"];
 
 let svgHeightandWidth = 325;
-let cxandcy = svgHeightandWidth / 2;
+let cx = svgHeightandWidth / 2;
+let cy = svgHeightandWidth / 2;
 let radius = svgHeightandWidth / 2 - 40;
 
 let maxValue = 20;
@@ -373,8 +372,8 @@ let circleSlice = (2 * Math.PI) / numOfAxes;
 
 function toXY(angle, r) {
     return {
-        x: cxandcy + r * Math.cos(angle - Math.PI / 2),
-        y: cxandcy + r * Math.sin(angle - Math.PI / 2)
+        x: cx + r * Math.cos(angle - Math.PI / 2),
+        y: cy + r * Math.sin(angle - Math.PI / 2)
     };
 }
 
@@ -386,8 +385,8 @@ let svgContainer = d3.select("#radarChartContainer")
 const ringLevels = 5;
 for (let i = 1; i <= ringLevels; i++) {
     svgContainer.append("circle")
-        .attr("cx", cxandcy)
-        .attr("cy", cxandcy)
+        .attr("cx", cx)
+        .attr("cy", cy)
         .attr("r", radius * (i / ringLevels))
         .attr("fill", "none")
         .attr("stroke", "#848276")
@@ -400,8 +399,8 @@ radarChartLabels.forEach((label, i) => {
     const axisTip = toXY(angle, radius);
 
     svgContainer.append("line")
-        .attr("x1", cxandcy)
-        .attr("y1", cxandcy)
+        .attr("x1", cx)
+        .attr("y1", cy)
         .attr("x2", axisTip.x)
         .attr("y2", axisTip.y)
         .attr("stroke", "#ccc");
